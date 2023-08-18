@@ -1,0 +1,107 @@
+
+/*#root-deriv-tree ul {
+  list-style-type: none;
+  padding-left: 12px;
+}*/
+
+#root-deriv-tree .backLigth {
+  background-color: PaleTurquoise;
+}
+
+
+/* #root-deriv-tree .Yellow {
+  color: yellow;
+}
+
+#root-deriv-tree .Blue {
+  color: blue;
+}
+
+#root-deriv-tree .LightBlue {
+  color: lightblue;
+}
+
+#root-deriv-tree .Pink {
+  color: pink;
+}
+
+#root-deriv-tree .Red {
+  color: red;
+}
+
+#root-deriv-tree .LightGreen {
+  color: lightgreen;
+}
+
+#root-deriv-tree .Green {
+  color: green;
+}
+
+#root-deriv-tree .Brown {
+  color: brown;
+}
+
+.Olive {
+  color: olive;
+}
+
+.Indigo {
+  color: indigo;
+} */
+
+
+#root-deriv-tree ul.tree, ul.tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#root-deriv-tree ul.tree ul {
+    margin-left: 10px;
+  }
+  
+  #root-deriv-tree ul.tree li a {
+    text-decoration: none;
+  }
+  
+  #root-deriv-tree h5 a {
+    text-decoration: none;
+  }
+  
+  #root-deriv-tree ul.tree li {
+        margin: 0;
+    padding: 0 7px;
+    line-height: 20px;
+    color: #369;
+    font-weight: bold;
+    border-left: 1px solid rgb(100,100,100);
+  }
+
+#root-deriv-tree ul.tree li:last-child {
+  border-left: none;
+}
+
+/*#root-deriv-tree ul.tree li:first-child {
+  border-left: none;
+}*/
+
+  #root-deriv-tree ul.tree li:before {
+    position: relative;
+    top: -0.3em;
+    height: 1em;
+    width: 12px;
+    color: white;
+    border-bottom: 1px solid rgb(100,100,100);
+    content: "";
+    display: inline-block;
+    left: -7px;
+  }
+
+  #root-deriv-tree ul.tree li:last-child:before {
+    border-left: 1px solid rgb(100,100,100);
+  }
+
+
+  /*#root-deriv-tree ul.tree:first-child li:first-child:before {
+    border-left: none;
+  }*/
