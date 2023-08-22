@@ -13,7 +13,7 @@ export const recountApi = createApi({
     RecountBases: builder.mutation<void, void>({
       query(args) {
         return {
-          url: `/recount/bases`,
+          url: `/databaserecounter/recountbases`,
           method: "POST",
         };
       },
@@ -29,7 +29,7 @@ export const recountApi = createApi({
     RecountInflectionSamples: builder.mutation<void, void>({
       query(args) {
         return {
-          url: `/recount/inflectionsamples`,
+          url: `/databaserecounter/recountinflectionsamples`,
           method: "POST",
         };
       },
@@ -48,7 +48,7 @@ export const recountApi = createApi({
     >({
       query(args) {
         return {
-          url: `/recount/findderivationbrancheswithoutdescendants`,
+          url: `/databaserecounter/findderivationbrancheswithoutdescendants`,
           method: "POST",
         };
       },

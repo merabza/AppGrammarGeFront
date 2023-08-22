@@ -3,16 +3,26 @@
 //RecountsDashboard
 import { useState, useEffect, FC, useCallback } from "react";
 import { Button, Spinner, ProgressBar } from "react-bootstrap";
-import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";
+import {
+  HubConnection,
+  HubConnectionBuilder,
+  LogLevel,
+  HttpTransportType,
+} from "@aspnet/signalr";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { Err } from "../appcarcass/redux/types/errorTypes";
-import { setAlertClientRunTimeError } from "../appcarcass/redux/slices/alertSlice";
+import {
+  EAlertKind,
+  setAlertClientRunTimeError,
+} from "../appcarcass/redux/slices/alertSlice";
 import { useLocation } from "react-router-dom";
 import {
   useRecountBasesMutation,
   useRecountFindDerivationBranchesWithoutDescendantsMutation,
   useRecountInflectionSamplesMutation,
 } from "../redux/api/recountApi";
+import { ProgressData } from "./RecountDashboardTypes";
+import AlertMessages from "../appcarcass/common/AlertMessages";
 
 const RecountsDashboard: FC = () => {
   // const {
@@ -67,56 +77,67 @@ const RecountsDashboard: FC = () => {
     },
   ] = useRecountFindDerivationBranchesWithoutDescendantsMutation();
 
+  const { user } = useAppSelector((state) => state.userState);
+
   // Set the Hub Connection on mount.
   useEffect(
     () => {
       // Set the initial SignalR Hub Connection.
       const createHubConnection = async () => {
+        if (user === null) {
+          dispatch(
+            setAlertClientRunTimeError({
+              errorCode: "hubConnectError",
+              errorMessage: "user is not authorised",
+            } as Err)
+          );
+          return;
+        }
         // Build new Hub Connection, url is currently hard coded.
         const hubConnect = new HubConnectionBuilder()
-          .withUrl(`${baseUrl}/recountmessages`)
+          .withUrl(`${baseUrl}/databaserecounter/recountmessages`, {
+            transport:
+              /*HttpTransportType.WebSockets |*/ HttpTransportType.LongPolling,
+            accessTokenFactory: () => user.token,
+          })
+          .configureLogging(LogLevel.Information)
           .build();
         try {
           await hubConnect.start();
-          //console.log('hub Connection successful!');
+          console.log("hub Connection successful!");
 
           // Bind event handlers to the hubConnection.
-          hubConnect.on("sendtoall", (receivedData) => {
-            //console.log("RecountsDashboard receivedMessage=", receivedData);
-            if (receivedData == null) {
-              setProcName("");
-              setLevelName("");
-              setCheckBase("");
-              setChangedBase("");
-              setErrorMessage("");
-              setProcLength(0);
-              setProcPosition(0);
-              setByLevelLength(0);
-              setByLevelPosition(0);
+          hubConnect.on("sendtoall", (receivedData: ProgressData | null) => {
+            console.log("RecountsDashboard receivedMessage=", receivedData);
+            if (!receivedData) {
+              // setProcName("");
+              // setLevelName("");
+              // setCheckBase("");
+              // setChangedBase("");
+              // setErrorMessage("");
+              // setProcLength(0);
+              // setProcPosition(0);
+              // setByLevelLength(0);
+              // setByLevelPosition(0);
               return;
             }
-            const { strData, intData } = receivedData;
-            if (strData !== null) {
-              if (strData.procName || strData.procName === "")
-                setProcName(strData.procName);
-              if (strData.levelName || strData.levelName === "")
-                setLevelName(strData.levelName);
-              if (strData.checkBase || strData.checkBase === "")
-                setCheckBase(strData.checkBase);
-              if (strData.changedBase || strData.changedBase === "")
-                setChangedBase(strData.changedBase);
-              if (strData.error || strData.error === "")
-                setErrorMessage(strData.error);
+            const { StrData, IntData } = receivedData;
+            console.log("RecountsDashboard StrData=", StrData);
+            if (StrData) {
+              if (StrData.procName) setProcName(StrData.procName);
+              if (StrData.levelName) setLevelName(StrData.levelName);
+              if (StrData.checkBase) setCheckBase(StrData.checkBase);
+              if (StrData.changedBase) setChangedBase(StrData.changedBase);
+              if (StrData.error) setErrorMessage(StrData.error);
             }
-            if (intData !== null) {
-              if (intData.procLength || intData.procLength === "")
-                setProcLength(intData.procLength);
-              if (intData.procPosition || intData.procPosition === "")
-                setProcPosition(intData.procPosition);
-              if (intData.byLevelLength || intData.byLevelLength === "")
-                setByLevelLength(intData.byLevelLength);
-              if (intData.byLevelPosition || intData.byLevelPosition === "")
-                setByLevelPosition(intData.byLevelPosition);
+            console.log("RecountsDashboard IntData=", IntData);
+            if (IntData) {
+              if (IntData.procLength) setProcLength(IntData.procLength);
+              if (IntData.procPosition) setProcPosition(IntData.procPosition);
+              if (IntData.byLevelLength)
+                setByLevelLength(IntData.byLevelLength);
+              if (IntData.byLevelPosition)
+                setByLevelPosition(IntData.byLevelPosition);
             }
             //setLastMessage(receivedMessage);
           });
@@ -138,7 +159,7 @@ const RecountsDashboard: FC = () => {
             } as Err)
           );
 
-          //console.log('Error while establishing connection: ' + { err });
+          console.log("Error while establishing connection: " + { err });
         }
         setHubConnection(hubConnect);
       };
@@ -173,13 +194,14 @@ const RecountsDashboard: FC = () => {
   const procPercentage = Math.round((procPosition / procLength) * 100);
   const byLevelPercentage = Math.round((byLevelPosition / byLevelLength) * 100);
 
-  //console.log("RecountsDashboard procPercentage=", procPercentage);
-  //console.log("RecountsDashboard byLevelPosition=", byLevelPosition);
-  //console.log("RecountsDashboard byLevelLength=", byLevelLength);
-  //console.log("RecountsDashboard byLevelPercentage=", byLevelPercentage);
+  console.log("RecountsDashboard procPercentage=", procPercentage);
+  console.log("RecountsDashboard byLevelPosition=", byLevelPosition);
+  console.log("RecountsDashboard byLevelLength=", byLevelLength);
+  console.log("RecountsDashboard byLevelPercentage=", byLevelPercentage);
   return (
     <div>
       <h3>გადაანგარიშებები</h3>
+      {/* <AlertMessages alertKind={EAlertKind.ClientRunTime} /> */}
       <Button
         className="mr-1 mb-1"
         type="button"
