@@ -61,6 +61,38 @@ export const recountApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
+    DatabaseIntegrityCheck: builder.mutation<void, void>({
+      query(args) {
+        return {
+          url: `/databaserecounter/databaseintegritycheck`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(setAlertApiMutationError(buildErrorMessage(error)));
+        }
+      },
+    }),
+    //////////////////////////////////////////////////////
+    CancelCurrentProcess: builder.mutation<void, void>({
+      query(args) {
+        return {
+          url: `/databaserecounter/cancelcurrentprocess`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(setAlertApiMutationError(buildErrorMessage(error)));
+        }
+      },
+    }),
+    //////////////////////////////////////////////////////
   }),
 });
 
@@ -68,4 +100,6 @@ export const {
   useRecountBasesMutation,
   useRecountFindDerivationBranchesWithoutDescendantsMutation,
   useRecountInflectionSamplesMutation,
+  useDatabaseIntegrityCheckMutation,
+  useCancelCurrentProcessMutation,
 } = recountApi;

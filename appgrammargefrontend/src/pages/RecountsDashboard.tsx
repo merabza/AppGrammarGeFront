@@ -17,6 +17,8 @@ import {
 } from "../appcarcass/redux/slices/alertSlice";
 import { useLocation } from "react-router-dom";
 import {
+  useCancelCurrentProcessMutation,
+  useDatabaseIntegrityCheckMutation,
   useRecountBasesMutation,
   useRecountFindDerivationBranchesWithoutDescendantsMutation,
   useRecountInflectionSamplesMutation,
@@ -76,6 +78,22 @@ const RecountsDashboard: FC = () => {
       isError: failureFindDerivationBranchesWithoutDescendants,
     },
   ] = useRecountFindDerivationBranchesWithoutDescendantsMutation();
+
+  const [
+    DatabaseIntegrityCheck,
+    {
+      isLoading: rcWorkingOnDatabaseIntegrityCheck,
+      isError: failureDatabaseIntegrityCheck,
+    },
+  ] = useDatabaseIntegrityCheckMutation();
+
+  const [
+    CancelCurrentProcess,
+    {
+      isLoading: rcWorkingOnCancelCurrentProcess,
+      isError: failureCancelCurrentProcess,
+    },
+  ] = useCancelCurrentProcessMutation();
 
   const { user } = useAppSelector((state) => state.userState);
 
@@ -249,6 +267,7 @@ const RecountsDashboard: FC = () => {
           დასრულდა.
         </p>
       )}
+
       <Button
         className="mr-1 mb-1"
         type="button"
@@ -274,6 +293,44 @@ const RecountsDashboard: FC = () => {
           წარუმატებლად დასრულდა.
         </p>
       )}
+
+      <Button
+        className="mr-1 mb-1"
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          DatabaseIntegrityCheck();
+        }}
+      >
+        {rcWorkingOnDatabaseIntegrityCheck && (
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+        )}
+        მონაცემთა ბაზის მთლიანობის შემოწმება
+      </Button>
+      {failureDatabaseIntegrityCheck && (
+        <p>
+          მონაცემთა ბაზის მთლიანობის შემოწმების ბოლო მცდელობა წარუმატებლად
+          დასრულდა.
+        </p>
+      )}
+
+      <Button
+        className="mr-1 mb-1"
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          CancelCurrentProcess();
+        }}
+      >
+        პროცესის შეჩერება
+      </Button>
+
       {!!procName && (
         <div>
           <p className="mt-1 mb-0">{procName}</p>
@@ -298,26 +355,3 @@ const RecountsDashboard: FC = () => {
 };
 
 export default RecountsDashboard;
-
-// function mapStateToProps(state) {
-//   const { rcWorkingOnRecountBases, failureRecountBases,
-//     rcWorkingOnRecountInflectionSamples, failureRecountInflectionSamples,
-//     rcWorkingOnRecountFindDerivationBranchesWithoutDescendants, failureFindDerivationBranchesWithoutDescendants } = state.recountsStore;
-//   const { flatMenu } = state.navMenu;
-//   return { flatMenu, rcWorkingOnRecountBases, failureRecountBases,
-//     rcWorkingOnRecountInflectionSamples, failureRecountInflectionSamples,
-//     rcWorkingOnRecountFindDerivationBranchesWithoutDescendants, failureFindDerivationBranchesWithoutDescendants };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     RecountBases: () => dispatch(RecountsActions.RecountBases()),
-//     RecountInflectionSamples: () => dispatch(RecountsActions.RecountInflectionSamples()),
-//     RecountFindDerivationBranchesWithoutDescendants: () => dispatch(RecountsActions.RecountFindDerivationBranchesWithoutDescendants())
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(RecountsDashboard);
