@@ -1,7 +1,7 @@
 //useDeleteInflection.ts
 
 import { useCallback } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../appcarcass/redux/hooks";
 import { useDeleteInflectionMutation } from "../../redux/api/inflectionCrudApi";
 import { funAfterSaveInflection } from "./inflectionCommonFunctionsModule";
@@ -14,7 +14,7 @@ export type fnDeleteInflection = (
 
 export function useDeleteInflection(): [fnDeleteInflection, boolean, boolean] {
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [
     DeleteInflection,
     { isLoading: workingOnDeleteInflection, isError: DeleteFailure },
@@ -29,7 +29,7 @@ export function useDeleteInflection(): [fnDeleteInflection, boolean, boolean] {
       if (infId) {
         DeleteInflection(infId);
 
-        funAfterSaveInflection(rootsRepo, rootId, dbrId, infId, null);
+        funAfterSaveInflection(rootsRepo, rootId, dbrId, infId, null, navigate);
       }
     },
     [rootsRepo]

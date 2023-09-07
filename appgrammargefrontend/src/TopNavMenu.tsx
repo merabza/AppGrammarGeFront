@@ -14,8 +14,23 @@ import ForConfirmRootsListTopForm from "./forConfirmRoots/ForConfirmRootsListTop
 import { FC } from "react";
 import ForIssuesTopForm from "./issues/ForIssuesTopForm";
 
+// import {
+//   IconDefinition,
+//   IconLookup,
+//   findIconDefinition,
+// } from "@fortawesome/free-solid-svg-icons";
+// import {
+//   IconLookup,
+//   IconDefinition,
+//   findIconDefinition,
+// } from "@fortawesome/fontawesome-svg-core";
+
 const TopNavMenu: FC = () => {
   const dispatch = useAppDispatch();
+
+  // const alignLeftLookup: IconLookup = { prefix: "fas", iconName: "align-left" };
+  // const alignLeftIconDefinition: IconDefinition =
+  //   findIconDefinition(alignLeftLookup);
 
   return (
     <Navbar bg="light" expand="lg">

@@ -1,5 +1,5 @@
 //inflectionCommonFunctionsModule.ts
-
+import { NavigateFunction } from "react-router-dom";
 import { redirect } from "react-router-dom";
 import { RootFullModel } from "../../redux/types/rootsTypes";
 import {
@@ -13,12 +13,18 @@ export async function funAfterSaveInflection(
   rootId: number | undefined,
   derivBranchId: number | undefined,
   inflectionId: number | undefined,
-  duplicateInflectionId: number | null
+  duplicateInflectionId: number | null,
+  navigate: NavigateFunction
 ) {
   //თავიდან ჩაიტვირთოს ფლექსიის იდენტიფიკატორის მიხედვით ყველა საჭირო ძირი
   // if (inflectionId) {
   //   await getRootByInflectionId(dispatch, getState, inflectionId);
   // }
+
+  console.log(
+    "funAfterSaveInflection {rootsRepo, rootId, derivBranchId, inflectionId, duplicateInflectionId}",
+    { rootsRepo, rootId, derivBranchId, inflectionId, duplicateInflectionId }
+  );
 
   //მივიღოთ ფლექსია იდენტიფიკატორის მიხედვით
   const inflection = !!inflectionId
@@ -46,8 +52,10 @@ export async function funAfterSaveInflection(
       ? derivBranchId
       : preBranches[0];
 
+  console.log("funAfterSaveInflection dbrId", dbrId);
+
   //დადგენილი დერივაციისათვის მივიღოთ წინაპარი ძირების სია
-  if (!dbrId) redirect("/basesearch");
+  if (!dbrId) navigate("/basesearch");
   else {
     const branch = getBranchByIdFromStore(rootsRepo, dbrId);
     const predRootIds = funPredRoots(branch, rootsRepo);
@@ -60,14 +68,42 @@ export async function funAfterSaveInflection(
         ? rootId
         : predRootIds[0];
 
+    console.log(
+      "funAfterSaveInflection {forOpenRootId, dbrId, duplicateInflectionId, mustBeinflectionId}",
+      { forOpenRootId, dbrId, duplicateInflectionId, mustBeinflectionId }
+    );
+
     if (forOpenRootId) {
       if (dbrId) {
-        if (duplicateInflectionId)
-          redirect(`/root/${forOpenRootId}/${dbrId}/${duplicateInflectionId}`);
-        else if (mustBeinflectionId)
-          redirect(`/root/${forOpenRootId}/${dbrId}/${mustBeinflectionId}`);
-        else redirect(`/root/${forOpenRootId}/${dbrId}`);
-      } else redirect(`/root/${forOpenRootId}`);
-    } else redirect("/basesearch");
+        if (duplicateInflectionId) {
+          console.log(
+            "funAfterSaveInflection redirect",
+            `/root/${forOpenRootId}/${dbrId}/${duplicateInflectionId}`
+          );
+          navigate(`/root/${forOpenRootId}/${dbrId}/${duplicateInflectionId}`);
+        } else if (mustBeinflectionId) {
+          console.log(
+            "funAfterSaveInflection redirect",
+            `/root/${forOpenRootId}/${dbrId}/${mustBeinflectionId}`
+          );
+          navigate(`/root/${forOpenRootId}/${dbrId}/${mustBeinflectionId}`);
+        } else {
+          console.log(
+            "funAfterSaveInflection redirect",
+            `/root/${forOpenRootId}/${dbrId}`
+          );
+          navigate(`/root/${forOpenRootId}/${dbrId}`);
+        }
+      } else {
+        console.log(
+          "funAfterSaveInflection redirect",
+          `/root/${forOpenRootId}`
+        );
+        navigate(`/root/${forOpenRootId}`);
+      }
+    } else {
+      console.log("funAfterSaveInflection redirect", "/basesearch");
+      navigate("/basesearch");
+    }
   }
 }

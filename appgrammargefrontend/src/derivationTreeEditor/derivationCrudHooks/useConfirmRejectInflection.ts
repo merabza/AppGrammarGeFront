@@ -1,7 +1,7 @@
 //useConfirmRejectInflection.ts
 
 import { useCallback } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../appcarcass/redux/hooks";
 import { useConfirmRejectInflectionChangeMutation } from "../../redux/api/inflectionCrudApi";
 import { funAfterSaveInflection } from "./inflectionCommonFunctionsModule";
@@ -21,7 +21,7 @@ export function useConfirmRejectInflection(): [
   () => void
 ] {
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [
     ConfirmRejectInflection,
     {
@@ -42,7 +42,7 @@ export function useConfirmRejectInflection(): [
       if (infId) {
         ConfirmRejectInflection({ infId, confirm, withAllDescendants });
 
-        funAfterSaveInflection(rootsRepo, rootId, dbrId, infId, null);
+        funAfterSaveInflection(rootsRepo, rootId, dbrId, infId, null, navigate);
       }
     },
     [rootsRepo]

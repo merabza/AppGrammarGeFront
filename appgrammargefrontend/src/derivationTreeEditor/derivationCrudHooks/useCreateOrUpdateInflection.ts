@@ -1,7 +1,7 @@
 //useCreateOrUpdateInflection.ts
 
 import { useCallback } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../appcarcass/redux/hooks";
 import {
   useCreateInflectionMutation,
@@ -25,7 +25,7 @@ export function useCreateOrUpdateInflection(): [
 ] {
   const dispatch = useAppDispatch();
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [createInflection, { isLoading: creatingInflection }] =
     useCreateInflectionMutation();
   const [updateInflection, { isLoading: updatingInflection }] =
@@ -60,7 +60,8 @@ export function useCreateOrUpdateInflection(): [
         rootId,
         dbrId,
         infId,
-        duplicateInflectionId
+        duplicateInflectionId,
+        navigate
       );
 
       // if (rootId in rootsRepo && rootsRepo[rootId]) return;
