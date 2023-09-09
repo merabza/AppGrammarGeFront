@@ -161,8 +161,16 @@ const PhoneticsOptionEdit: FC = () => {
       JSON.stringify(frm)
     ) as PhoneticsOptionEditFormData;
 
-    if (curPhoIdVal) updatePhoneticsOption(currentForm);
-    else createPhoneticsOption(currentForm);
+    if (curPhoIdVal)
+      updatePhoneticsOption({
+        phoneticsOptionEditFormData: currentForm,
+        navigate,
+      });
+    else
+      createPhoneticsOption({
+        phoneticsOptionEditFormData: currentForm,
+        navigate,
+      });
     clearUsedTables();
   }
 
@@ -232,7 +240,8 @@ const PhoneticsOptionEdit: FC = () => {
             workingOnDelete={workingOnDeletePhoneticsOption}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
-              if (!!curPhoIdVal) deletePhoneticsOption(curPhoIdVal);
+              if (!!curPhoIdVal)
+                deletePhoneticsOption({ phoId: curPhoIdVal, navigate });
               clearUsedTables();
             }}
             allowDelete={PhoneticsOptionsDataType.delete}

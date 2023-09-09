@@ -11,6 +11,7 @@ import { useLazyGetRootByDerivBranchIdQuery } from "../../redux/api/rootsApi";
 import { setduplicateDerivationBranchId } from "../../redux/slices/derivationCrudSlice";
 import { DerivationBranchData } from "../TypesAndSchemas/DerivationBranchDataTypeAndSchema";
 import { funAfterSaveBranch } from "./derivationCommonFunctionsModule";
+import { useNavigate } from "react-router-dom";
 
 export type fnCreateOrUpdateDerivationBranch = (
   curDbrIdVal: number | undefined,
@@ -24,7 +25,7 @@ export function useCreateOrUpdateDerivationBranch(): [
 ] {
   const dispatch = useAppDispatch();
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [createDerivationBranch, { isLoading: creatingDerivationBranch }] =
     useCreateDerivationBranchMutation();
   const [updateDerivationBranch, { isLoading: updatingDerivationBranch }] =
@@ -53,7 +54,13 @@ export function useCreateOrUpdateDerivationBranch(): [
       //თავიდან ჩაიტვირთოს დერივაციის იდენტიფიკატორის მიხედვით ყველა საჭირო ძირი
       if (dbrId) await getRootByDerivBranchId(dbrId).unwrap();
 
-      funAfterSaveBranch(dbrId, rootId, rootsRepo, duplicateDerivationBranchId);
+      funAfterSaveBranch(
+        dbrId,
+        rootId,
+        rootsRepo,
+        duplicateDerivationBranchId,
+        navigate
+      );
 
       // if (rootId in rootsRepo && rootsRepo[rootId]) return;
       // dispatch(setRootLoading(true));

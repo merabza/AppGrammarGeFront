@@ -1,6 +1,7 @@
 //inflectionVerbCompositionCommonFunctionsModule.ts
 
-import { redirect } from "react-router-dom";
+// import { redirect } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 import { RootFullModel } from "../../redux/types/rootsTypes";
 import {
   funPredRoots,
@@ -79,7 +80,8 @@ export async function funAfterSaveInflectionVerbComposition(
   derivBranchId: number | undefined,
   inflectionId: number | undefined,
   inflectionVerbCompositionId: number | undefined,
-  duplicateInflectionVerbCompositionId: number | null
+  duplicateInflectionVerbCompositionId: number | null,
+  navigate: NavigateFunction
 ) {
   //console.log("funAfterSaveInflectionVerbComposition {rootId, derivBranchId, inflectionId, inflectionVerbCompositionId}=", {rootId, derivBranchId, inflectionId, inflectionVerbCompositionId})
   // //თავიდან ჩაიტვირთოს ფლექსიის იდენტიფიკატორის მიხედვით ყველა საჭირო ძირი
@@ -126,7 +128,7 @@ export async function funAfterSaveInflectionVerbComposition(
       : preinflections[0];
 
   //მივიღოთ ფლექსია იდენტიფიკატორის მიხედვით
-  if (!infId) redirect("/basesearch");
+  if (!infId) navigate("/basesearch");
   else {
     const inflection =
       inflectionId === null
@@ -147,7 +149,7 @@ export async function funAfterSaveInflectionVerbComposition(
         ? derivBranchId
         : preBranches[0];
 
-    if (!dbrId) redirect("/basesearch");
+    if (!dbrId) navigate("/basesearch");
     else {
       //დადგენილი დერივაციისათვის მივიღოთ წინაპარი ძირების სია
       const branch = getBranchByIdFromStore(rootsRepo, dbrId);
@@ -167,17 +169,17 @@ export async function funAfterSaveInflectionVerbComposition(
         if (dbrId) {
           if (infId) {
             if (duplicateInflectionVerbCompositionId)
-              redirect(
+              navigate(
                 `/root/${forOpenRootId}/${dbrId}/${infId}/${duplicateInflectionVerbCompositionId}`
               );
             else if (mustBeinflectionVerbCompositionId)
-              redirect(
+              navigate(
                 `/root/${forOpenRootId}/${dbrId}/${infId}/${mustBeinflectionVerbCompositionId}`
               );
-            else redirect(`/root/${forOpenRootId}/${dbrId}/${infId}`);
-          } else redirect(`/root/${forOpenRootId}/${dbrId}`);
-        } else redirect(`/root/${forOpenRootId}`);
-      } else redirect("/basesearch");
+            else navigate(`/root/${forOpenRootId}/${dbrId}/${infId}`);
+          } else navigate(`/root/${forOpenRootId}/${dbrId}`);
+        } else navigate(`/root/${forOpenRootId}`);
+      } else navigate("/basesearch");
     }
   }
 }

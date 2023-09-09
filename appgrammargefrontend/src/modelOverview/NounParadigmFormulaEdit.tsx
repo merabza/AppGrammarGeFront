@@ -388,8 +388,16 @@ const NounParadigmFormulaEdit: FC = () => {
       JSON.stringify(frm)
     ) as NounParadigmFormulaFormData;
 
-    if (curFormulaIdVal) updateNounParadigmFormula(currentForm);
-    else createNounParadigmFormula(currentForm);
+    if (curFormulaIdVal)
+      updateNounParadigmFormula({
+        nounParadigmFormulaFormData: currentForm,
+        navigate,
+      });
+    else
+      createNounParadigmFormula({
+        nounParadigmFormulaFormData: currentForm,
+        navigate,
+      });
     clearUsedTables();
   }
 
@@ -412,7 +420,8 @@ const NounParadigmFormulaEdit: FC = () => {
             workingOnDelete={deletingNounParadigmFormula}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
-              if (!!curFormulaIdVal) deleteNounParadigmFormula(curFormulaIdVal);
+              if (!!curFormulaIdVal)
+                deleteNounParadigmFormula({ nprId: curFormulaIdVal, navigate });
               clearUsedTables();
             }}
             allowDelete={dataType.delete}

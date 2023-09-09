@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { useAppSelector } from "../../appcarcass/redux/hooks";
 import { useConfirmRejectInflectionVerbCompositionChangeMutation } from "../../redux/api/inflectionVerbCompositionCrudApi";
 import { funAfterSaveInflectionVerbComposition } from "./inflectionVerbCompositionCommonFunctionsModule";
+import { useNavigate } from "react-router-dom";
 
 export type fnConfirmRejectInflectionVerbComposition = (
   ivcId: number | undefined,
@@ -22,7 +23,7 @@ export function useConfirmRejectInflectionVerbComposition(): [
   () => void
 ] {
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [
     ConfirmRejectInflectionVerbComposition,
     {
@@ -54,7 +55,8 @@ export function useConfirmRejectInflectionVerbComposition(): [
           dbrId,
           infId,
           ivcId,
-          null
+          null,
+          navigate
         );
       }
     },

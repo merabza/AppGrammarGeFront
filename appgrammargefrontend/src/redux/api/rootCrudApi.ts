@@ -3,7 +3,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { jwtBaseQuery } from "../../appcarcass/redux/api/jwtBaseQuery";
 import { setDeleteFailureRoot, setRootForEdit } from "../slices/rootCrudSlice";
-import { RootData } from "../../derivationTreeEditor/TypesAndSchemas/RootDataTypeAndSchema";
+import {
+  CreateUpdateRootData,
+  RootData,
+} from "../../derivationTreeEditor/TypesAndSchemas/RootDataTypeAndSchema";
 import {
   buildErrorMessage,
   Err,
@@ -14,12 +17,14 @@ import {
   setAlertApiLoadError,
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
-import { redirect } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
+// import { redirect } from "react-router-dom";
 
 export interface IConfirmRejectRootChangeParameters {
   rootId: number;
   confirm: boolean;
   withAllDescendants: boolean;
+  navigate: NavigateFunction;
 }
 
 export const rootCrudApi = createApi({
@@ -45,21 +50,21 @@ export const rootCrudApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    createRoot: builder.mutation<RootData, RootData>({
-      query(rootData) {
+    createRoot: builder.mutation<RootData, CreateUpdateRootData>({
+      query({ rootData }) {
         return {
           url: `/rootcrud`,
           method: "POST",
           body: rootData,
         };
       },
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           dispatch(clearAlert(EAlertKind.ApiMutation));
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setRootForEdit(data));
-          redirect(`/root/${data.root.rootId}`);
+          navigate(`/root/${data.root.rootId}`);
         } catch (error) {
           dispatch(
             setAlertApiMutationError(
@@ -73,15 +78,18 @@ export const rootCrudApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    updateRoot: builder.mutation<number | null, RootData>({
-      query(rootData) {
+    updateRoot: builder.mutation<number | null, CreateUpdateRootData>({
+      query({ rootData }) {
         return {
           url: `/rootcrud/${rootData.root.rootId}`,
           method: "PUT",
           body: rootData,
         };
       },
-      async onQueryStarted(rootData, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { rootData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           dispatch(clearAlert(EAlertKind.ApiMutation));
 
@@ -94,14 +102,14 @@ export const rootCrudApi = createApi({
             //   "updateRoot navigate duplicateRootId=",
             //   duplicateRootId
             // );
-            redirect(`/root/${duplicateRootId}`);
+            navigate(`/root/${duplicateRootId}`);
           } else {
             // console.log("updateRoot rootData=", rootData);
             // console.log(
             //   "updateRoot navigate rootData.root.rootId=",
             //   rootData.root.rootId
             // );
-            redirect(`/root/${rootData.root.rootId}`);
+            navigate(`/root/${rootData.root.rootId}`);
           }
         } catch (error) {
           dispatch(
@@ -116,18 +124,21 @@ export const rootCrudApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    deleteRoot: builder.mutation<void, number>({
+    deleteRoot: builder.mutation<
+      void,
+      { rootId: number; navigate: NavigateFunction }
+    >({
       query(rootId) {
         return {
           url: `/rootcrud/${rootId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(rootId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ rootId, navigate }, { dispatch, queryFulfilled }) {
         try {
           dispatch(clearAlert(EAlertKind.ApiMutation));
           await queryFulfilled;
-          redirect(`/root/${rootId}`);
+          navigate(`/root/${rootId}`);
         } catch (error) {
           dispatch(setDeleteFailureRoot(true));
           dispatch(
@@ -152,11 +163,14 @@ export const rootCrudApi = createApi({
           method: "PATCH",
         };
       },
-      async onQueryStarted({ rootId, confirm }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { rootId, confirm, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           dispatch(clearAlert(EAlertKind.ApiMutation));
           await queryFulfilled;
-          redirect(`/root/${rootId}`);
+          navigate(`/root/${rootId}`);
         } catch (error) {
           dispatch(
             setAlertApiMutationError(

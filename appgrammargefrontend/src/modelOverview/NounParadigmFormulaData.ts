@@ -1,11 +1,17 @@
 //NounParadigmFormulaData.ts
 
+import { NavigateFunction } from "react-router-dom";
 import * as yup from "yup";
 
 export interface NounParadigmFormulaFormData
   extends yup.InferType<typeof NounParadigmFormulaFormDataSchema> {
   nounParadigmFormula: NounParadigmFormulaModel;
   morphemeIds: number[];
+}
+
+export interface CreateUpdateNounParadigmFormulaFormData {
+  nounParadigmFormulaFormData: NounParadigmFormulaFormData;
+  navigate: NavigateFunction;
 }
 
 export interface NounParadigmFormulaModel {

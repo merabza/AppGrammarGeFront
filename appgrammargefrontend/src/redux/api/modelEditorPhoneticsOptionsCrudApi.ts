@@ -7,9 +7,13 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { redirect } from "react-router-dom";
-import { PhoneticsOptionEditFormData } from "../../modelOverview/PhoneticsOptionEditFormData";
+// import { redirect } from "react-router-dom";
+import {
+  CreateUpdatePhoneticsOptionEditFormData,
+  PhoneticsOptionEditFormData,
+} from "../../modelOverview/PhoneticsOptionEditFormData";
 import { setPhoneticsOptionForEdit } from "../slices/modelEditorPhoneticsOptionsCrudSlice";
+import { NavigateFunction } from "react-router-dom";
 
 export const modelEditorPhoneticsOptionsCrudApi = createApi({
   reducerPath: "modelEditorPhoneticsOptionsCrudApi",
@@ -42,7 +46,7 @@ export const modelEditorPhoneticsOptionsCrudApi = createApi({
     ////////////////////////////////////////////////////
     createPhoneticsOption: builder.mutation<
       PhoneticsOptionEditFormData,
-      PhoneticsOptionEditFormData
+      CreateUpdatePhoneticsOptionEditFormData
     >({
       query(derivationBranchData) {
         return {
@@ -51,13 +55,16 @@ export const modelEditorPhoneticsOptionsCrudApi = createApi({
           body: derivationBranchData,
         };
       },
-      async onQueryStarted(PhoneticsOption, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { phoneticsOptionEditFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setPhoneticsOptionForEdit(data));
-          redirect(
-            `/phoneticsTypesOverview/phoneticsoption/${PhoneticsOption.phoneticsOption.phoId}`
+          navigate(
+            `/phoneticsTypesOverview/phoneticsoption/${phoneticsOptionEditFormData.phoneticsOption.phoId}`
           );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
@@ -65,36 +72,45 @@ export const modelEditorPhoneticsOptionsCrudApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    updatePhoneticsOption: builder.mutation<void, PhoneticsOptionEditFormData>({
-      query(PhoneticsOption) {
+    updatePhoneticsOption: builder.mutation<
+      void,
+      CreateUpdatePhoneticsOptionEditFormData
+    >({
+      query({ phoneticsOptionEditFormData }) {
         return {
-          url: `/modeleditor/phoneticsoption/${PhoneticsOption.phoneticsOption.phoId}`,
+          url: `/modeleditor/phoneticsoption/${phoneticsOptionEditFormData.phoneticsOption.phoId}`,
           method: "PUT",
-          body: PhoneticsOption,
+          body: phoneticsOptionEditFormData,
         };
       },
-      async onQueryStarted(PhoneticsOption, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { phoneticsOptionEditFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           await queryFulfilled;
-          const phoId = PhoneticsOption.phoneticsOption.phoId;
-          redirect(`/phoneticsTypesOverview/phoneticsoption/${phoId}`);
+          const phoId = phoneticsOptionEditFormData.phoneticsOption.phoId;
+          navigate(`/phoneticsTypesOverview/phoneticsoption/${phoId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    deletePhoneticsOption: builder.mutation<void, number>({
+    deletePhoneticsOption: builder.mutation<
+      void,
+      { phoId: number; navigate: NavigateFunction }
+    >({
       query(phoId) {
         return {
           url: `/modeleditor/phoneticsoption/${phoId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(phoId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          redirect("/phoneticsTypesOverview");
+          navigate("/phoneticsTypesOverview");
         } catch (error) {
           // dispatch(setDeleteFailureDerivation(true));
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));

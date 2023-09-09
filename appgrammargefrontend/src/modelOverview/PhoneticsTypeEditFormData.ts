@@ -2,12 +2,18 @@
 
 import * as yup from "yup";
 import { PhoneticsType, PhoneticsTypeProhibition } from "../masterData/mdTypes";
+import { NavigateFunction } from "react-router-dom";
 
 export interface PhoneticsTypeEditFormData
   extends yup.InferType<typeof phoneticsTypeEditFormDataSchema> {
   phoneticsType: PhoneticsType;
   phoneticsOptionIds: number[];
   phoneticsTypeProhibitions: PhoneticsTypeProhibition[];
+}
+
+export interface CreateUpdatePhoneticsTypeEditFormData {
+  phoneticsTypeEditFormData: PhoneticsTypeEditFormData;
+  navigate: NavigateFunction;
 }
 
 //5. სარედაქტირებელი ობიექტის სქემა

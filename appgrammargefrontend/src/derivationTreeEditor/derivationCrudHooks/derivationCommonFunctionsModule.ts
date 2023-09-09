@@ -1,6 +1,7 @@
 //derivationCommonFunctionsModule.ts
 
-import { redirect } from "react-router-dom";
+// import { redirect } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 import {
   DerivationBranchModel,
   InflectionVerbCompositionRedModel,
@@ -135,7 +136,8 @@ export async function funAfterSaveBranch(
   derivBranchId: number | undefined,
   rootId: number | undefined,
   rootsRepo: RootFullModel[],
-  duplicateDerivationBranchId: number | null
+  duplicateDerivationBranchId: number | null,
+  navigate: NavigateFunction
 ) {
   // history,
   // dispatch,
@@ -164,10 +166,10 @@ export async function funAfterSaveBranch(
 
   if (forOpenRootId) {
     if (duplicateDerivationBranchId)
-      redirect(`/root/${forOpenRootId}/${duplicateDerivationBranchId}`);
-    else if (derivBranchId) redirect(`/root/${forOpenRootId}/${derivBranchId}`);
-    else redirect(`/root/${forOpenRootId}`);
-  } else redirect("/basesearch");
+      navigate(`/root/${forOpenRootId}/${duplicateDerivationBranchId}`);
+    else if (derivBranchId) navigate(`/root/${forOpenRootId}/${derivBranchId}`);
+    else navigate(`/root/${forOpenRootId}`);
+  } else navigate("/basesearch");
 }
 
 export function funPredRoots(

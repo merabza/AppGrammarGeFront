@@ -392,8 +392,16 @@ const VerbRowParadigmFormulaEdit: FC = () => {
       JSON.stringify(frm)
     ) as VerbParadigmFormulaFormData;
 
-    if (curFormulaIdVal) updateVerbParadigmFormula(currentForm);
-    else createVerbParadigmFormula(currentForm);
+    if (curFormulaIdVal)
+      updateVerbParadigmFormula({
+        verbParadigmFormulaFormData: currentForm,
+        navigate,
+      });
+    else
+      createVerbParadigmFormula({
+        verbParadigmFormulaFormData: currentForm,
+        navigate,
+      });
     clearUsedTables();
   }
 
@@ -420,7 +428,8 @@ const VerbRowParadigmFormulaEdit: FC = () => {
             workingOnDelete={deletingVerbParadigmFormula}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
-              if (!!curFormulaIdVal) deleteVerbParadigmFormula(curFormulaIdVal);
+              if (!!curFormulaIdVal)
+                deleteVerbParadigmFormula({ vprId: curFormulaIdVal, navigate });
               clearUsedTables();
             }}
             allowDelete={dataType.delete}

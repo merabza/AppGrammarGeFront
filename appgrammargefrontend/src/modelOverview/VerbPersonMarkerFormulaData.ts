@@ -1,11 +1,17 @@
 //VerbPersonMarkerFormulaData.ts
 
+import { NavigateFunction } from "react-router-dom";
 import * as yup from "yup";
 
 export interface VerbPersonMarkerFormulaFormData
   extends yup.InferType<typeof VerbPersonMarkerFormulaFormDataSchema> {
   verbPersonMarkerFormula: VerbPersonMarkerFormulaModel;
   morphemeIds: number[];
+}
+
+export interface CreateUpdateVerbPersonMarkerFormulaFormData {
+  verbPersonMarkerFormulaFormData: VerbPersonMarkerFormulaFormData;
+  navigate: NavigateFunction;
 }
 
 export interface VerbPersonMarkerFormulaModel {

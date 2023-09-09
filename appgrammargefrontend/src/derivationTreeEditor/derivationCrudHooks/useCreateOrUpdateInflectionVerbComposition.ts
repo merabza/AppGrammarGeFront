@@ -11,6 +11,7 @@ import { useLazyGetRootByInflectionVerbCompositionIdQuery } from "../../redux/ap
 import { setduplicateInflectionVerbCompositionId } from "../../redux/slices/inflectionVerbCompositionCrudSlice";
 import { InflectionVerbCompositionData } from "../TypesAndSchemas/InflectionVerbCompositionDataTypeAndSchema";
 import { funAfterSaveInflectionVerbComposition } from "./inflectionVerbCompositionCommonFunctionsModule";
+import { useNavigate } from "react-router-dom";
 
 export type fnCreateOrUpdateInflectionVerbComposition = (
   infId: number | undefined,
@@ -25,7 +26,7 @@ export function useCreateOrUpdateInflectionVerbComposition(): [
 ] {
   const dispatch = useAppDispatch();
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [
     createInflectionVerbComposition,
     { isLoading: creatingInflectionVerbComposition },
@@ -69,7 +70,8 @@ export function useCreateOrUpdateInflectionVerbComposition(): [
         dbrId,
         infId,
         ivcId,
-        duplicateInflectionVerbCompositionId
+        duplicateInflectionVerbCompositionId,
+        navigate
       );
 
       // if (rootId in rootsRepo && rootsRepo[rootId]) return;

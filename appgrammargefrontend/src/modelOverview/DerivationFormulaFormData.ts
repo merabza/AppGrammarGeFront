@@ -1,11 +1,17 @@
 //DerivationFormulaFormData.ts
 
+import { NavigateFunction } from "react-router-dom";
 import * as yup from "yup";
 
 export interface DerivationFormulaFormData
   extends yup.InferType<typeof DerivationFormulaFormDataSchema> {
   derivationFormula: DerivationFormulaModel;
   morphemeIds: number[];
+}
+
+export interface CreateUpdateDerivationFormulaData {
+  derivationFormulaFormData: DerivationFormulaFormData;
+  navigate: NavigateFunction;
 }
 
 export interface DerivationFormulaModel {

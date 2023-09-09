@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { useAppSelector } from "../../appcarcass/redux/hooks";
 import { useConfirmRejectDerivationBranchChangeMutation } from "../../redux/api/derivationCrudApi";
 import { funAfterSaveBranch } from "./derivationCommonFunctionsModule";
+import { useNavigate } from "react-router-dom";
 
 export type fnConfirmRejectDerivationBranch = (
   curDbrIdVal: number | undefined,
@@ -20,7 +21,7 @@ export function useConfirmRejectDerivationBranch(): [
   () => void
 ] {
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [
     ConfirmRejectDerivationBranch,
     {
@@ -40,7 +41,7 @@ export function useConfirmRejectDerivationBranch(): [
       if (dbrId) {
         ConfirmRejectDerivationBranch({ dbrId, confirm, withAllDescendants });
 
-        funAfterSaveBranch(dbrId, rootId, rootsRepo, null);
+        funAfterSaveBranch(dbrId, rootId, rootsRepo, null, navigate);
       }
     },
     [rootsRepo]

@@ -7,9 +7,13 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { redirect } from "react-router-dom";
-import { VerbParadigmFormulaFormData } from "../../modelOverview/VerbParadigmFormulaData";
+// import { redirect } from "react-router-dom";
+import {
+  CreateUpdateVerbParadigmFormulaFormData,
+  VerbParadigmFormulaFormData,
+} from "../../modelOverview/VerbParadigmFormulaData";
 import { setVerbParadigmFormulaForEdit } from "../slices/verbParadigmFormulasCrudSlice";
+import { NavigateFunction } from "react-router-dom";
 
 export const verbParadigmFormulasCrudApi = createApi({
   reducerPath: "verbParadigmFormulasCrudApi",
@@ -42,22 +46,25 @@ export const verbParadigmFormulasCrudApi = createApi({
     ////////////////////////////////////////////////////
     createVerbParadigmFormula: builder.mutation<
       VerbParadigmFormulaFormData,
-      VerbParadigmFormulaFormData
+      CreateUpdateVerbParadigmFormulaFormData
     >({
-      query(verbParadigmBranchData) {
+      query({ verbParadigmFormulaFormData }) {
         return {
           url: `/modeleditor/verbParadigmformula`,
           method: "POST",
-          body: verbParadigmBranchData,
+          body: verbParadigmFormulaFormData,
         };
       },
-      async onQueryStarted(verbParadigmFormula, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { verbParadigmFormulaFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setVerbParadigmFormulaForEdit(data));
-          redirect(
-            `/verbParadigmFormulasOverview/df/${verbParadigmFormula.verbParadigmFormula.vprId}`
+          navigate(
+            `/verbParadigmFormulasOverview/df/${verbParadigmFormulaFormData.verbParadigmFormula.vprId}`
           );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
@@ -67,37 +74,43 @@ export const verbParadigmFormulasCrudApi = createApi({
     //////////////////////////////////////////////////////
     updateVerbParadigmFormula: builder.mutation<
       void,
-      VerbParadigmFormulaFormData
+      CreateUpdateVerbParadigmFormulaFormData
     >({
-      query(verbParadigmFormula) {
+      query({ verbParadigmFormulaFormData }) {
         return {
-          url: `/modeleditor/verbParadigmformula/${verbParadigmFormula.verbParadigmFormula.vprId}`,
+          url: `/modeleditor/verbParadigmformula/${verbParadigmFormulaFormData.verbParadigmFormula.vprId}`,
           method: "PUT",
-          body: verbParadigmFormula,
+          body: verbParadigmFormulaFormData,
         };
       },
-      async onQueryStarted(verbParadigmFormula, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { verbParadigmFormulaFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           await queryFulfilled;
-          const vprId = verbParadigmFormula.verbParadigmFormula.vprId;
-          redirect(`/verbParadigmFormulasOverview/df/${vprId}`);
+          const vprId = verbParadigmFormulaFormData.verbParadigmFormula.vprId;
+          navigate(`/verbParadigmFormulasOverview/df/${vprId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    deleteVerbParadigmFormula: builder.mutation<void, number>({
+    deleteVerbParadigmFormula: builder.mutation<
+      void,
+      { vprId: number; navigate: NavigateFunction }
+    >({
       query(vprId) {
         return {
           url: `/modeleditor/verbParadigmformula/${vprId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(vprId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ vprId, navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          redirect("/verbParadigmFormulasOverview");
+          navigate("/verbParadigmFormulasOverview");
         } catch (error) {
           // dispatch(setDeleteFailureVerbParadigm(true));
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));

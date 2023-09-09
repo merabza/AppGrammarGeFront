@@ -1,10 +1,16 @@
 //RootDataTypeAndSchema.ts
 
+import { NavigateFunction } from "react-router-dom";
 import * as yup from "yup";
 
 export interface RootData extends yup.InferType<typeof rootDataSchema> {
   root: RootCrudModel;
   basePhoneticsCombDetails: number[];
+}
+
+export interface CreateUpdateRootData {
+  rootData: RootData;
+  navigate: NavigateFunction;
 }
 
 export interface RootCrudModel {

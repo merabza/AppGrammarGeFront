@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { useAppSelector } from "../../appcarcass/redux/hooks";
 import { useDeleteInflectionVerbCompositionMutation } from "../../redux/api/inflectionVerbCompositionCrudApi";
 import { funAfterSaveInflectionVerbComposition } from "./inflectionVerbCompositionCommonFunctionsModule";
+import { useNavigate } from "react-router-dom";
 
 export type fnDeleteInflectionVerbComposition = (
   ivcId: number | undefined,
@@ -19,7 +20,7 @@ export function useDeleteInflectionVerbComposition(): [
   boolean
 ] {
   const { rootsRepo } = useAppSelector((state) => state.rootsState);
-
+  const navigate = useNavigate();
   const [
     DeleteInflectionVerbComposition,
     {
@@ -44,7 +45,8 @@ export function useDeleteInflectionVerbComposition(): [
           dbrId,
           infId,
           ivcId,
-          null
+          null,
+          navigate
         );
       }
     },

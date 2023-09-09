@@ -2,11 +2,17 @@
 
 import * as yup from "yup";
 import { PhoneticsOption, PhoneticsOptionDetail } from "../masterData/mdTypes";
+import { NavigateFunction } from "react-router-dom";
 
 export interface PhoneticsOptionEditFormData
   extends yup.InferType<typeof phoneticsOptionEditFormDataSchema> {
   phoneticsOption: PhoneticsOption;
   phoneticsOptionDetails: PhoneticsOptionDetail[];
+}
+
+export interface CreateUpdatePhoneticsOptionEditFormData {
+  phoneticsOptionEditFormData: PhoneticsOptionEditFormData;
+  navigate: NavigateFunction;
 }
 
 //5. სარედაქტირებელი ობიექტის სქემა

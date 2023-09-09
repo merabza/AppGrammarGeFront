@@ -1,11 +1,17 @@
 //VerbParadigmFormulaData.ts
 
+import { NavigateFunction } from "react-router-dom";
 import * as yup from "yup";
 
 export interface VerbParadigmFormulaFormData
   extends yup.InferType<typeof VerbParadigmFormulaFormDataSchema> {
   verbParadigmFormula: VerbParadigmFormulaModel;
   morphemeIds: number[];
+}
+
+export interface CreateUpdateVerbParadigmFormulaFormData {
+  verbParadigmFormulaFormData: VerbParadigmFormulaFormData;
+  navigate: NavigateFunction;
 }
 
 export interface VerbParadigmFormulaModel {

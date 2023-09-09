@@ -2,6 +2,7 @@
 
 import * as yup from "yup";
 import { Morpheme } from "../masterData/mdTypes";
+import { NavigateFunction } from "react-router-dom";
 
 export interface MorphemeEditFormData
   extends yup.InferType<typeof morphemeEditFormDataSchema> {
@@ -9,6 +10,11 @@ export interface MorphemeEditFormData
   phoneticsChangesLength: number;
   phoneticsOptionMorphemeIds: number[];
   morphemeOccasionPhoneticsChangeIds: number[];
+}
+
+export interface CreateUpdateMorphemeEditFormData {
+  morphemeEditFormData: MorphemeEditFormData;
+  navigate: NavigateFunction;
 }
 
 //5. სარედაქტირებელი ობიექტის სქემა

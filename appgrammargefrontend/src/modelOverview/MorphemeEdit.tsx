@@ -278,8 +278,9 @@ const MorphemeEdit: FC = () => {
     if (currentForm.morpheme.phoneticsTypeId === 0)
       currentForm.morpheme.phoneticsTypeId = null;
 
-    if (curMrpIdVal) updateMorpheme(currentForm);
-    else createMorpheme(currentForm);
+    if (curMrpIdVal)
+      updateMorpheme({ morphemeEditFormData: currentForm, navigate });
+    else createMorpheme({ morphemeEditFormData: currentForm, navigate });
     clearUsedTables();
   }
 
@@ -316,7 +317,8 @@ const MorphemeEdit: FC = () => {
             workingOnDelete={workingOnDeleteMorpheme}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
-              if (!!curMrpIdVal) deleteMorpheme(curMrpIdVal);
+              if (!!curMrpIdVal)
+                deleteMorpheme({ mrpId: curMrpIdVal, navigate });
               clearUsedTables();
             }}
             allowDelete={morphemesDataType.delete}

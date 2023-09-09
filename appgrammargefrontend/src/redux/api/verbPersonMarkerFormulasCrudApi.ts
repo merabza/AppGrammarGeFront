@@ -7,9 +7,13 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { redirect } from "react-router-dom";
-import { VerbPersonMarkerFormulaFormData } from "../../modelOverview/VerbPersonMarkerFormulaData";
+// import { redirect } from "react-router-dom";
+import {
+  CreateUpdateVerbPersonMarkerFormulaFormData,
+  VerbPersonMarkerFormulaFormData,
+} from "../../modelOverview/VerbPersonMarkerFormulaData";
 import { setVerbPersonMarkerFormulaForEdit } from "../slices/verbPersonMarkerFormulasCrudSlice";
+import { NavigateFunction } from "react-router-dom";
 
 export const verbPersonMarkerFormulasCrudApi = createApi({
   reducerPath: "verbPersonMarkerFormulasCrudApi",
@@ -42,25 +46,25 @@ export const verbPersonMarkerFormulasCrudApi = createApi({
     ////////////////////////////////////////////////////
     createVerbPersonMarkerFormula: builder.mutation<
       VerbPersonMarkerFormulaFormData,
-      VerbPersonMarkerFormulaFormData
+      CreateUpdateVerbPersonMarkerFormulaFormData
     >({
-      query(verbPersonMarkerBranchData) {
+      query({ verbPersonMarkerFormulaFormData }) {
         return {
           url: `/modeleditor/verbpersonmarkerformula`,
           method: "POST",
-          body: verbPersonMarkerBranchData,
+          body: verbPersonMarkerFormulaFormData,
         };
       },
       async onQueryStarted(
-        verbPersonMarkerFormula,
+        { verbPersonMarkerFormulaFormData, navigate },
         { dispatch, queryFulfilled }
       ) {
         try {
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setVerbPersonMarkerFormulaForEdit(data));
-          redirect(
-            `/verbPersonMarkerFormulasOverview/df/${verbPersonMarkerFormula.verbPersonMarkerFormula.vpmprId}`
+          navigate(
+            `/verbPersonMarkerFormulasOverview/df/${verbPersonMarkerFormulaFormData.verbPersonMarkerFormula.vpmprId}`
           );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
@@ -70,41 +74,44 @@ export const verbPersonMarkerFormulasCrudApi = createApi({
     //////////////////////////////////////////////////////
     updateVerbPersonMarkerFormula: builder.mutation<
       void,
-      VerbPersonMarkerFormulaFormData
+      CreateUpdateVerbPersonMarkerFormulaFormData
     >({
-      query(verbPersonMarkerFormula) {
+      query({ verbPersonMarkerFormulaFormData }) {
         return {
-          url: `/modeleditor/verbpersonmarkerformula/${verbPersonMarkerFormula.verbPersonMarkerFormula.vpmprId}`,
+          url: `/modeleditor/verbpersonmarkerformula/${verbPersonMarkerFormulaFormData.verbPersonMarkerFormula.vpmprId}`,
           method: "PUT",
-          body: verbPersonMarkerFormula,
+          body: verbPersonMarkerFormulaFormData,
         };
       },
       async onQueryStarted(
-        verbPersonMarkerFormula,
+        { verbPersonMarkerFormulaFormData, navigate },
         { dispatch, queryFulfilled }
       ) {
         try {
           await queryFulfilled;
           const vpmprId =
-            verbPersonMarkerFormula.verbPersonMarkerFormula.vpmprId;
-          redirect(`/verbPersonMarkerFormulasOverview/df/${vpmprId}`);
+            verbPersonMarkerFormulaFormData.verbPersonMarkerFormula.vpmprId;
+          navigate(`/verbPersonMarkerFormulasOverview/df/${vpmprId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    deleteVerbPersonMarkerFormula: builder.mutation<void, number>({
-      query(vpmprId) {
+    deleteVerbPersonMarkerFormula: builder.mutation<
+      void,
+      { vpmprId: number; navigate: NavigateFunction }
+    >({
+      query({ vpmprId }) {
         return {
           url: `/modeleditor/verbpersonmarkerformula/${vpmprId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(vpmprId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          redirect("/verbPersonMarkerFormulasOverview");
+          navigate("/verbPersonMarkerFormulasOverview");
         } catch (error) {
           // dispatch(setDeleteFailureVerbPersonMarker(true));
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));

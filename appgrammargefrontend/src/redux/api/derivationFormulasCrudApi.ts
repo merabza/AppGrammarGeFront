@@ -7,9 +7,13 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { DerivationFormulaFormData } from "../../modelOverview/DerivationFormulaFormData";
+import {
+  DerivationFormulaFormData,
+  CreateUpdateDerivationFormulaData,
+} from "../../modelOverview/DerivationFormulaFormData";
 import { setDerivationFormulaForEdit } from "../slices/derivationFormulasCrudSlice";
-import { redirect } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
+// import { redirect } from "react-router-dom";
 
 export const derivationFormulasCrudApi = createApi({
   reducerPath: "derivationFormulasCrudApi",
@@ -42,22 +46,25 @@ export const derivationFormulasCrudApi = createApi({
     ////////////////////////////////////////////////////
     createDerivationFormula: builder.mutation<
       DerivationFormulaFormData,
-      DerivationFormulaFormData
+      CreateUpdateDerivationFormulaData
     >({
-      query(derivationBranchData) {
+      query({ derivationFormulaFormData }) {
         return {
           url: `/modeleditor/derivationformula`,
           method: "POST",
-          body: derivationBranchData,
+          body: derivationFormulaFormData,
         };
       },
-      async onQueryStarted(derivationFormula, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { derivationFormulaFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setDerivationFormulaForEdit(data));
-          redirect(
-            `/derivationFormulasOverview/df/${derivationFormula.derivationFormula.dfId}`
+          navigate(
+            `/derivationFormulasOverview/df/${derivationFormulaFormData.derivationFormula.dfId}`
           );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
@@ -65,36 +72,45 @@ export const derivationFormulasCrudApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    updateDerivationFormula: builder.mutation<void, DerivationFormulaFormData>({
-      query(derivationFormula) {
+    updateDerivationFormula: builder.mutation<
+      void,
+      CreateUpdateDerivationFormulaData
+    >({
+      query({ derivationFormulaFormData }) {
         return {
-          url: `/modeleditor/derivationformula/${derivationFormula.derivationFormula.dfId}`,
+          url: `/modeleditor/derivationformula/${derivationFormulaFormData.derivationFormula.dfId}`,
           method: "PUT",
-          body: derivationFormula,
+          body: derivationFormulaFormData,
         };
       },
-      async onQueryStarted(derivationFormula, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { derivationFormulaFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           await queryFulfilled;
-          const dfId = derivationFormula.derivationFormula.dfId;
-          redirect(`/derivationFormulasOverview/df/${dfId}`);
+          const dfId = derivationFormulaFormData.derivationFormula.dfId;
+          navigate(`/derivationFormulasOverview/df/${dfId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    deleteDerivationFormula: builder.mutation<void, number>({
-      query(dfId) {
+    deleteDerivationFormula: builder.mutation<
+      void,
+      { dfId: number; navigate: NavigateFunction }
+    >({
+      query({ dfId }) {
         return {
           url: `/modeleditor/derivationformula/${dfId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(dfId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          redirect("/derivationFormulasOverview");
+          navigate("/derivationFormulasOverview");
         } catch (error) {
           // dispatch(setDeleteFailureDerivation(true));
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));

@@ -365,8 +365,16 @@ const DerivationFormulaEdit: FC = () => {
     if (currentForm.derivationFormula.dfAutoPhoneticsType === 0)
       currentForm.derivationFormula.dfAutoPhoneticsType = null;
 
-    if (curDfIdVal) updateDerivationFormula(currentForm);
-    else createDerivationFormula(currentForm);
+    if (curDfIdVal)
+      updateDerivationFormula({
+        derivationFormulaFormData: currentForm,
+        navigate,
+      });
+    else
+      createDerivationFormula({
+        derivationFormulaFormData: currentForm,
+        navigate,
+      });
     clearUsedTables();
   }
 
@@ -389,7 +397,8 @@ const DerivationFormulaEdit: FC = () => {
             workingOnDelete={deletingDerivationFormula}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
-              if (!!curDfIdVal) deleteDerivationFormula(curDfIdVal);
+              if (!!curDfIdVal)
+                deleteDerivationFormula({ dfId: curDfIdVal, navigate });
               clearUsedTables();
             }}
             allowDelete={dataType.delete}

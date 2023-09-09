@@ -7,9 +7,13 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { redirect } from "react-router-dom";
-import { NounParadigmFormulaFormData } from "../../modelOverview/NounParadigmFormulaData";
+// import { redirect } from "react-router-dom";
+import {
+  CreateUpdateNounParadigmFormulaFormData,
+  NounParadigmFormulaFormData,
+} from "../../modelOverview/NounParadigmFormulaData";
 import { setNounParadigmFormulaForEdit } from "../slices/nounParadigmFormulasCrudSlice";
+import { NavigateFunction } from "react-router-dom";
 
 export const nounParadigmFormulasCrudApi = createApi({
   reducerPath: "nounParadigmFormulasCrudApi",
@@ -42,22 +46,25 @@ export const nounParadigmFormulasCrudApi = createApi({
     ////////////////////////////////////////////////////
     createNounParadigmFormula: builder.mutation<
       NounParadigmFormulaFormData,
-      NounParadigmFormulaFormData
+      CreateUpdateNounParadigmFormulaFormData
     >({
-      query(nounParadigmBranchData) {
+      query({ nounParadigmFormulaFormData }) {
         return {
           url: `/modeleditor/nounParadigmformula`,
           method: "POST",
-          body: nounParadigmBranchData,
+          body: nounParadigmFormulaFormData,
         };
       },
-      async onQueryStarted(nounParadigmFormula, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { nounParadigmFormulaFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setNounParadigmFormulaForEdit(data));
-          redirect(
-            `/nounParadigmFormulasOverview/df/${nounParadigmFormula.nounParadigmFormula.nprId}`
+          navigate(
+            `/nounParadigmFormulasOverview/df/${nounParadigmFormulaFormData.nounParadigmFormula.nprId}`
           );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
@@ -67,37 +74,43 @@ export const nounParadigmFormulasCrudApi = createApi({
     //////////////////////////////////////////////////////
     updateNounParadigmFormula: builder.mutation<
       void,
-      NounParadigmFormulaFormData
+      CreateUpdateNounParadigmFormulaFormData
     >({
-      query(nounParadigmFormula) {
+      query({ nounParadigmFormulaFormData }) {
         return {
-          url: `/modeleditor/nounParadigmformula/${nounParadigmFormula.nounParadigmFormula.nprId}`,
+          url: `/modeleditor/nounParadigmformula/${nounParadigmFormulaFormData.nounParadigmFormula.nprId}`,
           method: "PUT",
-          body: nounParadigmFormula,
+          body: nounParadigmFormulaFormData,
         };
       },
-      async onQueryStarted(nounParadigmFormula, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { nounParadigmFormulaFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           await queryFulfilled;
-          const nprId = nounParadigmFormula.nounParadigmFormula.nprId;
-          redirect(`/nounParadigmFormulasOverview/df/${nprId}`);
+          const nprId = nounParadigmFormulaFormData.nounParadigmFormula.nprId;
+          navigate(`/nounParadigmFormulasOverview/df/${nprId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    deleteNounParadigmFormula: builder.mutation<void, number>({
+    deleteNounParadigmFormula: builder.mutation<
+      void,
+      { nprId: number; navigate: NavigateFunction }
+    >({
       query(nprId) {
         return {
           url: `/modeleditor/nounParadigmformula/${nprId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(nprId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          redirect("/nounParadigmFormulasOverview");
+          navigate("/nounParadigmFormulasOverview");
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }

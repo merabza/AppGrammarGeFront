@@ -7,9 +7,13 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { redirect } from "react-router-dom";
-import { MorphemeEditFormData } from "../../modelOverview/MorphemeEditFormData";
+// import { redirect } from "react-router-dom";
+import {
+  CreateUpdateMorphemeEditFormData,
+  MorphemeEditFormData,
+} from "../../modelOverview/MorphemeEditFormData";
 import { setMorphemeForEdit } from "../slices/modelEditorMorphemesCrudSlice";
+import { NavigateFunction } from "react-router-dom";
 
 export const modelEditorMorphemesCrudApi = createApi({
   reducerPath: "ModelEditorMorphemeCrudApi",
@@ -39,57 +43,68 @@ export const modelEditorMorphemesCrudApi = createApi({
     ////////////////////////////////////////////////////
     createMorpheme: builder.mutation<
       MorphemeEditFormData,
-      MorphemeEditFormData
+      CreateUpdateMorphemeEditFormData
     >({
-      query(derivationBranchData) {
+      query({ morphemeEditFormData }) {
         return {
           url: `/modeleditor/morpheme`,
           method: "POST",
-          body: derivationBranchData,
+          body: morphemeEditFormData,
         };
       },
-      async onQueryStarted(Morpheme, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { morphemeEditFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(setMorphemeForEdit(data));
-          redirect(`/morphemesOverview/mrp/${Morpheme.morpheme.mrpId}`);
+          navigate(
+            `/morphemesOverview/mrp/${morphemeEditFormData.morpheme.mrpId}`
+          );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    updateMorpheme: builder.mutation<void, MorphemeEditFormData>({
-      query(Morpheme) {
+    updateMorpheme: builder.mutation<void, CreateUpdateMorphemeEditFormData>({
+      query({ morphemeEditFormData }) {
         return {
-          url: `/modeleditor/morpheme/${Morpheme.morpheme.mrpId}`,
+          url: `/modeleditor/morpheme/${morphemeEditFormData.morpheme.mrpId}`,
           method: "PUT",
-          body: Morpheme,
+          body: morphemeEditFormData,
         };
       },
-      async onQueryStarted(Morpheme, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { morphemeEditFormData, navigate },
+        { dispatch, queryFulfilled }
+      ) {
         try {
           await queryFulfilled;
-          const mrpId = Morpheme.morpheme.mrpId;
-          redirect(`/morphemesOverview/mrp/${mrpId}`);
+          const mrpId = morphemeEditFormData.morpheme.mrpId;
+          navigate(`/morphemesOverview/mrp/${mrpId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
       },
     }),
     //////////////////////////////////////////////////////
-    deleteMorpheme: builder.mutation<void, number>({
+    deleteMorpheme: builder.mutation<
+      void,
+      { mrpId: number; navigate: NavigateFunction }
+    >({
       query(mrpId) {
         return {
           url: `/modeleditor/morpheme/${mrpId}`,
           method: "DELETE",
         };
       },
-      async onQueryStarted(mrpId, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          redirect("/MorphemesOverview");
+          navigate("/MorphemesOverview");
         } catch (error) {
           // dispatch(setDeleteFailureDerivation(true));
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));

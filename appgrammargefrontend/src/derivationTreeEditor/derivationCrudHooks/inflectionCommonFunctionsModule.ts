@@ -1,6 +1,6 @@
 //inflectionCommonFunctionsModule.ts
 import { NavigateFunction } from "react-router-dom";
-import { redirect } from "react-router-dom";
+// import { redirect } from "react-router-dom";
 import { RootFullModel } from "../../redux/types/rootsTypes";
 import {
   funPredRoots,
@@ -76,33 +76,33 @@ export async function funAfterSaveInflection(
     if (forOpenRootId) {
       if (dbrId) {
         if (duplicateInflectionId) {
-          console.log(
-            "funAfterSaveInflection redirect",
-            `/root/${forOpenRootId}/${dbrId}/${duplicateInflectionId}`
-          );
+          // console.log(
+          //   "funAfterSaveInflection redirect",
+          //   `/root/${forOpenRootId}/${dbrId}/${duplicateInflectionId}`
+          // );
           navigate(`/root/${forOpenRootId}/${dbrId}/${duplicateInflectionId}`);
         } else if (mustBeinflectionId) {
-          console.log(
-            "funAfterSaveInflection redirect",
-            `/root/${forOpenRootId}/${dbrId}/${mustBeinflectionId}`
-          );
+          // console.log(
+          //   "funAfterSaveInflection redirect",
+          //   `/root/${forOpenRootId}/${dbrId}/${mustBeinflectionId}`
+          // );
           navigate(`/root/${forOpenRootId}/${dbrId}/${mustBeinflectionId}`);
         } else {
-          console.log(
-            "funAfterSaveInflection redirect",
-            `/root/${forOpenRootId}/${dbrId}`
-          );
+          // console.log(
+          //   "funAfterSaveInflection redirect",
+          //   `/root/${forOpenRootId}/${dbrId}`
+          // );
           navigate(`/root/${forOpenRootId}/${dbrId}`);
         }
       } else {
-        console.log(
-          "funAfterSaveInflection redirect",
-          `/root/${forOpenRootId}`
-        );
+        // console.log(
+        //   "funAfterSaveInflection redirect",
+        //   `/root/${forOpenRootId}`
+        // );
         navigate(`/root/${forOpenRootId}`);
       }
     } else {
-      console.log("funAfterSaveInflection redirect", "/basesearch");
+      // console.log("funAfterSaveInflection redirect", "/basesearch");
       navigate("/basesearch");
     }
   }

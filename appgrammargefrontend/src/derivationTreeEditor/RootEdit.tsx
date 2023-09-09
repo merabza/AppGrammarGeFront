@@ -324,8 +324,8 @@ const RootEdit: FC = () => {
     //წავშალოთ ფორმის ინფორმაცია, რადგან ის საჭირო არ არის შენახვისას
 
     const currentForm = { ...frm } as RootData;
-    if (curRootIdVal) updateRoot(currentForm);
-    else createRoot(frm);
+    if (curRootIdVal) updateRoot({ rootData: currentForm, navigate });
+    else createRoot({ rootData: currentForm, navigate });
     clearUsedTables();
   }
 
@@ -365,7 +365,7 @@ const RootEdit: FC = () => {
             DeleteFailure={DeleteFailure}
             onDelete={() => {
               if (curRootIdVal) {
-                deleteRoot(curRootIdVal);
+                deleteRoot({ rootId: curRootIdVal, navigate });
                 clearUsedTables();
               }
             }}
@@ -387,6 +387,7 @@ const RootEdit: FC = () => {
                     rootId: curRootIdVal,
                     confirm,
                     withAllDescendants,
+                    navigate,
                   });
                   clearUsedTables();
                 }

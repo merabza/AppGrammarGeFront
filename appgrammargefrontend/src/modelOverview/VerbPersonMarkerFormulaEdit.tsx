@@ -411,8 +411,16 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
       JSON.stringify(frm)
     ) as VerbPersonMarkerFormulaFormData;
 
-    if (curFormulaIdVal) updateVerbPersonMarkerFormula(currentForm);
-    else createVerbPersonMarkerFormula(currentForm);
+    if (curFormulaIdVal)
+      updateVerbPersonMarkerFormula({
+        verbPersonMarkerFormulaFormData: currentForm,
+        navigate,
+      });
+    else
+      createVerbPersonMarkerFormula({
+        verbPersonMarkerFormulaFormData: currentForm,
+        navigate,
+      });
     clearUsedTables();
   }
 
@@ -436,7 +444,10 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
             DeleteFailure={DeleteFailure}
             onDelete={() => {
               if (!!curFormulaIdVal)
-                deleteVerbPersonMarkerFormula(curFormulaIdVal);
+                deleteVerbPersonMarkerFormula({
+                  vpmprId: curFormulaIdVal,
+                  navigate,
+                });
               clearUsedTables();
             }}
             allowDelete={dataType.delete}
