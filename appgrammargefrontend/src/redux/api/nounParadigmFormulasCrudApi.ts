@@ -101,7 +101,8 @@ export const nounParadigmFormulasCrudApi = createApi({
       void,
       { nprId: number; navigate: NavigateFunction }
     >({
-      query(nprId) {
+      query({ nprId }) {
+        console.log("deleteNounParadigmFormula query nprId=", nprId);
         return {
           url: `/modeleditor/nounParadigmformula/${nprId}`,
           method: "DELETE",

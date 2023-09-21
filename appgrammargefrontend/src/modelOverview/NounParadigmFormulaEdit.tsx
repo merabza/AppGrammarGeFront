@@ -271,6 +271,10 @@ const NounParadigmFormulaEdit: FC = () => {
     if (curFormulaIdVal !== formulaIdVal) {
       //შეცვლილა
       //დავიმახსოვროთ შეცვლილი იდენტიფიკატორი
+      console.log(
+        "setCurFormulaIdVal(formulaIdVal); formulaIdVal=",
+        formulaIdVal
+      );
       setCurFormulaIdVal(formulaIdVal);
       setFormDataPrepared(false);
       setParadigmIdsForClear([]);
@@ -420,6 +424,7 @@ const NounParadigmFormulaEdit: FC = () => {
             workingOnDelete={deletingNounParadigmFormula}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
+              console.log("onDelete curFormulaIdVal=", curFormulaIdVal);
               if (!!curFormulaIdVal)
                 deleteNounParadigmFormula({ nprId: curFormulaIdVal, navigate });
               clearUsedTables();
