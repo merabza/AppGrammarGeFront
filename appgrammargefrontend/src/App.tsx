@@ -158,8 +158,8 @@ const App: FC = () => {
       <QueryParamProvider adapter={ReactRouter6Adapter}>
         {/* <div className="content-wrapper"> */}
         <Routes>
-          <Route path="/*" element={<PrivateApp />}>
-            <Route path="/*" element={<Layout />}>
+          <Route element={<PrivateApp />}>
+            <Route element={<Layout />}>
               <Route index element={<Home />} />
 
               <Route path="profile" element={<Profile />} />

@@ -64,7 +64,7 @@ export const nounParadigmFormulasCrudApi = createApi({
           const { data } = queryResult;
           dispatch(setNounParadigmFormulaForEdit(data));
           navigate(
-            `/nounParadigmFormulasOverview/df/${nounParadigmFormulaFormData.nounParadigmFormula.nprId}`
+            `/nounParadigmsOverview/df/${nounParadigmFormulaFormData.nounParadigmFormula.nprId}`
           );
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
@@ -90,7 +90,7 @@ export const nounParadigmFormulasCrudApi = createApi({
         try {
           await queryFulfilled;
           const nprId = nounParadigmFormulaFormData.nounParadigmFormula.nprId;
-          navigate(`/nounParadigmFormulasOverview/df/${nprId}`);
+          navigate(`/nounParadigmsOverview/df/${nprId}`);
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
@@ -111,7 +111,7 @@ export const nounParadigmFormulasCrudApi = createApi({
       async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          navigate("/nounParadigmFormulasOverview");
+          navigate("/nounParadigmsOverview");
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
