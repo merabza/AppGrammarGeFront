@@ -3,12 +3,7 @@
 import { useEffect, useMemo, useCallback, FC } from "react";
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  IGridColumn,
-  IssueKind,
-  IssuePriority,
-  IssueStatus,
-} from "./IssueTypes";
+import { IssueKind, IssuePriority, IssueStatus } from "./IssueTypes";
 import { useLocation } from "react-router-dom";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import Loading from "../appcarcass/common/Loading";
@@ -20,9 +15,10 @@ import CustomColumn from "./CustomColumn";
 import LinkColumn from "./LinkColumn";
 import MdLookupColumn from "./MdLookupColumn";
 import DateTimeColumn from "./DateTimeColumn";
-import GridView from "./GridView";
 import { useCheckLoadIssues } from "./useCheckLoadIssues";
 import { useIssuesFilterSort } from "./useIssuesFilterSort";
+import GridView from "../appcarcass/common/GridView";
+import { IGridColumn } from "../appcarcass/common/GridViewTypes";
 
 const Issues: FC = () => {
   // const {
@@ -272,48 +268,3 @@ const Issues: FC = () => {
 };
 
 export default Issues;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const { isMenuLoading, flatMenu } = state.navMenu;
-//   const {
-//     insideChanging,
-//     issuesLoading,
-//     issues,
-//     issuesCount,
-//     issuesLoadingFailure,
-//   } = state.issuesStore;
-//   const { tabWindowId } = state.authentication;
-
-//   return {
-//     alert,
-//     isMenuLoading,
-//     flatMenu,
-//     masterData,
-//     insideChanging,
-//     issuesLoading,
-//     issues,
-//     issuesCount,
-//     issuesLoadingFailure,
-//     tabWindowId,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) =>
-//       dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     loadIssues: (offset, rowsCount) =>
-//       dispatch(IssuesActions.loadIssues(offset, rowsCount)),
-//     getIssuesCount: () => dispatch(IssuesActions.getIssuesCount()),
-//     createIssuesFilterSort: (filterSortObject, rowCount) =>
-//       dispatch(
-//         IssuesActions.createIssuesFilterSort(filterSortObject, rowCount)
-//       ),
-//     saveReturnPageName: (pageName) =>
-//       dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//   };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Issues);

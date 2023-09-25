@@ -12,8 +12,8 @@ import {
   IssueDetailByDerivationBranchModel,
   IssueDetailByInflectionModel,
 } from "../types/issuesTypes";
-import { IFilterSortObject } from "../../issues/IssueTypes";
 import { issueDetailTypes } from "../../issues/IssueDetailsEnums";
+import { IFilterSortObject } from "../../appcarcass/common/GridViewTypes";
 
 export interface IIssuesState {
   savedIssueDetailLine: IIssueDetailLine | null;

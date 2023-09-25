@@ -7,7 +7,6 @@ import {
   setAlertApiMutationError,
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
-import { IFilterSortObject } from "../../issues/IssueTypes";
 import {
   setCheckDetail,
   setIssues,
@@ -18,6 +17,7 @@ import {
   IssueModel,
   OneIssueFullModel,
 } from "../types/issuesTypes";
+import { IFilterSortObject } from "../../appcarcass/common/GridViewTypes";
 
 export interface IloadIssueDetailsParameters {
   issueId: number;
@@ -91,7 +91,8 @@ export const issuesApi = createApi({
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          const result = await queryFulfilled;
+          // const result =
+          await queryFulfilled;
           //console.log("issuesApi getOneIssueById result=", result);
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));

@@ -3,12 +3,15 @@
 import { useCallback } from "react";
 import { useCreateIssuesFilterSortMutation } from "../redux/api/issuesApi";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
-import { IFilterSortObject, ISortField } from "./IssueTypes";
 import { issueDetailTableNames } from "./IssueDetailsEnums";
 import {
   setIssueDetailsFilterSortId,
   setIssuesTableFilterSortId,
 } from "../redux/slices/issuesSlice";
+import {
+  IFilterSortObject,
+  ISortField,
+} from "../appcarcass/common/GridViewTypes";
 
 export type fncreateIssuesTableFilterSort = (
   sortFields: ISortField[] | null

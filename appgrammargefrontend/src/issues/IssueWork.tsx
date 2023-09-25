@@ -4,14 +4,12 @@ import { useState, useEffect, FC } from "react";
 
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import GridView from "./GridView";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { useCheckLoadOneIssueById } from "./useCheckLoadOneIssueById";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
-import { IGridColumn, IGridScrollTo } from "./IssueTypes";
 import {
   issueDetailTableNames,
   issueDetailTypes,
@@ -27,6 +25,8 @@ import { useIssueDetailRootsGridColumns } from "./IssueDetailRootsGridColumns";
 import { useIssueDetailNotesGridColumns } from "./IssueDetailNotesGridColumns";
 import { useIssueDetailDerivationBranchesGridColumns } from "./IssueDetailDerivationBranchesGridColumns";
 import { useIssueDetailInflectionsGridColumns } from "./IssueDetailInflectionsGridColumns";
+import { IGridColumn, IGridScrollTo } from "../appcarcass/common/GridViewTypes";
+import GridView from "../appcarcass/common/GridView";
 
 const IssueWork: FC = () => {
   const dispatch = useAppDispatch();

@@ -99,6 +99,7 @@ import Issues from "./issues/Issues";
 import { FC } from "react";
 import IssueWork from "./issues/IssueWork";
 import RecountsDashboard from "./pages/RecountsDashboard";
+import MdListEdit from "./appcarcass/masterdata/MdListEdit";
 
 library.add(
   faCheckSquare,
@@ -171,6 +172,12 @@ const App: FC = () => {
 
               <Route path="mdList/:tableName/:recName" element={<MdList />} />
               <Route path="mdList/:tableName" element={<MdList />} />
+
+              <Route
+                path="mdListEdit/:tableName/:recName"
+                element={<MdListEdit />}
+              />
+              <Route path="mdListEdit/:tableName" element={<MdListEdit />} />
 
               <Route
                 path="mdItemEdit/:tableName/:mdIdValue"

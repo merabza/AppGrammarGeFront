@@ -1,7 +1,6 @@
 //IssueDetailDerivationBranchesGridColumns.tsx
 
 import CustomColumn from "./CustomColumn";
-import { IGridColumn } from "./IssueTypes";
 import { useCallback } from "react";
 import LinkColumn from "./LinkColumn";
 import { saveIssueDetailLine } from "../redux/slices/issuesSlice";
@@ -10,6 +9,7 @@ import { IIssueDetailLine } from "../redux/types/issuesTypes";
 import { Link } from "react-router-dom";
 import CheckboxColumn from "./CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
+import { IGridColumn } from "../appcarcass/common/GridViewTypes";
 
 export type fnIssueDetailDerivationBranchesGridColumns = (
   issId: number

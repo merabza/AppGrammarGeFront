@@ -2,12 +2,12 @@
 
 import { Link } from "react-router-dom";
 import CustomColumn from "./CustomColumn";
-import { IGridColumn } from "./IssueTypes";
 import { useCallback } from "react";
 import CheckboxColumn from "./CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
 import { issueDetailTypes } from "./IssueDetailsEnums";
 import { IcheckDetailParameters } from "../redux/types/issuesTypes";
+import { IGridColumn } from "../appcarcass/common/GridViewTypes";
 
 export type fnIssueDetailInflectionsGridColumns = (
   issId: number

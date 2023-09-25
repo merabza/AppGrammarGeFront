@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import CustomColumn from "./CustomColumn";
 import { issueDetailTypes } from "./IssueDetailsEnums";
-import { IGridColumn, IRoot } from "./IssueTypes";
+import { IRoot } from "./IssueTypes";
 import { useAppDispatch } from "../appcarcass/redux/hooks";
 import { saveIssueDetailLine } from "../redux/slices/issuesSlice";
 import {
@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CheckboxColumn from "./CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
 import { useCallback } from "react";
+import { IGridColumn } from "../appcarcass/common/GridViewTypes";
 
 export type fnIssueDetailRootsGridColumns = (issId: number) => IGridColumn[];
 
