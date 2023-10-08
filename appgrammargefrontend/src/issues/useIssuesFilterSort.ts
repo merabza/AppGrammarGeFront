@@ -9,9 +9,10 @@ import {
   setIssuesTableFilterSortId,
 } from "../redux/slices/issuesSlice";
 import {
+  IFilterField,
   IFilterSortObject,
   ISortField,
-} from "../appcarcass/common/GridViewTypes";
+} from "../appcarcass/grid/GridViewTypes";
 
 export type fncreateIssuesTableFilterSort = (
   sortFields: ISortField[] | null
@@ -39,7 +40,7 @@ export function useIssuesFilterSort(): [
       const filterSortObject = {
         tabWindowId,
         tableName: issuesTableName,
-        filterByFields: [] as ISortField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
+        filterByFields: [] as IFilterField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
         sortByFields: sortFields ?? ([] as ISortField[]),
       } as IFilterSortObject;
       await createIssuesFilterSort(filterSortObject);
@@ -56,7 +57,7 @@ export function useIssuesFilterSort(): [
       const filterSortObject = {
         tabWindowId,
         tableName: (issueDetailTableNames as any)[detName],
-        filterByFields: [] as ISortField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
+        filterByFields: [] as IFilterField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
         sortByFields: sortFields ?? ([] as ISortField[]),
       };
       await createIssuesFilterSort(filterSortObject);

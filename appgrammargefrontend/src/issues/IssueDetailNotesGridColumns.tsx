@@ -1,6 +1,6 @@
 //IssueDetailNotesGridColumns.tsx
 
-import { IGridColumn } from "../appcarcass/common/GridViewTypes";
+import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
 import CustomColumn from "./CustomColumn";
 import { useCallback } from "react";
 

@@ -9,7 +9,7 @@ import { IIssueDetailLine } from "../redux/types/issuesTypes";
 import { Link } from "react-router-dom";
 import CheckboxColumn from "./CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
-import { IGridColumn } from "../appcarcass/common/GridViewTypes";
+import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
 
 export type fnIssueDetailDerivationBranchesGridColumns = (
   issId: number

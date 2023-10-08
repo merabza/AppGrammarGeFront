@@ -64,7 +64,7 @@ import Layout from "./appcarcass/common/Layout";
 import Profile from "./appcarcass/user/Profile";
 import FrmRights from "./appcarcass/rights/FrmRights";
 import Home from "./pages/Home";
-import MdList from "./appcarcass/masterdata/MdList";
+import MdListOld from "./appcarcass/masterdata/MdListOld";
 import MdItemEdit from "./appcarcass/masterdata/MdItemEdit";
 import BaseSearch from "./derivationTreeEditor/BaseSearch";
 import RootDerivationTree from "./derivationTreeEditor/RootDerivationTree";
@@ -99,7 +99,8 @@ import Issues from "./issues/Issues";
 import { FC } from "react";
 import IssueWork from "./issues/IssueWork";
 import RecountsDashboard from "./pages/RecountsDashboard";
-import MdListEdit from "./appcarcass/masterdata/MdListEdit";
+import MdList from "./appcarcass/masterdata/MdList";
+import MdGridView from "./appcarcass/masterdata/MdGridView";
 
 library.add(
   faCheckSquare,
@@ -170,14 +171,14 @@ const App: FC = () => {
               <Route path="Rights/:rView" element={<FrmRights />} />
               <Route path="Rights" element={<FrmRights />} />
 
+              <Route
+                path="mdListOld/:tableName/:recName"
+                element={<MdListOld />}
+              />
+              <Route path="mdListOld/:tableName" element={<MdListOld />} />
+
               <Route path="mdList/:tableName/:recName" element={<MdList />} />
               <Route path="mdList/:tableName" element={<MdList />} />
-
-              <Route
-                path="mdListEdit/:tableName/:recName"
-                element={<MdListEdit />}
-              />
-              <Route path="mdListEdit/:tableName" element={<MdListEdit />} />
 
               <Route
                 path="mdItemEdit/:tableName/:mdIdValue"

@@ -25,8 +25,8 @@ import { useIssueDetailRootsGridColumns } from "./IssueDetailRootsGridColumns";
 import { useIssueDetailNotesGridColumns } from "./IssueDetailNotesGridColumns";
 import { useIssueDetailDerivationBranchesGridColumns } from "./IssueDetailDerivationBranchesGridColumns";
 import { useIssueDetailInflectionsGridColumns } from "./IssueDetailInflectionsGridColumns";
-import { IGridColumn, IGridScrollTo } from "../appcarcass/common/GridViewTypes";
-import GridView from "../appcarcass/common/GridView";
+import { IGridColumn, IGridScrollTo } from "../appcarcass/grid/GridViewTypes";
+import GridViewOld from "../appcarcass/grid/GridViewOld";
 
 const IssueWork: FC = () => {
   const dispatch = useAppDispatch();
@@ -175,7 +175,7 @@ const IssueWork: FC = () => {
                   {oneIssue.detailsCounts[detName]}
                 </span>
               </p>
-              <GridView
+              <GridViewOld
                 showCountColumn
                 columns={detailsGridColumns[detName]}
                 rows={oneIssuesDetails[detName]}
@@ -221,7 +221,7 @@ const IssueWork: FC = () => {
                     : undefined
                 }
                 backLigth={backLigth}
-              ></GridView>
+              ></GridViewOld>
             </div>
           );
         })}

@@ -13,12 +13,13 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useGetIssuesCountQuery } from "../redux/api/issuesApi";
 import CustomColumn from "./CustomColumn";
 import LinkColumn from "./LinkColumn";
-import MdLookupColumn from "./MdLookupColumn";
+import MdLookupColumn from "../appcarcass/grid/MdLookupColumn";
 import DateTimeColumn from "./DateTimeColumn";
 import { useCheckLoadIssues } from "./useCheckLoadIssues";
 import { useIssuesFilterSort } from "./useIssuesFilterSort";
-import GridView from "../appcarcass/common/GridView";
-import { IGridColumn } from "../appcarcass/common/GridViewTypes";
+import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
+import GridViewOld from "../appcarcass/grid/GridViewOld";
+import GridView from "../appcarcass/grid/GridView";
 
 const Issues: FC = () => {
   // const {
@@ -251,7 +252,7 @@ const Issues: FC = () => {
 
   return (
     <div>
-      <GridView
+      <GridViewOld
         showCountColumn
         columns={gridColumns}
         rows={issues}
@@ -261,10 +262,27 @@ const Issues: FC = () => {
           createIssuesTableFilterSort(sortFields)
         }
         loading={LoadingIssues}
-      ></GridView>
+      ></GridViewOld>
       {/* {insideChanging && <span>&frasl;</span>} */}
     </div>
   );
+
+  // return (
+  //   <div>
+  //     <GridView
+  //       showCountColumn
+  //       columns={gridColumns}
+  //       rowsData={issues}
+  //       allRowsCount={issuesCount}
+  //       onLoad={(offset, rowsCount) => checkLoadIssues(offset, rowsCount)}
+  //       onFilterSortChange={(sortFields) =>
+  //         createIssuesTableFilterSort(sortFields)
+  //       }
+  //       loading={LoadingIssues}
+  //     ></GridView>
+  //     {/* {insideChanging && <span>&frasl;</span>} */}
+  //   </div>
+  // );
 };
 
 export default Issues;

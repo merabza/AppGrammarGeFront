@@ -13,7 +13,7 @@ import {
   IssueDetailByInflectionModel,
 } from "../types/issuesTypes";
 import { issueDetailTypes } from "../../issues/IssueDetailsEnums";
-import { IFilterSortObject } from "../../appcarcass/common/GridViewTypes";
+import { IFilterSortObject } from "../../appcarcass/grid/GridViewTypes";
 
 export interface IIssuesState {
   savedIssueDetailLine: IIssueDetailLine | null;

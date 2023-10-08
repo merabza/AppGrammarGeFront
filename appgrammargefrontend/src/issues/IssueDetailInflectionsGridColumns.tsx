@@ -7,7 +7,7 @@ import CheckboxColumn from "./CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
 import { issueDetailTypes } from "./IssueDetailsEnums";
 import { IcheckDetailParameters } from "../redux/types/issuesTypes";
-import { IGridColumn } from "../appcarcass/common/GridViewTypes";
+import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
 
 export type fnIssueDetailInflectionsGridColumns = (
   issId: number

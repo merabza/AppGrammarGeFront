@@ -17,7 +17,7 @@ import {
   IssueModel,
   OneIssueFullModel,
 } from "../types/issuesTypes";
-import { IFilterSortObject } from "../../appcarcass/common/GridViewTypes";
+import { IFilterSortObject } from "../../appcarcass/grid/GridViewTypes";
 
 export interface IloadIssueDetailsParameters {
   issueId: number;
