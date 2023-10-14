@@ -1,6 +1,6 @@
 //Issues.tsx
 
-import { useEffect, useMemo, useCallback, FC } from "react";
+import { useEffect, useMemo, useCallback, FC, useState } from "react";
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import { IssueKind, IssuePriority, IssueStatus } from "./IssueTypes";
@@ -10,14 +10,21 @@ import Loading from "../appcarcass/common/Loading";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import AlertMessages from "../appcarcass/common/AlertMessages";
-import { useGetIssuesCountQuery } from "../redux/api/issuesApi";
+import {
+  useGetIssuesCountQuery,
+  useLazyGetissuesRowsDataQuery,
+} from "../redux/api/issuesApi";
 import CustomColumn from "./CustomColumn";
 import LinkColumn from "./LinkColumn";
 import MdLookupColumn from "../appcarcass/grid/MdLookupColumn";
 import DateTimeColumn from "./DateTimeColumn";
-import { useCheckLoadIssues } from "./useCheckLoadIssues";
+// import { useCheckLoadIssues } from "./useCheckLoadIssues";
 import { useIssuesFilterSort } from "./useIssuesFilterSort";
-import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
+import {
+  IFilterSortRequest,
+  IGridColumn,
+  IRowsData,
+} from "../appcarcass/grid/GridViewTypes";
 import GridViewOld from "../appcarcass/grid/GridViewOld";
 import GridView from "../appcarcass/grid/GridView";
 
@@ -57,7 +64,17 @@ const Issues: FC = () => {
 
   const { issues } = useAppSelector((state) => state.issuesState);
 
-  const [checkLoadIssues, LoadingIssues] = useCheckLoadIssues();
+  // const [checkLoadIssues, LoadingIssues] = useCheckLoadIssues();
+
+  const [
+    getIssuesRowsData,
+    { data: curRowsData, isLoading: loadingIssuesRowsData },
+  ] = useLazyGetissuesRowsDataQuery();
+
+  // const [curRowsData, setCurRowsData] = useState<IRowsData | undefined>(
+  //   undefined
+  // );
+
   //console.log("Issues props=", props);
 
   const menLinkKey = useLocation().pathname.split("/")[1];
@@ -250,39 +267,42 @@ const Issues: FC = () => {
     },
   ] as IGridColumn[];
 
-  return (
-    <div>
-      <GridViewOld
-        showCountColumn
-        columns={gridColumns}
-        rows={issues}
-        allRowsCount={issuesCount}
-        onLoad={(offset, rowsCount) => checkLoadIssues(offset, rowsCount)}
-        onFilterSortChange={(sortFields) =>
-          createIssuesTableFilterSort(sortFields)
-        }
-        loading={LoadingIssues}
-      ></GridViewOld>
-      {/* {insideChanging && <span>&frasl;</span>} */}
-    </div>
-  );
-
   // return (
   //   <div>
-  //     <GridView
+  //     <GridViewOld
   //       showCountColumn
   //       columns={gridColumns}
-  //       rowsData={issues}
+  //       rows={issues}
   //       allRowsCount={issuesCount}
   //       onLoad={(offset, rowsCount) => checkLoadIssues(offset, rowsCount)}
   //       onFilterSortChange={(sortFields) =>
   //         createIssuesTableFilterSort(sortFields)
   //       }
   //       loading={LoadingIssues}
-  //     ></GridView>
+  //     ></GridViewOld>
   //     {/* {insideChanging && <span>&frasl;</span>} */}
   //   </div>
   // );
+
+  return (
+    <div>
+      <GridView
+        showCountColumn
+        columns={gridColumns}
+        rowsData={curRowsData}
+        onLoadRows={(offset, rowsCount, sortByFields, filterFields) => {
+          getIssuesRowsData({
+            offset,
+            rowsCount,
+            filterFields,
+            sortByFields,
+          } as IFilterSortRequest);
+        }}
+        loading={loadingIssuesRowsData}
+      ></GridView>
+      {/* {insideChanging && <span>&frasl;</span>} */}
+    </div>
+  );
 };
 
 export default Issues;

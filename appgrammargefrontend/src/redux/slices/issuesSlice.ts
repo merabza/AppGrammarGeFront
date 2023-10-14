@@ -13,11 +13,15 @@ import {
   IssueDetailByInflectionModel,
 } from "../types/issuesTypes";
 import { issueDetailTypes } from "../../issues/IssueDetailsEnums";
-import { IFilterSortObject } from "../../appcarcass/grid/GridViewTypes";
+import {
+  IFilterSortObject,
+  IRowsData,
+} from "../../appcarcass/grid/GridViewTypes";
 
 export interface IIssuesState {
   savedIssueDetailLine: IIssueDetailLine | null;
   issues: IIssue[];
+  issuesRowsData: IRowsData;
   filterSortRepo: { [key: string]: IFilterSortObject };
   issuesRepo: OneIssueFullModel[];
   issuesDetailsRepo: { [key: string]: IssueDetailModel[] }[];
@@ -30,6 +34,7 @@ export interface IIssuesState {
 const initialState: IIssuesState = {
   savedIssueDetailLine: null,
   issues: [] as IIssue[],
+  issuesRowsData: {} as IRowsData,
   filterSortRepo: {} as { [key: string]: IFilterSortObject },
   issuesRepo: [] as OneIssueFullModel[],
   issuesDetailsRepo: [] as { [key: string]: IssueDetailModel[] }[],
@@ -101,6 +106,10 @@ export const issuesSlice = createSlice({
     /////////////////////////////////////
     setIssues: (state, action: PayloadAction<IssueModel[]>) => {
       state.issues = action.payload;
+    },
+    /////////////////////////////////////
+    setIssuesRowsData: (state, action: PayloadAction<IRowsData>) => {
+      state.issuesRowsData = action.payload;
     },
     /////////////////////////////////////
     setOneIssue: (state, action: PayloadAction<OneIssueFullModel>) => {
@@ -179,6 +188,7 @@ export const {
   setIssuesTableFilterSortId,
   setCheckDetail,
   setIssues,
+  setIssuesRowsData,
   changeIssueDetailsOffsetAndShowRows,
   setOneIssueDetails,
   setIssueDetailsFilterSortId,

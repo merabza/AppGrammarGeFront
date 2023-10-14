@@ -10,6 +10,7 @@ import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
 import {
   setCheckDetail,
   setIssues,
+  setIssuesRowsData,
   setOneIssueDetails,
 } from "../slices/issuesSlice";
 import {
@@ -17,7 +18,11 @@ import {
   IssueModel,
   OneIssueFullModel,
 } from "../types/issuesTypes";
-import { IFilterSortObject } from "../../appcarcass/grid/GridViewTypes";
+import {
+  IFilterSortObject,
+  IFilterSortRequest,
+  IRowsData,
+} from "../../appcarcass/grid/GridViewTypes";
 
 export interface IloadIssueDetailsParameters {
   issueId: number;
@@ -60,6 +65,37 @@ export const issuesApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setIssues(data));
+        } catch (error) {
+          dispatch(setAlertApiLoadError(buildErrorMessage(error)));
+        }
+      },
+    }),
+    //////////////////////////////////////////////////////
+    getissuesRowsData: builder.query<IRowsData, IFilterSortRequest>({
+      query(filterSortRequest) {
+        console.log("getissuesRowsData filterSortRequest=", filterSortRequest);
+        // console.log(
+        //   "getissuesRowsData JSON.stringify(filterSortRequest)=",
+        //   JSON.stringify(filterSortRequest)
+        // );
+        // console.log(
+        //   "getissuesRowsData btoa(JSON.stringify(filterSortRequest)=",
+        //   btoa(JSON.stringify(filterSortRequest))
+        // );
+        return {
+          url: `/issues/getissuesrowsdata?filterSortRequest=${btoa(
+            JSON.stringify(filterSortRequest)
+          )}`,
+        };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(
+            "getissuesRowsData onQueryStarted queryFulfilled data=",
+            data
+          );
+          dispatch(setIssuesRowsData(data));
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));
         }
@@ -152,6 +188,7 @@ export const issuesApi = createApi({
 export const {
   useGetIssuesCountQuery,
   useLazyGetissuesQuery,
+  useLazyGetissuesRowsDataQuery,
   useCreateIssuesFilterSortMutation,
   useLazyGetOneIssueByIdQuery,
   useCheckDetailMutation,
