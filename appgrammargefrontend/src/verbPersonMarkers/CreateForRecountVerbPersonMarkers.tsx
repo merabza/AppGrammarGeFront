@@ -5,44 +5,30 @@ import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import {
   ActantGrammarCase,
-  ActantGrammarCasesByActantType,
   ActantGroup,
   ActantPosition,
   ActantType,
-  ActantTypesByVerbType,
   DominantActant,
   Morpheme,
-  PluralityChangesByVerbType,
   VerbNumber,
   VerbPerson,
-  VerbPersonMarkerParadigmChange,
   VerbPluralityType,
-  VerbPluralityTypeChange,
   VerbSeries,
   VerbTransition,
   VerbType,
 } from "../masterData/mdTypes";
 import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
 import { useLocation, useParams } from "react-router-dom";
-import { useCheckLoadMultipleListData } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMultipleListData";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import { useCheckLoadFilteredForRecountVerbPersonMarkers } from "./useCheckLoadFilteredForRecountVerbPersonMarkers";
-import {
-  checkDataTableLoaded,
-  checkDataTypeLoaded,
-  checkGridLoaded,
-} from "../appcarcass/modules/CheckDataLoaded";
-import {
-  DeserializeGridModel,
-  GridModel,
-} from "../appcarcass/redux/types/gridTypes";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
-import MdListView from "../appcarcass/masterdata/MdListView";
+import MdGridView from "../appcarcass/masterdata/MdGridView";
+import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 
 const CreateForRecountVerbPersonMarkers: FC = () => {
   // const {
@@ -71,16 +57,6 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const actantGrammarCasesByActantTypes =
-    mdRepo.actantGrammarCasesByActantTypes as ActantGrammarCasesByActantType[];
-  const actantTypesByVerbTypes =
-    mdRepo.actantTypesByVerbTypes as ActantTypesByVerbType[];
-  const pluralityChangesByVerbTypes =
-    mdRepo.pluralityChangesByVerbTypes as PluralityChangesByVerbType[];
-  const verbPersonMarkerParadigmChanges =
-    mdRepo.verbPersonMarkerParadigmChanges as VerbPersonMarkerParadigmChange[];
-  const verbPluralityTypeChanges =
-    mdRepo.verbPluralityTypeChanges as VerbPluralityTypeChange[];
   const actantTypes = mdRepo.actantTypes as ActantType[];
   const verbSeries = mdRepo.verbSeries as VerbSeries[];
   const actantGrammarCases = mdRepo.actantGrammarCases as ActantGrammarCase[];
@@ -115,31 +91,8 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
       "verbPersons",
       "dominantActantsQuery",
       "morphemesQuery",
-      "actantGrammarCasesByActantTypes",
-      "actantTypesByVerbTypes",
-      "pluralityChangesByVerbTypes",
-      "verbPersonMarkerParadigmChanges",
-      "verbPluralityTypeChanges",
     ],
     []
-  );
-
-  const listTableNames = useMemo(
-    () => [
-      "actantGrammarCasesByActantTypes",
-      "actantTypesByVerbTypes",
-      "pluralityChangesByVerbTypes",
-      "verbPersonMarkerParadigmChanges",
-      "verbPluralityTypeChanges",
-    ],
-    []
-  );
-
-  const onlygridRuleNames = useMemo(() => ["forRecountVerbPersonMarkers"], []);
-
-  const gridRuleNames = useMemo(
-    () => listTableNames.concat(onlygridRuleNames),
-    [listTableNames, onlygridRuleNames]
   );
 
   const { isMenuLoading, flatMenu } = useAppSelector(
@@ -153,20 +106,14 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     return flatMenu.find((f) => f.menLinkKey === menLinkKey);
   }, [flatMenu, menLinkKey]);
 
-  const [loadMultipleListData] = useCheckLoadMultipleListData();
+  const [checkLoadMdTables] = useCheckLoadMdTables();
 
   useEffect(() => {
     const menuItem = isValidPage();
     if (!menuItem) return;
 
-    loadMultipleListData(gridRuleNames, listTableNames, tableNamesForLoad);
-  }, [
-    isMenuLoading,
-    flatMenu,
-    listTableNames,
-    tableNamesForLoad,
-    gridRuleNames,
-  ]);
+    checkLoadMdTables(tableNamesForLoad);
+  }, [isMenuLoading, flatMenu, tableNamesForLoad]);
 
   const [
     checkLoadFilteredForRecountVerbPersonMarkers,
@@ -195,41 +142,6 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     dispatch(saveReturnPageName(menLinkKey));
   }
 
-  const checkedDataTypes = {} as { [key: string]: DataTypeFfModel };
-
-  let allDataTypesLoaded = true;
-  gridRuleNames.forEach((listTableName) => {
-    const checkResult = checkDataTypeLoaded(
-      masterData,
-      dataTypesState,
-      listTableName
-    );
-    if (checkResult) {
-      checkedDataTypes[listTableName] = checkResult;
-    } else allDataTypesLoaded = false;
-  });
-
-  let allListTablessLoaded = true;
-  listTableNames.forEach((listTableName) => {
-    const checkResult = checkDataTableLoaded(masterData, listTableName);
-    if (!checkResult) allListTablessLoaded = false;
-  });
-
-  const GridRules = {} as { [key: string]: GridModel };
-
-  let allGridsLoaded = true;
-  gridRuleNames.forEach((gridRuleName) => {
-    const checkResult = checkGridLoaded(
-      masterData,
-      dataTypesState,
-      gridRuleName
-    );
-    if (checkResult) {
-      const grid = DeserializeGridModel(checkResult);
-      if (grid) GridRules[gridRuleName] = grid;
-    } else allGridsLoaded = false;
-  });
-
   if (
     mdWorkingOnLoad ||
     LoadingFilteredForRecountVerbPersonMarkers ||
@@ -240,15 +152,7 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
   }
 
   if (
-    !allDataTypesLoaded ||
-    !allListTablessLoaded ||
-    !allGridsLoaded ||
     !curscrollTo ||
-    !actantGrammarCasesByActantTypes ||
-    !actantTypesByVerbTypes ||
-    !pluralityChangesByVerbTypes ||
-    !verbPersonMarkerParadigmChanges ||
-    !verbPluralityTypeChanges ||
     !actantTypes ||
     !verbSeries ||
     !actantGrammarCases ||
@@ -406,115 +310,11 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
         return <></>;
       })}
 
-      <MdListView
-        dataType={checkedDataTypes["actantGrammarCasesByActantTypes"]}
-        table={actantGrammarCasesByActantTypes.slice().sort((a, b) => {
-          const f =
-            actantTypesDict[a.actantTypeId].sortId -
-            actantTypesDict[b.actantTypeId].sortId;
-          if (f) return f;
-          return (
-            verbSeriesDict[a.verbSeriesId].sortId -
-            verbSeriesDict[b.verbSeriesId].sortId
-          );
-        })}
-        gridColumns={GridRules["actantGrammarCasesByActantTypes"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
-
-      <MdListView
-        dataType={checkedDataTypes["actantTypesByVerbTypes"]}
-        table={actantTypesByVerbTypes.slice().sort((a, b) => {
-          const f =
-            verbTypesDict[a.verbTypeId].sortId -
-            verbTypesDict[b.verbTypeId].sortId;
-          if (f) return f;
-          return (
-            actantPositionsDict[a.actantPositionId].sortId -
-            actantPositionsDict[b.actantPositionId].sortId
-          );
-        })}
-        gridColumns={GridRules["actantTypesByVerbTypes"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
-
-      <MdListView
-        dataType={checkedDataTypes["pluralityChangesByVerbTypes"]}
-        table={pluralityChangesByVerbTypes.slice().sort((a, b) => {
-          let f =
-            verbPluralityTypesDict[a.pluralityTypeIdStart].sortId -
-            verbPluralityTypesDict[b.pluralityTypeIdStart].sortId;
-          if (f) return f;
-          f =
-            verbTypesDict[a.verbTypeId].sortId -
-            verbTypesDict[b.verbTypeId].sortId;
-          if (f) return f;
-          return (
-            verbSeriesDict[a.verbSeriesId].sortId -
-            verbSeriesDict[b.verbSeriesId].sortId
-          );
-        })}
-        gridColumns={GridRules["pluralityChangesByVerbTypes"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
-
-      <MdListView
-        dataType={checkedDataTypes["verbPersonMarkerParadigmChanges"]}
-        table={verbPersonMarkerParadigmChanges.slice().sort((a, b) => {
-          const f = actantGroupsDict[a.actantGroupId].agrKey.localeCompare(
-            actantGroupsDict[b.actantGroupId].agrKey
-          );
-          if (f) return f;
-          return (
-            verbPersonMarkerParadigmsDict[a.verbPersonMarkerParadigmIdStart]
-              .sortId -
-            verbPersonMarkerParadigmsDict[b.verbPersonMarkerParadigmIdStart]
-              .sortId
-          );
-        })}
-        gridColumns={GridRules["verbPersonMarkerParadigmChanges"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
-
-      <MdListView
-        dataType={checkedDataTypes["verbPluralityTypeChanges"]}
-        table={verbPluralityTypeChanges.slice().sort((a, b) => {
-          let f =
-            verbPluralityTypesDict[a.pluralityTypeIdStart].sortId -
-            verbPluralityTypesDict[b.pluralityTypeIdStart].sortId;
-          if (f) return f;
-          f = a.pluralityTypeDominantId - b.pluralityTypeDominantId;
-          if (f) return f;
-          f = actantGroupsDict[a.actantGroupId].agrKey.localeCompare(
-            actantGroupsDict[b.actantGroupId].agrKey
-          );
-          if (f) return f;
-          f =
-            verbNumbersDict[a.verbNumberId].sortId -
-            verbNumbersDict[b.verbNumberId].sortId;
-          if (f) return f;
-          f =
-            verbPersonsDict[a.verbPersonId].sortId -
-            verbPersonsDict[b.verbPersonId].sortId;
-          if (f) return f;
-          return (
-            actantTypesDict[a.actantTypeId].sortId -
-            actantTypesDict[b.actantTypeId].sortId
-          );
-        })}
-        gridColumns={GridRules["verbPluralityTypeChanges"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
+      <MdGridView tableName="actantGrammarCasesByActantTypes" />
+      <MdGridView tableName="actantTypesByVerbTypes" />
+      <MdGridView tableName="pluralityChangesByVerbTypes" />
+      <MdGridView tableName="verbPersonMarkerParadigmChanges" />
+      <MdGridView tableName="verbPluralityTypeChanges" />
 
       <h4>პროცესის აღწერა</h4>
       <p>
@@ -524,54 +324,9 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
       {/* ეს ცხრილი ძალიან დიდია, ამიტომ საჭიროა ნაწილ ნაწილ ჩატვირთვის უზრუნველყოფა */}
       {/* თვითონ ფილტრის არჩევანიც ცალკე უნდა ჩაიტვირთოს */}
-      <MdListView
-        readOnly
-        dataType={checkedDataTypes["forRecountVerbPersonMarkers"]}
-        table={forRecountVerbPersonMarkers.slice().sort((a, b) => {
-          const f =
-            a.verbPersonMarkerCombinationId - b.verbPersonMarkerCombinationId;
-          if (f) return f;
-          return a.dominantActantId - b.dominantActantId;
-        })}
-        gridColumns={GridRules["forRecountVerbPersonMarkers"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-        firstFilter={{ verbPersonMarkerCombinationId: true }}
-        filterChanged={(frm) => {
-          //console.log("CreateForRecountVerbPersonMarkers filterChanged frm=", frm);
-          checkLoadFilteredForRecountVerbPersonMarkers(
-            frm.verbPersonMarkerCombinationId,
-            frm.dominantActantId,
-            frm.morphemeId
-          );
-        }}
-      />
+      {/* <MdGridView tableName="forRecountVerbPersonMarkers" readOnly /> */}
     </div>
   );
 };
 
 export default CreateForRecountVerbPersonMarkers;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const {isMenuLoading, flatMenu} = state.navMenu;
-//   const masterData = state.masterData;
-//   const {loadingForRecountVerbPersonMarkers, forRecountVerbPersonMarkers} = state.modelOverviewsStore;
-
-//   return {alert, isMenuLoading, flatMenu, masterData, loadingForRecountVerbPersonMarkers, forRecountVerbPersonMarkers};
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     saveReturnPageName: (pageName) => dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//     loadMultipleListData: (gridRuleNames, listTableNames, tableNamesForLoad) => dispatch(MasterDataActions.loadMultipleListData(gridRuleNames, listTableNames, tableNamesForLoad)),
-//     getFilteredForRecountVerbPersonMarkers: (verbPersonMarkerCombinationId, dominantActantId, morphemeId) =>
-//       dispatch(ModelOverviewsStoreActions.getFilteredForRecountVerbPersonMarkers(verbPersonMarkerCombinationId, dominantActantId, morphemeId))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(CreateForRecountVerbPersonMarkers);

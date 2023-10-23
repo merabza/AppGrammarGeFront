@@ -291,10 +291,6 @@ const InflectionEdit: FC = () => {
       //დავიმახსოვროთ პირების რაოდეონობა
       const verbPersonsCount = verbType ? verbType.vtpVerbPersonsCount : 0;
 
-      // const oldFormData = newForm.formData;
-      // //თუ არ არის შევქმნათ ფორმის ინფორმაცია, თუ არის დავაკოპიროთ ლოკალურ ცვლადში
-      // const formData = oldFormData ? {...oldFormData} : {};
-
       //დავაფიქსიროთ პირების რაოდენობის მიხედვით პირცვალებადობების მასივის სიგრძე
       newForm.personVariabilityTypeIds.length = verbPersonsCount;
 

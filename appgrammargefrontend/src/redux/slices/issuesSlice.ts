@@ -24,7 +24,7 @@ export interface IIssuesState {
   issuesRowsData: IRowsData;
   filterSortRepo: { [key: string]: IFilterSortObject };
   issuesRepo: OneIssueFullModel[];
-  issuesDetailsRepo: { [key: string]: IssueDetailModel[] }[];
+  issuesDetailsRepo: { [key: string]: IRowsData }[];
   filterSortIds: { [key: string]: number };
   showIssueDetailRows: { [key: string]: number };
   loadingIssueDetailRows: { [key: string]: boolean };
@@ -37,7 +37,7 @@ const initialState: IIssuesState = {
   issuesRowsData: {} as IRowsData,
   filterSortRepo: {} as { [key: string]: IFilterSortObject },
   issuesRepo: [] as OneIssueFullModel[],
-  issuesDetailsRepo: [] as { [key: string]: IssueDetailModel[] }[],
+  issuesDetailsRepo: [] as { [key: string]: IRowsData }[],
   filterSortIds: {} as { [key: string]: number },
   showIssueDetailRows: {} as { [key: string]: number },
   loadingIssueDetailRows: {} as { [key: string]: boolean },
@@ -61,7 +61,7 @@ export const issuesSlice = createSlice({
     /////////////////////////////////////
     setCheckDetail: (state, action: PayloadAction<IcheckDetailParameters>) => {
       const { issueId, detailsName, id, checkedValue } = action.payload;
-      const detail = state.issuesDetailsRepo[issueId][detailsName].find(
+      const detail = state.issuesDetailsRepo[issueId][detailsName].rows.find(
         (f) => f?.isdId === id
       );
       if (detail) {
@@ -118,7 +118,7 @@ export const issuesSlice = createSlice({
       state.issuesRepo[issId] = data;
       state.offsetsRepo[issId] = {} as { [key: string]: number };
       state.issuesDetailsRepo[issId] = {} as {
-        [key: string]: IssueDetailModel[];
+        [key: string]: IRowsData;
       };
       Object.values(issueDetailTypes).forEach((detName) => {
         state.offsetsRepo[issId][detName] = 0;
@@ -129,39 +129,13 @@ export const issuesSlice = createSlice({
       state,
       action: PayloadAction<{
         issueId: number;
-        detailsName: string;
-        offset: number;
-        data: IssueDetailModel[];
+        detName: string;
+        data: IRowsData;
       }>
     ) => {
-      const { issueId, detailsName, offset, data } = action.payload;
-      if (!(detailsName in state.issuesDetailsRepo[issueId]))
-        state.issuesDetailsRepo[issueId][detailsName] = [];
-      data.forEach((element, index) => {
-        switch (detailsName) {
-          case issueDetailTypes.notes: {
-            state.issuesDetailsRepo[issueId][detailsName][offset + index] =
-              element as IssueDetailModel;
-            break;
-          }
-          case issueDetailTypes.roots: {
-            state.issuesDetailsRepo[issueId][detailsName][offset + index] =
-              element as IssueDetailByRootModel;
-            break;
-          }
-          case issueDetailTypes.derivationBranches: {
-            state.issuesDetailsRepo[issueId][detailsName][offset + index] =
-              element as IssueDetailByDerivationBranchModel;
-            break;
-          }
-          case issueDetailTypes.inflections: {
-            state.issuesDetailsRepo[issueId][detailsName][offset + index] =
-              element as IssueDetailByInflectionModel;
-            break;
-          }
-        }
-      });
-      state.loadingIssueDetailRows[detailsName] = false;
+      const { issueId, detName, data } = action.payload;
+      state.issuesDetailsRepo[issueId][detName] = data;
+      state.loadingIssueDetailRows[detName] = false;
     },
     /////////////////////////////////////
     changeIssueDetailsOffsetAndShowRows: (

@@ -9,11 +9,14 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 type NameListEditorProps = {
   dataType: DataTypeFfModel;
   tableForEdit: any[];
-  curscrollTo: {
-    tabKey: string | undefined;
-    recId: number;
-    recName: string | undefined;
-  };
+  curscrollTo?:
+    | {
+        tabKey: string | undefined;
+        recId: number;
+        recName: string | undefined;
+      }
+    | undefined
+    | null;
   backLigth: (node: HTMLElement | HTMLLIElement | null) => void;
   saveReturnPageName: () => void;
 };
@@ -50,8 +53,8 @@ const NameListEditor: FC<NameListEditorProps> = (props) => {
       <ol>
         {tableForEditSorted.map((m) => {
           const bl =
-            curscrollTo.tabKey === tableName &&
-            curscrollTo.recName === m[idFieldName];
+            curscrollTo?.tabKey === tableName &&
+            curscrollTo?.recName === m[idFieldName];
           //console.log("NameListEditor map m=", m);
           //console.log("NameListEditor map idFieldName=", idFieldName);
           return (

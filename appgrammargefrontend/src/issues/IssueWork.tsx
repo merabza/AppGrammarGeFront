@@ -1,61 +1,45 @@
 //IssueWork.tsx
 
 import { useState, useEffect, FC } from "react";
-
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { useScroller } from "../appcarcass/hooks/useScroller";
-import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
+import { useAppSelector } from "../appcarcass/redux/hooks";
 import { useCheckLoadOneIssueById } from "./useCheckLoadOneIssueById";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import {
-  issueDetailTableNames,
   issueDetailTypes,
   issueDetailTypesGeoNames,
 } from "./IssueDetailsEnums";
-import { changeIssueDetailsOffsetAndShowRows } from "../redux/slices/issuesSlice";
-import {
-  useCheckDetailMutation,
-  useLazyLoadIssueDetailsQuery,
-} from "../redux/api/issuesApi";
-import { useIssuesFilterSort } from "./useIssuesFilterSort";
+import { useLazyGetIssueDetailsRowsDataQuery } from "../redux/api/issuesApi";
 import { useIssueDetailRootsGridColumns } from "./IssueDetailRootsGridColumns";
 import { useIssueDetailNotesGridColumns } from "./IssueDetailNotesGridColumns";
 import { useIssueDetailDerivationBranchesGridColumns } from "./IssueDetailDerivationBranchesGridColumns";
 import { useIssueDetailInflectionsGridColumns } from "./IssueDetailInflectionsGridColumns";
-import { IGridColumn, IGridScrollTo } from "../appcarcass/grid/GridViewTypes";
-import GridViewOld from "../appcarcass/grid/GridViewOld";
+import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
+import GridView from "../appcarcass/grid/GridView";
 
 const IssueWork: FC = () => {
-  const dispatch = useAppDispatch();
-
   const [curIssueIdVal, setCurIssueIdVal] = useState<number | null>(null); //1. იდენტიფიკატორი
 
   const { issueId } = useParams<string>();
 
-  const { tabWindowId } = useAppSelector((state) => state.userState);
-
   const {
     issuesRepo,
     issuesDetailsRepo,
-    showIssueDetailRows,
     loadingIssueDetailRows,
-    filterSortRepo,
-    filterSortIds,
     savedIssueDetailLine,
     offsetsRepo,
   } = useAppSelector((state) => state.issuesState);
 
   const [curscrollTo, backLigth] = useScroller(savedIssueDetailLine);
 
-  const [loadIssueDetails] = useLazyLoadIssueDetailsQuery();
-
-  const [, createIssueDetailsFilterSort] = useIssuesFilterSort();
+  const [getIssueDetailsRowsData, { isLoading: loadingIssueDetails }] =
+    useLazyGetIssueDetailsRowsDataQuery();
 
   const [checkLoadOneIssueById, oneIssueLoading] = useCheckLoadOneIssueById();
-  const [checkDetail] = useCheckDetailMutation();
   const [IssueDetailRootsGridColumns] = useIssueDetailRootsGridColumns();
   const [IssueDetailNotesGridColumns] = useIssueDetailNotesGridColumns();
   const [IssueDetailDerivationBranchesGridColumns] =
@@ -82,13 +66,13 @@ const IssueWork: FC = () => {
     }
   }, [curIssueIdVal, issueId]);
 
-  if (oneIssueLoading) {
+  if (loadingIssueDetails || oneIssueLoading) {
     return <Loading />;
   }
 
   // console.log("IssueWork curIssueIdVal=", curIssueIdVal);
   // console.log("IssueWork issuesRepo=", issuesRepo);
-  // console.log("IssueWork issuesDetailsRepo=", issuesDetailsRepo);
+  console.log("IssueWork issuesDetailsRepo=", issuesDetailsRepo);
 
   if (
     !curIssueIdVal ||
@@ -107,14 +91,13 @@ const IssueWork: FC = () => {
     );
   }
 
-  const oneIssueOffsets = offsetsRepo[curIssueIdVal];
   const oneIssue = issuesRepo[curIssueIdVal];
   const oneIssuesDetails = issuesDetailsRepo[curIssueIdVal];
 
   //console.log("IssueWork issuesRepo[curIssueIdVal]=", issuesRepo[curIssueIdVal]);
   // console.log("IssueWork oneIssueOffsets=", oneIssueOffsets);
   // console.log("IssueWork oneIssue=", oneIssue);
-  // console.log("IssueWork oneIssuesDetails=", oneIssuesDetails);
+  console.log("IssueWork oneIssuesDetails=", oneIssuesDetails);
 
   const strFormat = "YYYY-MM-DDTHH:mm:ss";
 
@@ -175,53 +158,25 @@ const IssueWork: FC = () => {
                   {oneIssue.detailsCounts[detName]}
                 </span>
               </p>
-              <GridViewOld
+              <GridView
                 showCountColumn
                 columns={detailsGridColumns[detName]}
-                rows={oneIssuesDetails[detName]}
-                offset={oneIssueOffsets[detName]}
-                showRows={showIssueDetailRows[detName]}
-                allRowsCount={oneIssue.detailsCounts[detName]}
-                onChangeOffsetAndShowRows={(offset, showRows) =>
-                  dispatch(
-                    changeIssueDetailsOffsetAndShowRows({
-                      issueId: curIssueIdVal,
-                      detailsName: detName,
-                      offset,
-                      showRows,
-                    })
-                  )
-                }
-                onLoad={(offset, rowsCount) =>
-                  loadIssueDetails({
+                rowsData={oneIssuesDetails[detName]}
+                onLoadRows={(offset, rowsCount, sortByFields, filterFields) =>
+                  getIssueDetailsRowsData({
                     issueId: curIssueIdVal,
-                    detailsName: detName,
-                    tabWindowId,
-                    offset,
-                    rowsCount,
+                    detName: detName,
+                    filterSortRequest: {
+                      offset,
+                      rowsCount,
+                      filterFields,
+                      sortByFields,
+                    },
                   })
                 }
-                onFilterSortChange={(sortFields) =>
-                  createIssueDetailsFilterSort(
-                    curIssueIdVal,
-                    detName,
-                    sortFields
-                  )
-                }
-                loading={loadingIssueDetailRows[detName]}
-                filterSortObject={
-                  filterSortRepo[(issueDetailTableNames as any)[detName]]
-                }
-                filterSortId={
-                  filterSortIds[(issueDetailTableNames as any)[detName]]
-                }
-                curscrollTo={
-                  curscrollTo?.detailsName === detName
-                    ? ({ index: curscrollTo.index } as IGridScrollTo)
-                    : undefined
-                }
+                loading={loadingIssueDetails || loadingIssueDetailRows[detName]}
                 backLigth={backLigth}
-              ></GridViewOld>
+              ></GridView>
             </div>
           );
         })}

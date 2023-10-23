@@ -3,27 +3,17 @@
 import { useEffect, useMemo, useCallback, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  ActantCombinationDetail,
-  ActantPosition,
-  VerbNumber,
-  VerbPerson,
-} from "../masterData/mdTypes";
+import { ActantPosition, VerbNumber, VerbPerson } from "../masterData/mdTypes";
 import { useLocation, useParams } from "react-router-dom";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
-import { checkDataLoaded } from "../appcarcass/modules/CheckDataLoaded";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
-import MdListView from "../appcarcass/masterdata/MdListView";
-import { useCheckLoadMultipleListData } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMultipleListData";
-import {
-  DeserializeGridModel,
-  GridModel,
-} from "../appcarcass/redux/types/gridTypes";
 import NameListEditor from "../modelOverview/NameListEditor";
+import MdGridView from "../appcarcass/masterdata/MdGridView";
+import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 
 const ActantCombinationsReCounter: FC = () => {
   // const { alert, isMenuLoading, flatMenu, loadMultipleListData, masterData } =
@@ -36,6 +26,7 @@ const ActantCombinationsReCounter: FC = () => {
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const masterData = useAppSelector((state) => state.masterDataState);
+  const [checkLoadMdTables] = useCheckLoadMdTables();
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
@@ -43,8 +34,8 @@ const ActantCombinationsReCounter: FC = () => {
   const verbNumbers = mdRepo.verbNumbers as VerbNumber[];
 
   const verbPersons = mdRepo.verbPersons as VerbPerson[];
-  const actantCombinationDetails =
-    mdRepo.actantCombinationDetails as ActantCombinationDetail[];
+  // const actantCombinationDetails =
+  //   mdRepo.actantCombinationDetails as ActantCombinationDetail[];
 
   const menLinkKey = useLocation().pathname.split("/")[1];
 
@@ -53,12 +44,12 @@ const ActantCombinationsReCounter: FC = () => {
       "actantPositions",
       "verbNumbers",
       "verbPersons",
-      "actantCombinationDetails",
+      // "actantCombinationDetails",
     ],
     []
   );
 
-  const listTableNames = useMemo(() => ["actantCombinationDetails"], []); //
+  // const listTableNames = useMemo(() => ["actantCombinationDetails"], []); //
 
   const { isMenuLoading, flatMenu } = useAppSelector(
     (state) => state.navMenuState
@@ -71,24 +62,28 @@ const ActantCombinationsReCounter: FC = () => {
     return flatMenu.find((f) => f.menLinkKey === menLinkKey);
   }, [flatMenu, menLinkKey]);
 
-  const [loadMultipleListData] = useCheckLoadMultipleListData();
+  // const [loadMultipleListData] = useCheckLoadMultipleListData();
 
   useEffect(() => {
     const menuItem = isValidPage();
     if (!menuItem) return;
 
-    loadMultipleListData(listTableNames, tableNamesForLoad, null);
-  }, [isMenuLoading, flatMenu, listTableNames, tableNamesForLoad]);
+    // loadMultipleListData(listTableNames, tableNamesForLoad, null);
+    checkLoadMdTables(tableNamesForLoad);
+  }, [isMenuLoading, flatMenu, tableNamesForLoad]);
 
   const { tabKey, recId, recName } = useParams<string>();
 
   const recIdNumber = NzInt(recId);
 
-  const [curscrollTo, backLigth] = useScroller<{
-    tabKey: string | undefined;
-    recId: number;
-    recName: string | undefined;
-  }>({
+  const [curscrollTo, backLigth] = useScroller<
+    | {
+        tabKey: string | undefined;
+        recId: number;
+        recName: string | undefined;
+      }
+    | undefined
+  >({
     tabKey,
     recId: recIdNumber,
     recName,
@@ -98,27 +93,36 @@ const ActantCombinationsReCounter: FC = () => {
     dispatch(saveReturnPageName(menLinkKey));
   }
 
-  const checkedDataTypes = {} as { [key: string]: DataTypeFfModel };
-  const GridRules = {} as { [key: string]: GridModel };
-  let allListsLoaded = true;
+  // const checkedDataTypes = {} as { [key: string]: DataTypeFfModel };
+  // const GridRules = {} as { [key: string]: GridModel };
+  //let allListsLoaded = true;
 
   // console.log("ActantCombinationsReCounter listTableNames = ", listTableNames);
 
-  listTableNames.forEach((listTableName) => {
-    const checkResult = checkDataLoaded(
-      masterData,
-      dataTypesState,
-      listTableName,
-      listTableName
-    );
-    if (checkResult) {
-      const { dataType, gridData } = checkResult;
-      checkedDataTypes[listTableName] = dataType;
-      const grid = DeserializeGridModel(gridData);
-      if (grid) GridRules[listTableName] = grid;
-      else allListsLoaded = false;
-    } else allListsLoaded = false;
-  });
+  // listTableNames.forEach((listTableName) => {
+  //   const checkResult = checkDataLoaded(
+  //     masterData,
+  //     dataTypesState,
+  //     listTableName,
+  //     listTableName
+  //   );
+  //   if (checkResult) {
+  //     const { dataType, gridData } = checkResult;
+  //     checkedDataTypes[listTableName] = dataType;
+  //     const grid = DeserializeGridModel(gridData);
+  //     if (grid) GridRules[listTableName] = grid;
+  //     else {
+  //       allListsLoaded = false;
+  //       //console.log("allListsLoaded = false because of grid=", grid);
+  //     }
+  //   } else {
+  //     allListsLoaded = false;
+  //     // console.log(
+  //     //   "allListsLoaded = false because of checkResult=",
+  //     //   checkResult
+  //     // );
+  //   }
+  // });
 
   // console.log(
   //   "ActantCombinationsReCounter checkedDataTypes = ",
@@ -131,6 +135,9 @@ const ActantCombinationsReCounter: FC = () => {
   //   actantCombinationDetails,
   //   curscrollTo,
   //   mdWorkingOnLoad,
+  //   dataTypes,
+
+  //   allListsLoaded,
   // });
 
   if (mdWorkingOnLoad || isMenuLoading || mdWorkingOnLoadingTables) {
@@ -138,12 +145,11 @@ const ActantCombinationsReCounter: FC = () => {
   }
 
   if (
-    !allListsLoaded ||
-    !curscrollTo ||
+    // !allListsLoaded ||
     !actantPositions ||
     !verbNumbers ||
     !verbPersons ||
-    !actantCombinationDetails ||
+    // !actantCombinationDetails ||
     !dataTypes
   ) {
     return (
@@ -168,17 +174,6 @@ const ActantCombinationsReCounter: FC = () => {
     "verbPersons",
   ];
 
-  const actantCombinationDetailsSorted = actantCombinationDetails
-    .slice()
-    .sort((a, b) => {
-      const f = a.actantCombinationId - b.actantCombinationId;
-      if (f) return f;
-      return (
-        actantPositionsDict[a.actantPositionId].sortId -
-        actantPositionsDict[b.actantPositionId].sortId
-      );
-    });
-
   return (
     <div>
       <h3>აქტანტების კომბინაციების დაანგარიშება</h3>
@@ -194,7 +189,6 @@ const ActantCombinationsReCounter: FC = () => {
       <p>
         <strong>ზმნის პირი</strong> - ზმნის პირის განმარტება (გასაკეთებელია).
       </p>
-
       {listEditorTableNames.map((tn) => {
         const dataType = dataTypes.find((f) => f.dtTable === tn);
         if (dataType) {
@@ -211,7 +205,6 @@ const ActantCombinationsReCounter: FC = () => {
         }
         return <></>;
       })}
-
       <h4>პროცესის აღწერა</h4>
       <p>
         განიხილება პოზიციების რაოდენობა 1 დან მაქსიმუმამდე (
@@ -227,49 +220,10 @@ const ActantCombinationsReCounter: FC = () => {
         ყველა არსებული კომბინაციიდან ვტოვებთ მხოლოდ იმათ, რომლებიც ზემოთ
         ჩამოთვლილ კრიტერიუმებს აკმაყოფილებს.
       </p>
-
       <h4>შედეგი</h4>
-
-      <MdListView
-        readOnly
-        dataType={checkedDataTypes["actantCombinationDetails"]}
-        table={actantCombinationDetailsSorted}
-        gridColumns={GridRules["actantCombinationDetails"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-        firstFilter={{ actantCombinationId: true }}
-      />
+      <MdGridView tableName="actantCombinationDetails" readOnly />
     </div>
   );
 };
 
 export default ActantCombinationsReCounter;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const { isMenuLoading, flatMenu } = state.navMenu;
-
-//   return { alert, isMenuLoading, flatMenu, masterData };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     saveReturnPageName: (pageName) =>
-//       dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//     loadMultipleListData: (listTableNames, tableNamesForLoad) =>
-//       dispatch(
-//         MasterDataActions.loadMultipleListData(
-//           listTableNames,
-//           listTableNames,
-//           tableNamesForLoad
-//         )
-//       ),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(ActantCombinationsReCounter);

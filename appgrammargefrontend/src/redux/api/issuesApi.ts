@@ -23,6 +23,7 @@ import {
   IFilterSortRequest,
   IRowsData,
 } from "../../appcarcass/grid/GridViewTypes";
+import { string } from "yup";
 
 export interface IloadIssueDetailsParameters {
   issueId: number;
@@ -30,6 +31,12 @@ export interface IloadIssueDetailsParameters {
   tabWindowId: number;
   offset: number;
   rowsCount: number;
+}
+
+export interface IGetIssueDetailsRowsDataParameters {
+  issueId: number;
+  detName: string;
+  filterSortRequest: IFilterSortRequest;
 }
 
 export const issuesApi = createApi({
@@ -102,6 +109,40 @@ export const issuesApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
+    getIssueDetailsRowsData: builder.query<
+      IRowsData,
+      IGetIssueDetailsRowsDataParameters
+    >({
+      query(args) {
+        console.log("getIssueDetailsRowsData args=", args);
+        const { issueId, detName, filterSortRequest } = args;
+
+        // console.log(
+        //   "getissuesRowsData JSON.stringify(filterSortRequest)=",
+        //   JSON.stringify(filterSortRequest)
+        // );
+        // console.log(
+        //   "getissuesRowsData btoa(JSON.stringify(filterSortRequest)=",
+        //   btoa(JSON.stringify(filterSortRequest))
+        // );
+        return {
+          url: `/issues/getissuedetailsrowsdata/${issueId}/${detName}?filterSortRequest=${btoa(
+            JSON.stringify(filterSortRequest)
+          )}`,
+        };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { issueId, detName } = args;
+          const { data } = await queryFulfilled;
+          console.log("issuesApi getIssueDetailsRowsData data=", data);
+          dispatch(setOneIssueDetails({ issueId, detName, data }));
+        } catch (error) {
+          dispatch(setAlertApiLoadError(buildErrorMessage(error)));
+        }
+      },
+    }),
+    //////////////////////////////////////////////////////
     createIssuesFilterSort: builder.mutation<void, IFilterSortObject>({
       query(filterSortObject) {
         return {
@@ -135,26 +176,26 @@ export const issuesApi = createApi({
         }
       },
     }),
-    //////////////////////////////////////////////////////
-    loadIssueDetails: builder.query<any[], IloadIssueDetailsParameters>({
-      query(args) {
-        const { issueId, detailsName, tabWindowId, offset, rowsCount } = args;
-        return {
-          url: `/issues/getdetails/${issueId}/${detailsName}/${tabWindowId}/${offset}/${rowsCount}`,
-        };
-      },
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { issueId, detailsName, offset } = args;
-          const { data } = await queryFulfilled;
-          // console.log("issuesApi loadIssueDetails data=", data);
-          dispatch(setOneIssueDetails({ issueId, detailsName, offset, data }));
-        } catch (error) {
-          dispatch(setAlertApiLoadError(buildErrorMessage(error)));
-        }
-      },
-    }),
-    //////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////
+    // loadIssueDetails: builder.query<any[], IloadIssueDetailsParameters>({
+    //   query(args) {
+    //     const { issueId, detailsName, tabWindowId, offset, rowsCount } = args;
+    //     return {
+    //       url: `/issues/getdetails/${issueId}/${detailsName}/${tabWindowId}/${offset}/${rowsCount}`,
+    //     };
+    //   },
+    //   async onQueryStarted(args, { dispatch, queryFulfilled }) {
+    //     try {
+    //       const { issueId, detailsName, offset } = args;
+    //       const { data } = await queryFulfilled;
+    //       // console.log("issuesApi loadIssueDetails data=", data);
+    //       dispatch(setOneIssueDetails({ issueId, detailsName, offset, data }));
+    //     } catch (error) {
+    //       dispatch(setAlertApiLoadError(buildErrorMessage(error)));
+    //     }
+    //   },
+    // }),
+    // //////////////////////////////////////////////////////
     checkDetail: builder.mutation<void, IcheckDetailParameters>({
       query({ issueId, detailsName, id, checkedValue }) {
         return {
@@ -189,8 +230,9 @@ export const {
   useGetIssuesCountQuery,
   useLazyGetissuesQuery,
   useLazyGetissuesRowsDataQuery,
+  useLazyGetIssueDetailsRowsDataQuery,
   useCreateIssuesFilterSortMutation,
   useLazyGetOneIssueByIdQuery,
   useCheckDetailMutation,
-  useLazyLoadIssueDetailsQuery,
+  // useLazyLoadIssueDetailsQuery,
 } = issuesApi;

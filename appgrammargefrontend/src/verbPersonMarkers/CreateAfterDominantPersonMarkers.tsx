@@ -6,13 +6,9 @@ import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import {
   ActantGrammarCase,
-  ActantGrammarCasesByActantType,
   ActantGroup,
   ActantPosition,
   ActantType,
-  ActantTypesByVerbType,
-  AfterDominantPersonMarker,
-  DominantActant,
   VerbNumber,
   VerbPerson,
   VerbSeries,
@@ -20,20 +16,15 @@ import {
   VerbType,
 } from "../masterData/mdTypes";
 import { useLocation, useParams } from "react-router-dom";
-import { useCheckLoadMultipleListData } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMultipleListData";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
-import {
-  DeserializeGridModel,
-  GridModel,
-} from "../appcarcass/redux/types/gridTypes";
-import { checkDataLoaded } from "../appcarcass/modules/CheckDataLoaded";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
-import MdListView from "../appcarcass/masterdata/MdListView";
 import NameListEditor from "../modelOverview/NameListEditor";
+import MdGridView from "../appcarcass/masterdata/MdGridView";
+import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 
 const CreateAfterDominantPersonMarkers: FC = () => {
   const dispatch = useAppDispatch();
@@ -47,13 +38,6 @@ const CreateAfterDominantPersonMarkers: FC = () => {
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const actantGrammarCasesByActantTypes =
-    mdRepo.actantGrammarCasesByActantTypes as ActantGrammarCasesByActantType[];
-  const actantTypesByVerbTypes =
-    mdRepo.actantTypesByVerbTypes as ActantTypesByVerbType[];
-  const dominantActants = mdRepo.dominantActants as DominantActant[];
-  const afterDominantPersonMarkers =
-    mdRepo.afterDominantPersonMarkers as AfterDominantPersonMarker[];
   const actantGrammarCases = mdRepo.actantGrammarCases as ActantGrammarCase[];
   const actantGroups = mdRepo.actantGroups as ActantGroup[];
   const actantPositions = mdRepo.actantPositions as ActantPosition[];
@@ -79,23 +63,9 @@ const CreateAfterDominantPersonMarkers: FC = () => {
       "verbSeries",
       "verbTransitions",
       "verbTypes",
-      "actantGrammarCasesByActantTypes",
-      "actantTypesByVerbTypes",
-      "dominantActants",
-      "afterDominantPersonMarkers",
     ],
     []
   );
-
-  const listTableNames = useMemo(
-    () => [
-      "actantGrammarCasesByActantTypes",
-      "actantTypesByVerbTypes",
-      "dominantActants",
-      "afterDominantPersonMarkers",
-    ],
-    []
-  ); //
 
   const { isMenuLoading, flatMenu } = useAppSelector(
     (state) => state.navMenuState
@@ -108,14 +78,14 @@ const CreateAfterDominantPersonMarkers: FC = () => {
     return flatMenu.find((f) => f.menLinkKey === menLinkKey);
   }, [flatMenu, menLinkKey]);
 
-  const [loadMultipleListData] = useCheckLoadMultipleListData();
+  const [checkLoadMdTables] = useCheckLoadMdTables();
 
   useEffect(() => {
     const menuItem = isValidPage();
     if (!menuItem) return;
 
-    loadMultipleListData(listTableNames, tableNamesForLoad, null);
-  }, [isMenuLoading, flatMenu, listTableNames, tableNamesForLoad]);
+    checkLoadMdTables(tableNamesForLoad);
+  }, [isMenuLoading, flatMenu, tableNamesForLoad]);
 
   const { tabKey, recId, recName } = useParams<string>();
 
@@ -135,28 +105,28 @@ const CreateAfterDominantPersonMarkers: FC = () => {
     dispatch(saveReturnPageName(menLinkKey));
   }
 
-  const checkedDataTypes = {} as { [key: string]: DataTypeFfModel };
-  const GridRules = {} as { [key: string]: GridModel };
-  let allListsLoaded = false;
+  // const checkedDataTypes = {} as { [key: string]: DataTypeFfModel };
+  // const GridRules = {} as { [key: string]: GridModel };
+  // let allListsLoaded = false;
 
-  if (!mdWorkingOnLoad) {
-    allListsLoaded = true;
-    listTableNames.forEach((listTableName) => {
-      const checkResult = checkDataLoaded(
-        masterData,
-        dataTypesState,
-        listTableName,
-        listTableName
-      );
-      if (checkResult) {
-        const { dataType, gridData } = checkResult;
-        checkedDataTypes[listTableName] = dataType;
-        const grid = DeserializeGridModel(gridData);
-        if (grid) GridRules[listTableName] = grid;
-        else allListsLoaded = false;
-      } else allListsLoaded = false;
-    });
-  }
+  // if (!mdWorkingOnLoad) {
+  //   allListsLoaded = true;
+  //   listTableNames.forEach((listTableName) => {
+  //     const checkResult = checkDataLoaded(
+  //       masterData,
+  //       dataTypesState,
+  //       listTableName,
+  //       listTableName
+  //     );
+  //     if (checkResult) {
+  //       const { dataType, gridData } = checkResult;
+  //       checkedDataTypes[listTableName] = dataType;
+  //       const grid = DeserializeGridModel(gridData);
+  //       if (grid) GridRules[listTableName] = grid;
+  //       else allListsLoaded = false;
+  //     } else allListsLoaded = false;
+  //   });
+  // }
   //console.log("CreateAfterDominantPersonMarkers allListsLoaded=", allListsLoaded);
   //debugger;
 
@@ -187,21 +157,21 @@ const CreateAfterDominantPersonMarkers: FC = () => {
   // });
 
   if (
-    !allListsLoaded ||
+    // !allListsLoaded ||
     !curscrollTo ||
     !actantGrammarCases ||
-    !actantGrammarCasesByActantTypes ||
+    // !actantGrammarCasesByActantTypes ||
     !actantGroups ||
     !actantPositions ||
     !actantTypes ||
-    !actantTypesByVerbTypes ||
-    !dominantActants ||
+    // !actantTypesByVerbTypes ||
+    // !dominantActants ||
     !verbNumbers ||
     !verbPersons ||
     !verbSeries ||
     !verbTransitions ||
     !verbTypes ||
-    !afterDominantPersonMarkers ||
+    // !afterDominantPersonMarkers ||
     !dataTypes
   ) {
     return (
@@ -265,18 +235,18 @@ const CreateAfterDominantPersonMarkers: FC = () => {
     "verbSeries",
   ];
 
-  const actantGrammarCasesByActantTypesSorted = actantGrammarCasesByActantTypes
-    .slice()
-    .sort((a, b) => {
-      const f =
-        actantTypesDict[a.actantTypeId].sortId -
-        actantTypesDict[b.actantTypeId].sortId;
-      if (f) return f;
-      return (
-        verbSeriesDict[a.verbSeriesId].sortId -
-        verbSeriesDict[b.verbSeriesId].sortId
-      );
-    });
+  // const actantGrammarCasesByActantTypesSorted = actantGrammarCasesByActantTypes
+  //   .slice()
+  //   .sort((a, b) => {
+  //     const f =
+  //       actantTypesDict[a.actantTypeId].sortId -
+  //       actantTypesDict[b.actantTypeId].sortId;
+  //     if (f) return f;
+  //     return (
+  //       verbSeriesDict[a.verbSeriesId].sortId -
+  //       verbSeriesDict[b.verbSeriesId].sortId
+  //     );
+  //   });
 
   return (
     <div>
@@ -333,50 +303,9 @@ const CreateAfterDominantPersonMarkers: FC = () => {
         return <></>;
       })}
 
-      <MdListView
-        dataType={checkedDataTypes["actantGrammarCasesByActantTypes"]}
-        table={actantGrammarCasesByActantTypesSorted}
-        gridColumns={GridRules["actantGrammarCasesByActantTypes"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
-
-      <MdListView
-        dataType={checkedDataTypes["actantTypesByVerbTypes"]}
-        table={actantTypesByVerbTypes.slice().sort((a, b) => {
-          const f =
-            verbTypesDict[a.verbTypeId].sortId -
-            verbTypesDict[b.verbTypeId].sortId;
-          if (f) return f;
-          return (
-            actantPositionsDict[a.actantPositionId].sortId -
-            actantPositionsDict[b.actantPositionId].sortId
-          );
-        })}
-        gridColumns={GridRules["actantTypesByVerbTypes"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
-
-      <MdListView
-        dataType={checkedDataTypes["dominantActants"]}
-        table={dominantActants.slice().sort((a, b) => {
-          const f = actantGroupsDict[a.actantGroupId].agrKey.localeCompare(
-            actantGroupsDict[b.actantGroupId].agrKey
-          );
-          if (f) return f;
-          return (
-            verbPersonsDict[a.verbPersonId].sortId -
-            verbPersonsDict[b.verbPersonId].sortId
-          );
-        })}
-        gridColumns={GridRules["dominantActants"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-      />
+      <MdGridView tableName="actantGrammarCasesByActantTypes" />
+      <MdGridView tableName="actantTypesByVerbTypes" />
+      <MdGridView tableName="dominantActants" />
 
       <h4>პროცესის აღწერა</h4>
       <p>
@@ -394,25 +323,7 @@ const CreateAfterDominantPersonMarkers: FC = () => {
 
       <h4>შედეგი</h4>
 
-      <MdListView
-        readOnly
-        dataType={checkedDataTypes["afterDominantPersonMarkers"]}
-        table={afterDominantPersonMarkers.slice().sort((a, b) => {
-          const f =
-            verbTypesDict[a.verbTypeId].sortId -
-            verbTypesDict[b.verbTypeId].sortId;
-          if (f) return f;
-          return (
-            verbSeriesDict[a.verbSeriesId].sortId -
-            verbSeriesDict[b.verbSeriesId].sortId
-          );
-        })}
-        gridColumns={GridRules["afterDominantPersonMarkers"].cells}
-        masterData={masterData}
-        curscrollTo={curscrollTo.recId}
-        backLigth={backLigth}
-        firstFilter={{ verbTypeId: true, verbSeriesId: true }}
-      />
+      <MdGridView tableName="afterDominantPersonMarkers" readOnly />
     </div>
   );
 };
