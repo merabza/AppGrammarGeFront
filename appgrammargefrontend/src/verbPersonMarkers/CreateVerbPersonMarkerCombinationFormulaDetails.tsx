@@ -35,6 +35,7 @@ import {
 } from "./CreateVerbPersonMarkerCombinationFormulaDetailsFormData";
 import { LookupCell } from "../appcarcass/redux/types/gridTypes";
 import { GetDisplayValue } from "../appcarcass/modules/GetDisplayValue";
+import MdGridView from "../appcarcass/masterdata/MdGridView";
 
 const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
   const dispatch = useAppDispatch();
@@ -251,142 +252,15 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
         return <></>;
       })}
 
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>ფორმულა</th>
-            <th>
-              ზმნის მრავლობითობის ტიპი
-              <BsComboBox
-                name="verbPluralityTypeId"
-                value={frm ? frm.verbPluralityTypeId : null}
-                dataMember={verbPluralityTypes
-                  .slice()
-                  .sort((a, b) => a.sortId - b.sortId)}
-                valueMember="vptId"
-                displayMember="vptName"
-                getError={getError}
-                sortByDisplayMember={false}
-                firstItem={{ id: -1, name: "ყველა" }}
-                firstItemIsSelectable
-                onChangeValue={onChangeFilterValue}
-              />
-            </th>
-            <th>
-              პირის ნიშნების პარადიგმა
-              <BsComboBox
-                name="verbPersonMarkerParadigmId"
-                value={frm ? frm.verbPersonMarkerParadigmId : null}
-                dataMember={verbPersonMarkerParadigms
-                  .slice()
-                  .sort((a, b) => a.sortId - b.sortId)}
-                valueMember="vpmpnId"
-                displayMember="vpmpnKey"
-                getError={getError}
-                sortByDisplayMember={false}
-                firstItem={{ id: -1, name: "ყველა" }}
-                firstItemIsSelectable
-                onChangeValue={onChangeFilterValue}
-              />
-            </th>
-            <th>
-              ზმნის ტიპი
-              <BsComboBox
-                name="verbTypeId"
-                value={frm ? frm.verbTypeId : null}
-                dataMember={verbTypes
-                  .slice()
-                  .sort((a, b) => a.sortId - b.sortId)}
-                valueMember="vtpId"
-                displayMember="vtpName"
-                getError={getError}
-                sortByDisplayMember={false}
-                firstItem={{ id: -1, name: "ყველა" }}
-                firstItemIsSelectable
-                onChangeValue={onChangeFilterValue}
-              />
-            </th>
-            <th>
-              სერია
-              <BsComboBox
-                name="verbSeriesId"
-                value={frm ? frm.verbSeriesId : null}
-                dataMember={verbSeries
-                  .slice()
-                  .sort((a, b) => a.sortId - b.sortId)}
-                valueMember="vsrId"
-                displayMember="vsrName"
-                getError={getError}
-                sortByDisplayMember={false}
-                firstItem={{ id: -1, name: "ყველა" }}
-                firstItemIsSelectable
-                onChangeValue={onChangeFilterValue}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {verbPersonMarkerCombinationFormulas
-            .filter((f) => filterByHeader(f, frm))
-            .slice()
-            .sort((a, b) => a.vpmcId - b.vpmcId)
-            .map((vpmc, index) => {
-              const bl = curscrollTo.recId === vpmc.vpmcId;
-              // console.log("vpmc=", vpmc);
-              return (
-                <tr key={vpmc.vpmcId.toString()} ref={bl ? backLigth : null}>
-                  <td className={bl ? "backLigth" : undefined}>
-                    {vpmc.vpmcId}
-                  </td>
-                  <td className={bl ? "backLigth" : undefined}>
-                    {getFormulaVisual2(
-                      vpmc.verbPersonMarkerCombinationFormulaDetails,
-                      rangesInGroup,
-                      morphemesQuery
-                    )}
-                  </td>
-                  <td className={bl ? "backLigth" : undefined}>
-                    {GetDisplayValue(masterData, vpmc, {
-                      valueMember: "vptId",
-                      displayMember: "vptName",
-                      typeName: "Lookup",
-                      dataMember: "verbPluralityTypes",
-                      fieldName: "verbPluralityTypeId",
-                    } as LookupCell)}
-                  </td>
-                  <td className={bl ? "backLigth" : undefined}>
-                    {GetDisplayValue(masterData, vpmc, {
-                      valueMember: "vpmpnId",
-                      displayMember: "vpmpnKey",
-                      typeName: "Lookup",
-                      dataMember: "verbPersonMarkerParadigms",
-                      fieldName: "verbPersonMarkerParadigmId",
-                    } as LookupCell)}
-                  </td>
-                  <td className={bl ? "backLigth" : undefined}>
-                    {GetDisplayValue(masterData, vpmc, {
-                      valueMember: "vtpId",
-                      displayMember: "vtpName",
-                      typeName: "Lookup",
-                      dataMember: "verbTypes",
-                      fieldName: "verbTypeId",
-                    } as LookupCell)}
-                  </td>
-                  <td className={bl ? "backLigth" : undefined}>
-                    {GetDisplayValue(masterData, vpmc, {
-                      valueMember: "vsrId",
-                      displayMember: "vsrName",
-                      typeName: "Lookup",
-                      dataMember: "verbSeries",
-                      fieldName: "verbSeriesId",
-                    } as LookupCell)}
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <MdGridView
+        tableName="verbPersonMarkerCombinations"
+        readOnly
+        serverSidePagination
+      />
+      <div>
+        წინა ვერსიაში ამ ცხრილში დამატებით იყო კიდევ ფორმულის სვეტი, რომელიც
+        დასამატებელი იქნება
+      </div>
     </div>
   );
 };
