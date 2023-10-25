@@ -108,7 +108,7 @@ const VerbRowParadigmsOverview: FC = () => {
     mdWorkingOnLoad ||
     // verbRowParadigmNamesLoading ||
     isMenuLoading ||
-    mdWorkingOnLoadingTables
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   ) {
     return <Loading />;
   }

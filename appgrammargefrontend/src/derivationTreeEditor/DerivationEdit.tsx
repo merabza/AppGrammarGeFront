@@ -420,7 +420,7 @@ const DerivationEdit: FC = () => {
       !fromParamsDbrId ||
       !derivationBranchForEdit ||
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !derivationTypes ||
       !morphemeGroups ||
       !morphemeRanges ||
@@ -471,7 +471,7 @@ const DerivationEdit: FC = () => {
   if (
     loadingDerivationBranch ||
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     derivFormulasLoading ||
     rootLoading
   )

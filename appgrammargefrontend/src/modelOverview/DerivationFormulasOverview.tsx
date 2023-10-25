@@ -133,7 +133,7 @@ const DerivationFormulasOverview: FC = () => {
 
   if (
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     derivFormulasLoading ||
     isMenuLoading
     //  ||

@@ -139,7 +139,7 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     mdWorkingOnLoad ||
     LoadingFilteredVerbPersonMarkerCombinationFormulas ||
     isMenuLoading ||
-    mdWorkingOnLoadingTables
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   ) {
     return <Loading />;
   }

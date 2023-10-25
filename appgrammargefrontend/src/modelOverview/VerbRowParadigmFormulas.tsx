@@ -153,7 +153,7 @@ const VerbRowParadigmFormulas: FC = () => {
   //console.log("VerbRowParadigmFormulas curscrollTo=", curscrollTo);
   if (
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     verbParadigmFormulasLoading
   ) {
     return <Loading />;

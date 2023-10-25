@@ -200,7 +200,11 @@ const PhoneticsOptionEdit: FC = () => {
       </div>
     );
 
-  if (loadingPhoneticsOption || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingPhoneticsOption ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 

@@ -141,7 +141,7 @@ const VerbPersonMarkerFormulas: FC = () => {
   if (
     mdWorkingOnLoad ||
     verbPersonMarkerFormulasLoading ||
-    mdWorkingOnLoadingTables
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   ) {
     return <Loading />;
   }

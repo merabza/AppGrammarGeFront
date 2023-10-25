@@ -126,7 +126,7 @@ const NounParadigmFormulas: FC = () => {
   //console.log("NounParadigmFormulas curscrollTo=", curscrollTo);
   if (
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     nounParadigmFormulasLoading
   ) {
     return <Loading />;

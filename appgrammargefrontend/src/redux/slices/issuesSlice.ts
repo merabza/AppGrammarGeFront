@@ -6,11 +6,7 @@ import {
   OneIssueFullModel,
   IIssueDetailLine,
   IcheckDetailParameters,
-  IssueDetailModel,
   IssueModel,
-  IssueDetailByRootModel,
-  IssueDetailByDerivationBranchModel,
-  IssueDetailByInflectionModel,
 } from "../types/issuesTypes";
 import { issueDetailTypes } from "../../issues/IssueDetailsEnums";
 import {

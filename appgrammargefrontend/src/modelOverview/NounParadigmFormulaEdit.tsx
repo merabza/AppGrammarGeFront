@@ -291,7 +291,7 @@ const NounParadigmFormulaEdit: FC = () => {
     //თუ საჭირო ინფორმაცია ჯერ ჩატვირთული არ არის, მაშIნ გაგრეძელებას აზრი არ აქვს
     if (
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !morphemesQuery ||
       !nounParadigms
     )
@@ -342,7 +342,11 @@ const NounParadigmFormulaEdit: FC = () => {
     );
 
   //8. ჩატვირთვის შემოწმება
-  if (loadingNounParadigmFormula || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingNounParadigmFormula ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 

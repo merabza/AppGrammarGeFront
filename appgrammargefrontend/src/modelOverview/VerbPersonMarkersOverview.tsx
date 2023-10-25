@@ -109,7 +109,7 @@ const VerbPersonMarkersOverview: FC = () => {
     mdWorkingOnLoad ||
     // verbPersonMarkerParadigmNamesLoading ||
     isMenuLoading ||
-    mdWorkingOnLoadingTables
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   ) {
     return <Loading />;
   }

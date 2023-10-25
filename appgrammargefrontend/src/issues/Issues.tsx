@@ -77,7 +77,7 @@ const Issues: FC = () => {
   if (
     mdWorkingOnLoad ||
     isMenuLoading ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     issuesCountLoading
   ) {
     return <Loading />;

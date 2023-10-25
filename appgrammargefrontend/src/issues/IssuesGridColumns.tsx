@@ -24,7 +24,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
   const IssuesGridColumns = useCallback(() => {
     if (
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !issueKinds ||
       !issuePriorities ||
       !issueStatuses

@@ -150,7 +150,7 @@ const RootDerivationTree: FC = () => {
   if (
     rootLoading ||
     mdWorkingOnLoadingListData ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     isMenuLoading
   )
     return <WaitPage />;

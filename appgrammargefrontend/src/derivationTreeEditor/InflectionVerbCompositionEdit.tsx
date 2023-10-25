@@ -219,7 +219,7 @@ const InflectionVerbCompositionEdit: FC = () => {
       !fromParamsInfId ||
       !inflectionVerbCompositionForEdit ||
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !pronouns ||
       !morphemeRanges ||
       !classifiers ||
@@ -266,7 +266,7 @@ const InflectionVerbCompositionEdit: FC = () => {
   if (
     loadingInflectionVerbComposition ||
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     rootLoading
   )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა

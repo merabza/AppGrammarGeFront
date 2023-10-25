@@ -103,7 +103,11 @@ const MorphemesOverview: FC = () => {
       </div>
     );
 
-  if (mdWorkingOnLoad || mdWorkingOnLoadingTables || isMenuLoading) {
+  if (
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
+    isMenuLoading
+  ) {
     return <Loading />;
   }
 

@@ -295,7 +295,7 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
     //თუ საჭირო ინფორმაცია ჯერ ჩატვირთული არ არის, მაშIნ გაგრეძელებას აზრი არ აქვს
     if (
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !morphemesQuery ||
       !verbPersonMarkerParadigms
     )
@@ -353,7 +353,7 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
   if (
     loadingVerbPersonMarkerFormula ||
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;

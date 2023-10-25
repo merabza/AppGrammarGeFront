@@ -114,7 +114,7 @@ export const issuesApi = createApi({
       IGetIssueDetailsRowsDataParameters
     >({
       query(args) {
-        console.log("getIssueDetailsRowsData args=", args);
+        //console.log("getIssueDetailsRowsData args=", args);
         const { issueId, detName, filterSortRequest } = args;
 
         // console.log(
@@ -135,7 +135,7 @@ export const issuesApi = createApi({
         try {
           const { issueId, detName } = args;
           const { data } = await queryFulfilled;
-          console.log("issuesApi getIssueDetailsRowsData data=", data);
+          // console.log("issuesApi getIssueDetailsRowsData data=", data);
           dispatch(setOneIssueDetails({ issueId, detName, data }));
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));

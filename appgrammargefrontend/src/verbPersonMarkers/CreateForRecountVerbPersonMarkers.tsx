@@ -146,7 +146,7 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     mdWorkingOnLoad ||
     LoadingFilteredForRecountVerbPersonMarkers ||
     isMenuLoading ||
-    mdWorkingOnLoadingTables
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   ) {
     return <Loading />;
   }
@@ -324,7 +324,11 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
       {/* ეს ცხრილი ძალიან დიდია, ამიტომ საჭიროა ნაწილ ნაწილ ჩატვირთვის უზრუნველყოფა */}
       {/* თვითონ ფილტრის არჩევანიც ცალკე უნდა ჩაიტვირთოს */}
-      {/* <MdGridView tableName="forRecountVerbPersonMarkers" readOnly /> */}
+      <MdGridView
+        tableName="forRecountVerbPersonMarkers"
+        readOnly
+        serverSidePagination
+      />
     </div>
   );
 };

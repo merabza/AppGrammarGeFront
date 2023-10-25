@@ -133,7 +133,11 @@ const CreateAfterDominantPersonMarkers: FC = () => {
   //console.log("CreateAfterDominantPersonMarkers before check load allListsLoaded=", allListsLoaded);
   //console.log("CreateAfterDominantPersonMarkers before check load curscrollTo=", curscrollTo);
 
-  if (mdWorkingOnLoad || isMenuLoading || mdWorkingOnLoadingTables) {
+  if (
+    mdWorkingOnLoad ||
+    isMenuLoading ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  ) {
     return <Loading />;
   }
 

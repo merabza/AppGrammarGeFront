@@ -277,7 +277,11 @@ const RootEdit: FC = () => {
       </div>
     );
 
-  if (loadingRoot || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingRoot ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 

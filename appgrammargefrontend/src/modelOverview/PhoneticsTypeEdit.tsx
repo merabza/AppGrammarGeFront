@@ -218,7 +218,11 @@ const PhoneticsTypeEdit: FC = () => {
     );
 
   //8. ჩატვირთვის შემოწმება
-  if (loadingPhoneticsType || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingPhoneticsType ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 

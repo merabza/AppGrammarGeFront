@@ -579,7 +579,7 @@ const InflectionEdit: FC = () => {
       !fromParamsInfId ||
       !inflectionForEdit ||
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !inflectionBlocks ||
       !inflectionTypes ||
       !pronouns ||
@@ -671,7 +671,7 @@ const InflectionEdit: FC = () => {
   if (
     loadingInflection ||
     mdWorkingOnLoad ||
-    mdWorkingOnLoadingTables ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
     rootLoading ||
     verbRowParadigmsByVerbTypesLoading
   )

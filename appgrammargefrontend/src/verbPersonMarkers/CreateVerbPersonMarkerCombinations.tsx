@@ -5,13 +5,9 @@ import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import {
   ActantGrammarCase,
-  ActantGrammarCasesByActantType,
   ActantGroup,
   ActantPosition,
   ActantType,
-  ActantTypesByVerbType,
-  PluralityChangesByVerbType,
-  VerbPersonMarkerCombination,
   VerbPluralityType,
   VerbSeries,
   VerbTransition,
@@ -19,20 +15,13 @@ import {
 } from "../masterData/mdTypes";
 import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
 import { useLocation, useParams } from "react-router-dom";
-import { useCheckLoadMultipleListData } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMultipleListData";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
-import {
-  DeserializeGridModel,
-  GridModel,
-} from "../appcarcass/redux/types/gridTypes";
-import { checkDataLoaded } from "../appcarcass/modules/CheckDataLoaded";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
-import MdListView from "../appcarcass/masterdata/MdListView";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 
@@ -164,7 +153,11 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
   //   } else allGridsLoaded = false;
   // });
 
-  if (mdWorkingOnLoad || isMenuLoading || mdWorkingOnLoadingTables) {
+  if (
+    mdWorkingOnLoad ||
+    isMenuLoading ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  ) {
     return <Loading />;
   }
 

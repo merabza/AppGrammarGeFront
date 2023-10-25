@@ -140,7 +140,11 @@ const ActantCombinationsReCounter: FC = () => {
   //   allListsLoaded,
   // });
 
-  if (mdWorkingOnLoad || isMenuLoading || mdWorkingOnLoadingTables) {
+  if (
+    mdWorkingOnLoad ||
+    isMenuLoading ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  ) {
     return <Loading />;
   }
 

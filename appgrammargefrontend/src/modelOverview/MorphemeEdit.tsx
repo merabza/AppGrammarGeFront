@@ -205,7 +205,7 @@ const MorphemeEdit: FC = () => {
       !curMrpIdVal ||
       !morphemeForEdit ||
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !phoneticsChanges
     )
       return;
@@ -236,7 +236,11 @@ const MorphemeEdit: FC = () => {
   const morphemesDataType = dataTypes.find((f) => f.dtTable === "morphemes");
 
   //8. ჩატვირთვის შემოწმება
-  if (loadingMorpheme || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingMorpheme ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
   //თუ იდენტიფიკატორი წესიერია და ჩატვირთული ობიექტი ჯერ არ არის, ან საჭირო ცხრილები ჩატვირთული არ არის

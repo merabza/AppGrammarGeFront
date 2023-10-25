@@ -282,7 +282,7 @@ const DerivationFormulaEdit: FC = () => {
       !curDfIdVal ||
       !derivationFormulaForEdit ||
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !derivationTypes ||
       !morphemeRanges ||
       !morphemesQuery ||
@@ -318,7 +318,11 @@ const DerivationFormulaEdit: FC = () => {
     );
 
   //8. ჩატვირთვის შემოწმება
-  if (loadingDerivationFormula || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingDerivationFormula ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 

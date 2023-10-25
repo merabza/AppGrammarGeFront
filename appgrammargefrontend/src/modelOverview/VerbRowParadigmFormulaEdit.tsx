@@ -290,7 +290,7 @@ const VerbRowParadigmFormulaEdit: FC = () => {
     //თუ საჭირო ინფორმაცია ჯერ ჩატვირთული არ არის, მაშIნ გაგრეძელებას აზრი არ აქვს
     if (
       mdWorkingOnLoad ||
-      mdWorkingOnLoadingTables ||
+      Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !morphemesQuery ||
       !verbParadigms
     )
@@ -340,7 +340,11 @@ const VerbRowParadigmFormulaEdit: FC = () => {
     );
 
   //8. ჩატვირთვის შემოწმება
-  if (loadingVerbParadigmFormula || mdWorkingOnLoad || mdWorkingOnLoadingTables)
+  if (
+    loadingVerbParadigmFormula ||
+    mdWorkingOnLoad ||
+    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+  )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 
