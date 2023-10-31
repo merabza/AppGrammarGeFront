@@ -132,8 +132,10 @@ const InflectionEdit: FC = () => {
   const personVariabilityTypes =
     mdRepo.personVariabilityTypes as PersonVariabilityType[];
 
-  const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
-  const [ranges, setRanges] = useState<MorphemeRange[]>([] as MorphemeRange[]);
+  const [curMorphemes, setCurMorphemes] = useState<number[]>([] as number[]);
+  const [curRanges, setCurRanges] = useState<MorphemeRange[]>(
+    [] as MorphemeRange[]
+  );
 
   const { inflectionForEdit } = useAppSelector(
     (state) => state.inflectionCrudState
@@ -239,7 +241,12 @@ const InflectionEdit: FC = () => {
   }
 
   const copyMorphemsToMainData = useCallback(
-    (forForm: InflectionData) => {
+    (forForm: InflectionData, morphemes: number[], ranges: MorphemeRange[]) => {
+      console.log(
+        "InflectionEdit copyMorphemsToMainData morphemes=",
+        morphemes
+      );
+
       const newForm = { ...forForm } as InflectionData;
       newForm.freeMorphemeIds = morphemes
         .map((mrpId) => {
@@ -251,11 +258,11 @@ const InflectionEdit: FC = () => {
         )
         .map((m) => m.mrpId);
 
-      //console.log("InflectionEdit copyMorphemsToMainData newForm=", newForm);
+      console.log("InflectionEdit copyMorphemsToMainData newForm=", newForm);
 
       return newForm;
     },
-    [morphemesQuery, morphemes, ranges]
+    [morphemesQuery]
   );
 
   const setVerbType = useCallback(
@@ -359,7 +366,7 @@ const InflectionEdit: FC = () => {
 
       //დავამზადოთ ფორმის ახალი ობიექტი
       const newForm = JSON.parse(JSON.stringify(curForm)) as InflectionData; // { ...curForm } as InflectionData;
-      //console.log("InflectionEdit setInflectionType newForm=", newForm);
+      console.log("InflectionEdit setInflectionType newForm=", newForm);
 
       //ფლექსიის ტიპის იდენტიფიკატორის მიხედვით მოხდეს ფლექსიის ტიპის პოვნა
       const inflectionType = inflectionTypes.find(
@@ -466,11 +473,14 @@ const InflectionEdit: FC = () => {
         }
       }
 
-      //console.log("InflectionEdit setInflectionType before createFormulaFormData newForm=", newForm);
+      console.log(
+        "InflectionEdit setInflectionType before createFormulaFormData newForm=",
+        newForm
+      );
 
       const formulaFormDataType = createFormulaFormData(
-        ranges,
-        morphemes,
+        curRanges,
+        curMorphemes,
         rangesInGroup,
         newForm.freeMorphemeIds,
         morphemesQuery,
@@ -478,8 +488,12 @@ const InflectionEdit: FC = () => {
         true
       );
 
-      setMorphemes(formulaFormDataType.morphemes);
-      setRanges(formulaFormDataType.ranges);
+      console.log(
+        "InflectionEdit setInflectionType formulaFormDataType=",
+        formulaFormDataType
+      );
+      setCurMorphemes(formulaFormDataType.morphemes);
+      setCurRanges(formulaFormDataType.ranges);
       if (formulaFormDataType.error)
         dispatch(setAlertClientRunTimeError(formulaFormDataType.error));
 
@@ -502,7 +516,11 @@ const InflectionEdit: FC = () => {
 
       //გავუგზავნოთ ახალი ფორმა ფორმის მენეჯერს.
 
-      const newFormWithMorphemes = copyMorphemsToMainData(newForm);
+      const newFormWithMorphemes = copyMorphemsToMainData(
+        newForm,
+        formulaFormDataType.morphemes,
+        formulaFormDataType.ranges
+      );
 
       //console.log("InflectionEdit setInflectionType newFormWithMorphemes=", newFormWithMorphemes);
 
@@ -997,8 +1015,8 @@ const InflectionEdit: FC = () => {
                 )}
 
                 <BasesAndFreeMorphemes
-                  ranges={ranges}
-                  morphemes={morphemes}
+                  ranges={curRanges}
+                  morphemes={curMorphemes}
                   morphemesQuery={morphemesQuery}
                   forInflection
                   phoneticsTypes={phoneticsTypes}
@@ -1008,9 +1026,13 @@ const InflectionEdit: FC = () => {
                   predecessors={frm.inflectionPredecessors}
                   onMorphemeChange={(index, value) => {
                     let newForm = { ...frm };
-                    morphemes[index] = value;
+                    curMorphemes[index] = value;
                     // //გავუგზავნოთ ახალი ფორმა ფორმის მენეჯერს.
-                    newForm = copyMorphemsToMainData(newForm);
+                    newForm = copyMorphemsToMainData(
+                      newForm,
+                      curMorphemes,
+                      curRanges
+                    );
                     //console.log("InflectionEdit onMorphemeChange newForm=",newForm);
                     setFormData(newForm);
                   }}

@@ -9,6 +9,7 @@ import {
   Spinner,
   DropdownButton,
   Dropdown,
+  Form,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MessageBox from "../appcarcass/common/MessageBox";
@@ -63,15 +64,14 @@ const ParadigmTopNavMenu: FC = () => {
   return (
     <Nav>
       <Navbar.Brand> პარადიგმა </Navbar.Brand>
-      <ToggleButton
-        type="checkbox"
-        checked={prdShowhyphens ? true : false}
-        className="btn-space"
-        onChange={(val) => {
-          dispatch(showhyphens(val.target.checked));
-        }}
-        value="დეფისებით"
-      >
+      <ToggleButton type="checkbox" value="დეფისებით">
+        <Form.Check
+          type="checkbox"
+          checked={prdShowhyphens ? true : false}
+          onChange={(val) => {
+            dispatch(showhyphens(val.target.checked));
+          }}
+        />
         <FontAwesomeIcon icon="minus" /> დეფისებით
       </ToggleButton>
 
@@ -95,15 +95,14 @@ const ParadigmTopNavMenu: FC = () => {
         })}
       </DropdownButton>
 
-      <ToggleButton
-        type="checkbox"
-        checked={prdShowFormulas ? true : false}
-        className="btn-space"
-        onChange={(val) => {
-          dispatch(showFormulas(val.target.checked));
-        }}
-        value="ფორმულები"
-      >
+      <ToggleButton type="checkbox" value="1">
+        <Form.Check
+          type="checkbox"
+          checked={prdShowFormulas ? true : false}
+          onChange={(val) => {
+            dispatch(showFormulas(val.target.checked));
+          }}
+        />
         <FontAwesomeIcon icon="bezier-curve" /> ფორმულები
       </ToggleButton>
 

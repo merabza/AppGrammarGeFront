@@ -92,8 +92,10 @@ const DerivationEdit: FC = () => {
   );
   const [autoPhonetics, setAutoPhonetics] = useState<boolean>(false);
 
-  const [ranges, setRanges] = useState<MorphemeRange[]>([] as MorphemeRange[]);
-  const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
+  const [curRanges, setCurRanges] = useState<MorphemeRange[]>(
+    [] as MorphemeRange[]
+  );
+  const [curMorphemes, setCurMorphemes] = useState<number[]>([] as number[]);
 
   const { derivationBranchForEdit } = useAppSelector(
     (state) => state.derivationCrudState
@@ -332,16 +334,16 @@ const DerivationEdit: FC = () => {
       //დავაფიქსიროთ დერივაციის ტიპი
       newForm.derivationBranch.derivationFormulaId = newderivationFormulaId;
       const formulaFormDataType = createFormulaFormData(
-        ranges,
-        morphemes,
+        curRanges,
+        curMorphemes,
         rangesInGroup,
         newForm.freeMorphemeIds,
         morphemesQuery,
         true
       );
 
-      setMorphemes(formulaFormDataType.morphemes);
-      setRanges(formulaFormDataType.ranges);
+      setCurMorphemes(formulaFormDataType.morphemes);
+      setCurRanges(formulaFormDataType.ranges);
       if (formulaFormDataType.error)
         dispatch(setAlertClientRunTimeError(formulaFormDataType.error));
 
@@ -367,8 +369,8 @@ const DerivationEdit: FC = () => {
       morphemeRanges,
       morphemesQuery,
       morphemeRangesByDerivationTypes,
-      morphemes,
-      ranges,
+      curMorphemes,
+      curRanges,
     ]
   );
 
@@ -644,8 +646,8 @@ const DerivationEdit: FC = () => {
           {!!frm.derivationBranch.derivationFormulaId && (
             <div>
               <BasesAndFreeMorphemes
-                ranges={ranges}
-                morphemes={morphemes}
+                ranges={curRanges}
+                morphemes={curMorphemes}
                 morphemesQuery={morphemesQuery}
                 phoneticsTypes={phoneticsTypes}
                 phoneticsChangesQuery={phoneticsChangesQuery}
@@ -659,8 +661,12 @@ const DerivationEdit: FC = () => {
                     JSON.stringify(frm)
                   ) as DerivationBranchData;
                   //let newForm = { ...frm };
-                  morphemes[index] = value;
-                  newForm = copyMorphemsToMainData(newForm, morphemes, ranges);
+                  curMorphemes[index] = value;
+                  newForm = copyMorphemsToMainData(
+                    newForm,
+                    curMorphemes,
+                    curRanges
+                  );
                   // //გავუგზავნოთ ახალი ფორმა ფორმის მენეჯერს.
                   setFormData(newForm);
                 }}
