@@ -9,8 +9,8 @@ import {
   PhoneticsType,
   PhoneticsOption,
   PhoneticsChangeModel,
+  PhoneticsChangeQueryModel,
 } from "../masterData/mdTypes";
-// import { PhoneticsChangeModel } from "../redux/types/masterDataTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useForman } from "../appcarcass/hooks/useForman";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
@@ -43,7 +43,6 @@ import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
 const MorphemeEdit: FC = () => {
-  //const history = useHistory();
   const navigate = useNavigate();
 
   //1. იდენტიფიკატორი
@@ -51,36 +50,16 @@ const MorphemeEdit: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  //2. კომპონენტის თვისებები
-  // const { alert, mdWorkingOnLoad, checkLoadMdTables,
-  //   phoneticsTypes, morphemeRanges, morphemesQuery, phoneticsChanges, phoneticsChangesQuery, phoneticsOptions,
-  //   savingMorpheme, loadingMorpheme, workingOnDeleteMorpheme, morphemeForEdit, getOneMorphemeById, DeleteFailure } = props;
-
-  // const {
-  //   alert,
-  //   masterData,
-  //   savingMorpheme,
-  //   loadingMorpheme,
-  //   workingOnDeleteMorpheme,
-  //   morphemeForEdit,
-  //   DeleteFailure,
-  //   checkLoadMdTables,
-  //   getOneMorphemeById,
-  // } = props;
-
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
   );
 
-  // const { datatypesLoading, datatypes } = masterData;
-
   const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
   const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
   const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const phoneticsChanges =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeModel[];
+  const phoneticsChanges = mdRepo.phoneticsChanges as PhoneticsChangeModel[];
   const phoneticsChangesQuery =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeModel[];
+    mdRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
   const phoneticsOptions = mdRepo.phoneticsOptions as PhoneticsOption[];
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
@@ -102,7 +81,8 @@ const MorphemeEdit: FC = () => {
     (state) => state.modelEditorMorphemesCrudState
   );
 
-  //console.log("MorphemeEdit props=", props);
+  console.log("MorphemeEdit phoneticsChanges=", phoneticsChanges);
+  console.log("MorphemeEdit phoneticsChangesQuery=", phoneticsChangesQuery);
 
   //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
   const tableNamesForClear = useMemo(
@@ -160,7 +140,11 @@ const MorphemeEdit: FC = () => {
               (f) =>
                 f.phoneticsTypeId === newPhoneticsTypeId && f.phoneticsOptionId
             ).length;
-      const newForm = { ...curForm };
+
+      const newForm = JSON.parse(
+        JSON.stringify(curForm)
+      ) as MorphemeEditFormData;
+
       newForm.phoneticsChangesLength = pcLength;
       if (!newForm.phoneticsOptionMorphemeIds)
         newForm.phoneticsOptionMorphemeIds = [];
@@ -171,7 +155,7 @@ const MorphemeEdit: FC = () => {
         newPhoneticsTypeId == null ? 0 : newPhoneticsTypeId;
       setFormData(newForm);
     },
-    [phoneticsChanges, setFormData]
+    [phoneticsChanges]
   );
 
   const { mrpId: fromParamsmrpId } = useParams<string>();
@@ -220,8 +204,8 @@ const MorphemeEdit: FC = () => {
     mdWorkingOnLoadingTables,
   ]);
 
-  //console.log("MorphemeEdit curMrpIdVal=", curMrpIdVal);
-  //console.log("MorphemeEdit frm=", frm);
+  console.log("MorphemeEdit curMrpIdVal=", curMrpIdVal);
+  console.log("MorphemeEdit frm=", frm);
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
 
@@ -418,7 +402,7 @@ const MorphemeEdit: FC = () => {
             controlGroupId="morphemeOccasionPhoneticsChangeIds"
             label="ფონეტიკური შესაძლებლობები"
             basePhoneticsChanges={frm.morphemeOccasionPhoneticsChangeIds}
-            phoneticsChanges={phoneticsChangesQuery}
+            phoneticsChangesQuery={phoneticsChangesQuery}
             getError={getError}
             onChangeValue={changeField}
             onTrashButtonClick={(index) => {
@@ -451,31 +435,3 @@ const MorphemeEdit: FC = () => {
 };
 
 export default MorphemeEdit;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const { savingMorpheme, loadingMorpheme, workingOnDeleteMorpheme, morphemeForEdit, DeleteFailure } = state.modelEditorStore
-//   const masterData = state.masterData;
-
-//   return { alert, masterData,
-//     savingMorpheme, loadingMorpheme, workingOnDeleteMorpheme, morphemeForEdit, DeleteFailure
-//    };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     getOneMorphemeById: (mrpId) => dispatch(ModelEditorActions.getOneMorphemeById(mrpId)),
-//     updateMorpheme: (history, mrp) => dispatch(ModelEditorActions.updateMorpheme(history, mrp)),
-//     createMorpheme: (history, mrp) => dispatch(ModelEditorActions.createMorpheme(history, mrp)),
-//     deleteMorpheme: (history, mrpId) => dispatch(ModelEditorActions.deleteMorpheme(history, mrpId)),
-//     clearDeletingFailure: () => dispatch(ModelEditorActions.clearDeletingFailure()),
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     clearTablesFromRepo: (tableNamesFroClear, tableNamesFroLoad) => dispatch(MasterDataActions.clearTablesFromRepo(tableNamesFroClear, tableNamesFroLoad)),
-//     clearAlert: () => dispatch(alertActions.clear())
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(MorphemeEdit);

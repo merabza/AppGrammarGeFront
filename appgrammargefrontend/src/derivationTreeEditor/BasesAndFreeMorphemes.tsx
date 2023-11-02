@@ -15,6 +15,7 @@ import {
   Morpheme,
   MorphemeRange,
   PhoneticsChangeModel,
+  PhoneticsChangeQueryModel,
   PhoneticsType,
 } from "../masterData/mdTypes";
 import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
@@ -33,7 +34,7 @@ type BasesAndFreeMorphemesProps = {
   morphemes: number[];
   morphemesQuery: Morpheme[];
   phoneticsTypes: PhoneticsType[];
-  phoneticsChangesQuery?: PhoneticsChangeModel[];
+  phoneticsChangesQuery?: PhoneticsChangeQueryModel[];
   forInflection?: boolean | undefined;
   selectPhoneticsType: boolean;
   autoPhonetics?: boolean | undefined;

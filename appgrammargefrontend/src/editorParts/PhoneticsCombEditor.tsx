@@ -5,7 +5,10 @@ import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import OnePlusButton from "../appcarcass/editorParts/OnePlusButton";
 import OneStrongLabel from "../appcarcass/editorParts/OneStrongLabel";
 import { fnChangeField, fnGetError } from "../appcarcass/hooks/useForman";
-import { PhoneticsChangeModel } from "../masterData/mdTypes";
+import {
+  PhoneticsChangeModel,
+  PhoneticsChangeQueryModel,
+} from "../masterData/mdTypes";
 // import { PhoneticsChangeModel } from "../redux/types/masterDataTypes";
 
 export type fnTrashButtonClick = (index: number) => void;
@@ -19,7 +22,7 @@ type PhoneticsCombEditorProps = {
   onChangeValue: fnChangeField;
   onTrashButtonClick: fnTrashButtonClick;
   onPlusButtonClick: fnPlusButtonClick;
-  phoneticsChanges: PhoneticsChangeModel[];
+  phoneticsChangesQuery: PhoneticsChangeQueryModel[];
 };
 
 const PhoneticsCombEditor: FC<PhoneticsCombEditorProps> = (props) => {
@@ -31,7 +34,7 @@ const PhoneticsCombEditor: FC<PhoneticsCombEditorProps> = (props) => {
     onChangeValue,
     onTrashButtonClick,
     onPlusButtonClick,
-    phoneticsChanges,
+    phoneticsChangesQuery,
   } = props;
   //console.log("PhoneticsCombEditor props=", props);
 
@@ -47,7 +50,7 @@ const PhoneticsCombEditor: FC<PhoneticsCombEditorProps> = (props) => {
               controlId={`${controlGroupId}[${index}]`}
               label={`${index + 1}`}
               value={item}
-              dataMember={phoneticsChanges.filter(
+              dataMember={phoneticsChangesQuery.filter(
                 (fc) => !fc.onlyPhoneticsType
               )}
               firstItem={{ id: 0, name: "აირჩიე ფონეტიკური ცვლილება" }}

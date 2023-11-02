@@ -50,6 +50,7 @@ import { useForman } from "../appcarcass/hooks/useForman";
 import {
   DerivationType,
   PhoneticsChangeModel,
+  PhoneticsChangeQueryModel,
   classifierModel,
 } from "../masterData/mdTypes";
 
@@ -137,8 +138,8 @@ const RootEdit: FC = () => {
   );
   const derivationTypes = mdRepo.derivationTypes as DerivationType[];
   const classifiers = mdRepo.classifiers as classifierModel[];
-  const phoneticsChanges =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeModel[];
+  const phoneticsChangesQuery =
+    mdRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
 
   const { user } = useAppSelector((state) => state.userState);
 
@@ -303,7 +304,7 @@ const RootEdit: FC = () => {
     (curRootIdVal && !rootForEdit) ||
     !derivationTypes ||
     !classifiers ||
-    !phoneticsChanges ||
+    !phoneticsChangesQuery ||
     !frm ||
     !frm.root
   ) {
@@ -453,7 +454,7 @@ const RootEdit: FC = () => {
             controlGroupId="basePhoneticsCombDetails"
             label="შედეგის ფონეტიკური შესაძლებლობები"
             basePhoneticsChanges={frm.basePhoneticsCombDetails}
-            phoneticsChanges={phoneticsChanges}
+            phoneticsChangesQuery={phoneticsChangesQuery}
             getError={getError}
             onChangeValue={changeField}
             onTrashButtonClick={(index) => {

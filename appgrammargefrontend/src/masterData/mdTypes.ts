@@ -48,11 +48,15 @@ export interface classifierModel {}
 
 export interface PhoneticsChangeModel {
   phcId: number;
-  phcName: string;
-  onlyPhoneticsType: boolean;
   phoneticsTypeId: number | null;
   phoneticsOptionId: number | null;
   phoneticsTypeByOptionSequentialNumber: number;
+}
+
+export interface PhoneticsChangeQueryModel {
+  phcId: number;
+  phcName: string;
+  onlyPhoneticsType: boolean;
 }
 
 export interface MorphemeGroup {

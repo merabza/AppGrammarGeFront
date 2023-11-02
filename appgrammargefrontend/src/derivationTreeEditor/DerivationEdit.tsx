@@ -28,6 +28,7 @@ import {
   MorphemeRange,
   MorphemeRangeByDerivationType,
   PhoneticsChangeModel,
+  PhoneticsChangeQueryModel,
   PhoneticsType,
   classifierModel,
 } from "../masterData/mdTypes";
@@ -84,7 +85,7 @@ const DerivationEdit: FC = () => {
   const morphemeGroups = mdRepo.morphemeGroups as MorphemeGroup[];
   const classifiers = mdRepo.classifiers as classifierModel[];
   const phoneticsChangesQuery =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeModel[];
+    mdRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
   const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
 
   const [currentRootId, setCurrentRootId] = useState<number | undefined>(
@@ -717,7 +718,7 @@ const DerivationEdit: FC = () => {
                 controlGroupId="basePhoneticsCombDetails"
                 label="შედეგის ფონეტიკური შესაძლებლობები"
                 basePhoneticsChanges={frm.basePhoneticsCombDetails}
-                phoneticsChanges={phoneticsChangesQuery}
+                phoneticsChangesQuery={phoneticsChangesQuery}
                 getError={getError}
                 onChangeValue={changeField}
                 onTrashButtonClick={(index) => {
