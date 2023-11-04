@@ -32,15 +32,6 @@ import { getFormulaVisual2 } from "./FormulasModule";
 import { GetDisplayValueForLookup } from "../appcarcass/modules/GetDisplayValue";
 
 const VerbPersonMarkerFormulas: FC = () => {
-  // const {
-  //   alert,
-  //   masterData,
-  //   verbPersonMarkerFormulas,
-  //   verbPersonMarkerFormulasLoading,
-  //   checkLoadMdTables,
-  //   checkloadVerbPersonMarkerFormulas,
-  // } = props;
-
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
   );
@@ -61,8 +52,6 @@ const VerbPersonMarkerFormulas: FC = () => {
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-
-  //console.log("VerbPersonMarkerFormulas props=", props);
 
   const { paradigmId } = useParams<string>();
 
@@ -358,35 +347,3 @@ const VerbPersonMarkerFormulas: FC = () => {
 };
 
 export default VerbPersonMarkerFormulas;
-
-// export function GetDisplayValue2(dataTable, value, col) {
-
-//   const { dataMember, valueMember, displayMember, rowSource, columnType } = col;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const { verbPersonMarkerFormulas, verbPersonMarkerFormulasLoading } =
-//     state.formulasStore;
-
-//   return {
-//     alert,
-//     masterData,
-//     verbPersonMarkerFormulas,
-//     verbPersonMarkerFormulasLoading,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) =>
-//       dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     checkloadVerbPersonMarkerFormulas: (paradigmId) =>
-//       dispatch(FormulasActions.checkloadVerbPersonMarkerFormulas(paradigmId)),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(VerbPersonMarkerFormulas);

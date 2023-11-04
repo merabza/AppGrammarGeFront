@@ -4,15 +4,7 @@ import { FC } from "react";
 import { useEffect, useState } from "react";
 import { Col, Spinner, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// import { actionCreators as DerivTreeActions } from "./DerivationTreeStore";
-// import WaitPage from "../../carcass/common/WaitPage";
-// import { NzInt } from "../../carcass/common/myFunctions";
-// import MessageBox from "../../carcass/common/MessageBox";
-
 import "./Paradigm.css";
-// import { NzInt } from "../appcarcass/common/myFunctions";
-// import { useParams } from "react-router-dom";
 import {
   useLazyGetParadigmQuery,
   useLazyGetVerbCompositionParadigmQuery,
@@ -22,13 +14,11 @@ import {
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import { SamplePositionModel } from "../redux/types/rootsTypes";
 import WaitPage from "../appcarcass/common/WaitPage";
-// import { Pronoun } from "../redux/types/masterDataTypes";
 import MessageBox from "../appcarcass/common/MessageBox";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { Pronoun } from "../masterData/mdTypes";
-// import { string } from "yup";
 
 type ParadigmProps = {
   InflectionIdentifier: number;
@@ -388,25 +378,3 @@ const Paradigm: FC<ParadigmProps> = (props) => {
 };
 
 export default Paradigm;
-
-// function mapStateToProps(state) {
-//   const { inflectionWorkingOnLoadParadigm, paradigm, prdShowhyphens, prdShowFormulas, prdIspMorphemeNom, savingParadigmSamplePositions } = state.derivTree;
-//   const { mdWorkingOnLoad } = state.masterData;
-//   const {pronouns} = state.masterData.mdRepo;
-//   const { user } = state.authentication;
-//   return { inflectionWorkingOnLoadParadigm, paradigm, prdShowhyphens, prdShowFormulas, prdIspMorphemeNom, mdWorkingOnLoad, pronouns, user, savingParadigmSamplePositions };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     GetParadigm: (infId) => dispatch(DerivTreeActions.GetParadigm(infId)),
-//     GetVerbCompositionParadigm: (ivcId) => dispatch(DerivTreeActions.GetVerbCompositionParadigm(ivcId)),
-//     saveParadigmSamplePositions: (infId, samples) => dispatch(DerivTreeActions.saveParadigmSamplePositions(infId, samples)),
-//     saveVerbCompositionParadigmSamplePositions: (ivcId, samples) => dispatch(DerivTreeActions.saveVerbCompositionParadigmSamplePositions(ivcId, samples))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Paradigm);

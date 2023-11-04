@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../appcarcass/redux/hooks";
 import { useLazyGetVerbsForDropDownQuery } from "../../redux/api/rootsApi";
 import {
+  SetVerbsForDropdown,
   SetVerbsForDropdownloading,
   setVerbsPayloadType,
 } from "../../redux/slices/rootsSlice";
@@ -50,7 +51,4 @@ export function useVerbsForDropDown(): [fnloadVerbsForDropDown] {
   );
 
   return [loadVerbsForDropDownList];
-}
-function SetVerbsForDropdown(payload: setVerbsPayloadType): any {
-  throw new Error("Function not implemented.");
 }

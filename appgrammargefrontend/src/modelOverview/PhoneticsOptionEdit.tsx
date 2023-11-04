@@ -41,7 +41,6 @@ import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/u
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
 const PhoneticsOptionEdit: FC = () => {
-  //const history = useHistory();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -49,20 +48,6 @@ const PhoneticsOptionEdit: FC = () => {
   const [expandedActionIndex, setExpandedActionIndex] = useState<number | null>(
     null
   ); //გახსნილი მოქმედების ნომერი
-
-  // //2. კომპონენტის თვისებები
-  // const {
-  //   alert,
-  //   datatypesLoading,
-  //   datatypes,
-  //   checkLoadDataTypes,
-  //   savingPhoneticsOption,
-  //   loadingPhoneticsOption,
-  //   DeleteFailure,
-  //   workingOnDeletePhoneticsOption,
-  //   phoneticsOptionForEdit,
-  //   getOnePhoneticsOptionById,
-  // } = props;
 
   const { phoId } = useParams<string>();
 
@@ -424,50 +409,3 @@ const PhoneticsOptionEdit: FC = () => {
 };
 
 export default PhoneticsOptionEdit;
-
-// function mapStateToProps(state) {
-//   const { datatypesLoading, datatypes } = state.masterData;
-//   const {
-//     DeleteFailure,
-//     savingPhoneticsOption,
-//     loadingPhoneticsOption,
-//     workingOnDeletePhoneticsOption,
-//     phoneticsOptionForEdit,
-//   } = state.modelEditorStore;
-//   const alert = state.alert;
-
-//   return {
-//     alert,
-//     datatypesLoading,
-//     datatypes,
-//     DeleteFailure,
-//     savingPhoneticsOption,
-//     loadingPhoneticsOption,
-//     workingOnDeletePhoneticsOption,
-//     phoneticsOptionForEdit,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     getOnePhoneticsOptionById: (phoId) =>
-//       dispatch(ModelEditorActions.getOnePhoneticsOptionById(phoId)),
-//     updatePhoneticsOption: (history, pho) =>
-//       dispatch(ModelEditorActions.updatePhoneticsOption(history, pho)),
-//     createPhoneticsOption: (history, pho) =>
-//       dispatch(ModelEditorActions.createPhoneticsOption(history, pho)),
-//     deletePhoneticsOption: (history, phoId) =>
-//       dispatch(ModelEditorActions.deletePhoneticsOption(history, phoId)),
-//     clearDeletingFailure: () =>
-//       dispatch(ModelEditorActions.clearDeletingFailure()),
-//     clearTablesFromRepo: (tableNamesForClear) =>
-//       dispatch(MasterDataActions.clearTablesFromRepo(tableNamesForClear, [])),
-//     checkLoadDataTypes: () => dispatch(MasterDataActions.checkLoadDataTypes()),
-//     clearAlert: () => dispatch(alertActions.clear()),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(PhoneticsOptionEdit);

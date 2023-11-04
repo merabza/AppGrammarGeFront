@@ -27,7 +27,6 @@ import {
   MorphemeGroup,
   MorphemeRange,
   MorphemeRangeByDerivationType,
-  PhoneticsChangeModel,
   PhoneticsChangeQueryModel,
   PhoneticsType,
   classifierModel,

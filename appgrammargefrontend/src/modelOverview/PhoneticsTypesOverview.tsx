@@ -24,9 +24,6 @@ import {
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
 const PhoneticsTypesOverview: FC = () => {
-  // const { alert, isMenuLoading, flatMenu, masterData, checkLoadMdTables } =
-  //   props;
-
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
   );
@@ -41,16 +38,6 @@ const PhoneticsTypesOverview: FC = () => {
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-
-  // const {
-  //   // phoneticsOptions,
-  //   // phoneticsTypes,
-  //   // phoneticsOptionDetails,
-  //   // phoneticsTypeProhibitions,
-  //   phoneticsChanges,
-  // } = masterData.mdRepo;
-
-  //console.log("PhoneticsTypesOverview props=", props)
 
   const menLinkKey = useLocation().pathname.split("/")[1];
 
@@ -363,22 +350,3 @@ const PhoneticsTypesOverview: FC = () => {
 };
 
 export default PhoneticsTypesOverview;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const { isMenuLoading, flatMenu } = state.navMenu;
-//   const masterData = state.masterData;
-
-//   return {alert, isMenuLoading, flatMenu, masterData };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(PhoneticsTypesOverview);

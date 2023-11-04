@@ -15,7 +15,6 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 const itemsPerPage = 30;
 
 const BaseSearch: FC = () => {
-  //console.log("BaseSearch props=", props);
   const { isMenuLoading, flatMenu } = useAppSelector(
     (state) => state.navMenuState
   );
@@ -35,11 +34,8 @@ const BaseSearch: FC = () => {
     return { pageNom, pagekey: baseName + "_" + itemsPerPage + "_" + pageNom };
   }
 
-  //console.log("BaseSearch Start props=", props);
-
   const menLinkKey = useLocation().pathname.split("/")[1];
 
-  // const { baseName, page } = props.match.params;
   const { baseName, page } = useParams<string>();
 
   const [currentBaseName, setCurrentBaseName] = useState<string | undefined>(
@@ -186,20 +182,3 @@ const BaseSearch: FC = () => {
 };
 
 export default BaseSearch;
-
-// function mapStateToProps(state) {
-//   const { basesPageLoading, memoBaseCounts, memoBasePages } = state.derivTree;
-//   const { isMenuLoading, flatMenu } = state.navMenu;
-//   return { isMenuLoading, flatMenu, basesPageLoading, memoBaseCounts, memoBasePages };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     GetBasesByPages: (val, itemsPerPage, currentPage, pagekey) => dispatch(DerivTreeActions.GetBasesByPages(val, itemsPerPage, currentPage, pagekey))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(BaseSearch);

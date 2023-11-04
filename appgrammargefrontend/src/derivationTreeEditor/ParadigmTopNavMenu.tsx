@@ -22,19 +22,8 @@ import {
 } from "../redux/slices/rootsSlice";
 import { useParadigmSaveSamplesMutation } from "../redux/api/rootsApi";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
-// import { actionCreators as DerivTreeActions } from './DerivationTreeStore';
-// import { actionCreators as FormulasActions } from '../overviews/FormulasStore';
 
 const ParadigmTopNavMenu: FC = () => {
-  // const {
-  //   prdShowhyphens,
-  //   prdShowFormulas,
-  //   prdIspMorphemeNom,
-  //   paradigm,
-  //   savingParadigmSamples,
-  //   user,
-  // } = props;
-
   const { infId } = useParams<string>();
 
   const [ParadigmSaveSamples, { isLoading: savingParadigmSamples }] =
@@ -155,26 +144,3 @@ const ParadigmTopNavMenu: FC = () => {
 };
 
 export default ParadigmTopNavMenu;
-
-// function mapStateToProps(state) {
-//   const { prdShowhyphens, prdShowFormulas, prdIspMorphemeNom, paradigm, savingParadigmSamples } = state.derivTree;
-//   const { user } = state.authentication;
-//   return { prdShowhyphens, prdShowFormulas, prdIspMorphemeNom, paradigm, savingParadigmSamples, user };
-
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     Showhyphens: (val) => dispatch(DerivTreeActions.Showhyphens(val)),
-//     ShowFormulas: (val) => dispatch(DerivTreeActions.ShowFormulas(val)),
-//     SwithcIspMorphemeNom: (val) => dispatch(DerivTreeActions.SwithcIspMorphemeNom(val)),
-//     paradigmSaveSamples: (infId) => dispatch(DerivTreeActions.paradigmSaveSamples(infId)),
-//     clearNounParadigmFormulas: (paradigmIdsForClear) => dispatch(FormulasActions.clearNounParadigmFormulas(paradigmIdsForClear)),
-//     clearVerbRowParadigmFormulas: (paradigmIdsForClear) => dispatch(FormulasActions.clearVerbRowParadigmFormulas(paradigmIdsForClear))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(ParadigmTopNavMenu);

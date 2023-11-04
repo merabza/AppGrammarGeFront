@@ -21,16 +21,11 @@ import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
 const MorphemesOverview: FC = () => {
-  // const { alert, isMenuLoading, flatMenu, masterData, checkLoadMdTables } =
-  //   props;
-
   const dispatch = useAppDispatch();
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
   );
-
-  // const { datatypesLoading, datatypes } = masterData;
 
   const morphemeGroups = mdRepo.morphemeGroups as MorphemeGroup[];
   const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
@@ -364,23 +359,3 @@ const MorphemesOverview: FC = () => {
 };
 
 export default MorphemesOverview;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const { isMenuLoading, flatMenu } = state.navMenu;
-//   const masterData = state.masterData;
-
-//   return {alert, isMenuLoading, flatMenu, masterData };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     saveReturnPageName: (pageName) => dispatch(MasterDataActions.saveReturnPageName(pageName))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(MorphemesOverview);

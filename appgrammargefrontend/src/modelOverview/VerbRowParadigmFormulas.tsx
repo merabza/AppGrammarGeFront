@@ -4,16 +4,7 @@ import { useEffect, useState, useMemo, FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Table, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// import Loading from '../../carcass/common/Loading';
 import { getFormulaVisual2 } from "./FormulasModule";
-// import { actionCreators as MasterDataActions } from '../../carcass/masterdata/MasterDataStore';
-// import { actionCreators as FormulasActions } from './FormulasStore';
-// import { GetDisplayValue2 } from '../../carcass/modules/GetDisplayValue'
-// import { useScroller } from '../../carcass/common/MyHooks';
-// import { NzInt, filterByHeader } from '../../carcass/common/myFunctions';
-// import BsComboBox from '../../carcass/masterdata/BsComboBox';
-// import { useForman } from '../../carcass/common/MyHooks';
 import * as yup from "yup";
 import { NzInt, filterByHeader } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
@@ -41,18 +32,6 @@ import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import { GetDisplayValueForLookup } from "../appcarcass/modules/GetDisplayValue";
 
 const VerbRowParadigmFormulas: FC = () => {
-  // const { mdWorkingOnLoad, morphemeRanges, morphemesQuery, inflectionBlocks, inflectionTypes,
-  //   morphemeRangesByInflectionBlocks, verbTypes, verbRows, verbParadigms, verbPersonMarkerParadigms, checkLoadMdTables,
-  //   verbRowParadigmFormulas, verbRowParadigmFormulasLoading, checkloadVerbParadigmFormulas } = props;
-  // const {
-  //   alert,
-  //   masterData,
-  //   verbRowParadigmFormulas,
-  //   verbRowParadigmFormulasLoading,
-  //   checkLoadMdTables,
-  //   checkloadVerbParadigmFormulas,
-  // } = props;
-
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
   );
@@ -75,8 +54,6 @@ const VerbRowParadigmFormulas: FC = () => {
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-
-  //console.log("VerbRowParadigmFormulas props=", props);
 
   const { paradigmId } = useParams<string>();
 
@@ -371,35 +348,3 @@ const VerbRowParadigmFormulas: FC = () => {
 };
 
 export default VerbRowParadigmFormulas;
-
-// // export function GetDisplayValue2(dataTable, value, col) {
-
-// //   const { dataMember, valueMember, displayMember, rowSource, columnType } = col;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const { verbRowParadigmFormulas, verbRowParadigmFormulasLoading } =
-//     state.formulasStore;
-
-//   return {
-//     alert,
-//     masterData,
-//     verbRowParadigmFormulas,
-//     verbRowParadigmFormulasLoading,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) =>
-//       dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     checkloadVerbParadigmFormulas: (paradigmId) =>
-//       dispatch(FormulasActions.checkloadVerbParadigmFormulas(paradigmId)),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(VerbRowParadigmFormulas);

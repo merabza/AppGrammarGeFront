@@ -14,7 +14,6 @@ import OneStrongLabel from "../appcarcass/editorParts/OneStrongLabel";
 import {
   Morpheme,
   MorphemeRange,
-  PhoneticsChangeModel,
   PhoneticsChangeQueryModel,
   PhoneticsType,
 } from "../masterData/mdTypes";
@@ -27,7 +26,6 @@ import {
 import { fnGetError } from "../appcarcass/hooks/useForman";
 import { DerivationPredecessorModel } from "./TypesAndSchemas/DerivationBranchDataTypeAndSchema";
 import { InflectionPredecessorRedModel } from "./TypesAndSchemas/InflectionDataTypeAndSchema";
-// import { PhoneticsChangeModel } from "../redux/types/masterDataTypes";
 
 type BasesAndFreeMorphemesProps = {
   ranges: MorphemeRange[];
@@ -50,12 +48,6 @@ type BasesAndFreeMorphemesProps = {
 };
 
 const BasesAndFreeMorphemes: FC<BasesAndFreeMorphemesProps> = (props) => {
-  // //რედაქსიდან
-  // const { rootsRepo, memoBasesDict, basesForDropdownloading } = props;
-  // //კონტროლის თვისებებიდან
-  // const {ranges, morphemes, morphemesQuery, forInflection, phoneticsTypes, phoneticsChangesQuery, morphemesdPath, getError,
-  //   selectPhoneticsType, autoPhonetics, predecessors, onMorphemeChange, onPredecessorChange, onPredecessorPhoneticsTypeChange} = props;
-
   const {
     ranges,
     morphemes,
@@ -315,20 +307,3 @@ const BasesAndFreeMorphemes: FC<BasesAndFreeMorphemesProps> = (props) => {
 };
 
 export default BasesAndFreeMorphemes;
-
-// function mapStateToProps(state) {
-//   const { rootsRepo, memoBasesDict, basesForDropdownloading } = state.derivTree;
-//   return { rootsRepo, memoBasesDict, basesForDropdownloading };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     GetBasesForDropDown: (val) =>
-//       dispatch(DerivTreeActions.GetBasesForDropDown(val)),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(BasesAndFreeMorphemes);

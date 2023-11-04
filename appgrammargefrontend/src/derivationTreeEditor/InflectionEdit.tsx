@@ -26,7 +26,6 @@ import {
   VerbType,
   classifierModel,
 } from "../masterData/mdTypes";
-// import { classifierModel } from "../redux/types/masterDataTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useGetVerbRowParadigmsByVerbTypesQuery } from "../redux/api/modelDataApi";
 import {
@@ -75,36 +74,6 @@ const InflectionEdit: FC = () => {
   const [currentRootId, setCurrentRootId] = useState<number | undefined>(
     undefined
   );
-
-  //2. კომპონენტის თვისებები
-
-  // const {
-  //   alert,
-  //   user,
-  //   masterData,
-  //   savingInflection,
-  //   loadingInflection,
-  //   workingOnDeleteInflection,
-  //   inflectionForEdit,
-  //   getOneInflectionById,
-  //   DeleteFailure,
-  //   rootLoading,
-  //   verbRowParadigmsByVerbTypesLoading,
-  //   verbRowParadigmsByVerbTypesLoadingFailure,
-  //   verbRowParadigmsByVerbTypes,
-  //   alertError,
-  //   checkLoadMdTables,
-  //   GetVerbRowParadigmsByVerbTypes,
-  //   CheckLoadRootsByInflectionVerbCompositionId,
-  //   clearForConfirmRootsPagesMemo,
-  //   clearTablesFromRepo,
-  //   clearRoot,
-  //   clearMemo,
-  //   workingOnConfirmRejectInflectionChange,
-  //   confirmRejectFailure,
-  //   confirmRejectInflectionChange,
-  //   clearConfirmRejectFailure,
-  // } = props;
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
@@ -1093,65 +1062,8 @@ const InflectionEdit: FC = () => {
       </Col>
 
       {!!curInfIdVal && <Paradigm InflectionIdentifier={curInfIdVal} />}
-
-      {/* <Routes>
-        <Route path="inflEdit/:infId/:dbrId/:rootId/*" element={<Paradigm />}>
-          <Route path="inflEdit/:infId/:dbrId/:rootId" element={<Paradigm />} />
-          <Route path="inflEdit/:infId/:dbrId" element={<Paradigm />} />
-
-          <Route path="inflEdit/:infId" element={<Paradigm />} />
-          <Route path="inflEdit" element={<Paradigm />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Route>
-      </Routes> */}
     </Row>
   );
 };
 
 export default InflectionEdit;
-
-// function mapStateToProps(state) {
-//     const alert = state.alert;
-//     const { user } = state.authentication;
-//     const masterData = state.masterData;
-//     const { savingInflection, loadingInflection, workingOnDeleteInflection,
-//         inflectionForEdit, getOneInflectionById, DeleteFailure,
-//         confirmRejectFailure, workingOnConfirmRejectInflectionChange } = state.rootEditorStore;
-//     const { rootLoading, verbRowParadigmsByVerbTypesLoading, verbRowParadigmsByVerbTypesLoadingFailure, verbRowParadigmsByVerbTypes } = state.derivTree;
-
-//     return {
-//         alert, user, masterData, savingInflection, loadingInflection, workingOnDeleteInflection, inflectionForEdit,
-//         getOneInflectionById, DeleteFailure,
-//         confirmRejectFailure, workingOnConfirmRejectInflectionChange,
-//         rootLoading, verbRowParadigmsByVerbTypesLoading,
-//         verbRowParadigmsByVerbTypesLoadingFailure, verbRowParadigmsByVerbTypes
-//     };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//         getOneInflectionById: (infId) => dispatch(RootEditorActions.getOneInflectionById(infId, true)),
-//         updateInflection: (history, inflectionForSave, rootId) => dispatch(RootEditorActions.updateInflection(history, inflectionForSave, rootId)),
-//         createInflection: (history, inflectionForSave, dbrId, rootId) => dispatch(RootEditorActions.createInflection(history, inflectionForSave, dbrId, rootId)),
-//         deleteInflection: (history, infId, dbrId, rootId) => dispatch(RootEditorActions.deleteInflection(history, infId, dbrId, rootId)),
-//         clearDeletingFailure: () => dispatch(RootEditorActions.clearDeletingFailure()),
-//         clearTablesFromRepo: (tableNamesForClear, tableNamesForLoad) => dispatch(MasterDataActions.clearTablesFromRepo(tableNamesForClear, tableNamesForLoad)),
-//         clearAlert: () => dispatch(alertActions.clear()),
-//         clearRoot: (rootId) => dispatch(DerivTreeActions.clearRoot(rootId)),
-//         clearMemo: () => dispatch(DerivTreeActions.clearMemo()),
-//         clearForConfirmRootsPagesMemo: () => dispatch(DerivTreeActions.clearForConfirmRootsPagesMemo()),
-//         CheckLoadRootsByInflectionVerbCompositionId: (infId) => dispatch(DerivTreeActions.CheckLoadRootsByInflectionVerbCompositionId(infId)),
-//         alertError: (errorMessage) => dispatch(alertActions.error(errorMessage)),
-//         GetVerbRowParadigmsByVerbTypes: () => dispatch(DerivTreeActions.GetVerbRowParadigmsByVerbTypes()),
-
-//         confirmRejectInflectionChange: (history, infId, dbrId, rootId, confirm, withAllDescendants) => dispatch(RootEditorActions.confirmRejectInflectionChange(history, infId, dbrId, rootId, confirm, withAllDescendants)),
-//         clearConfirmRejectFailure: () => dispatch(RootEditorActions.clearConfirmRejectFailure()),
-
-//     };
-// }
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(InflectionEdit);

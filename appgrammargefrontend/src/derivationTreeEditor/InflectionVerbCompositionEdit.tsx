@@ -1,14 +1,13 @@
 //InflectionVerbCompositionEdit.tsx
 
 import { useEffect, useState, useMemo, FC } from "react";
-import { Route, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Form, Row, Col } from "react-bootstrap";
 
 import Paradigm from "./Paradigm";
 import StatusConfirmRejectPart from "./StatusConfirmRejectPart";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { MorphemeRange, Pronoun, classifierModel } from "../masterData/mdTypes";
-// import { classifierModel } from "../redux/types/masterDataTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import {
   InflectionVerbCompositionData,
@@ -43,11 +42,6 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
 
-// import { actionCreators as DerivTreeActions } from './DerivationTreeStore';
-// import { actionCreators as alertActions } from '../../carcass/store/AlertStore';
-// import { actionCreators as MasterDataActions } from '../../carcass/masterdata/MasterDataStore';
-// import { actionCreators as RootEditorActions } from './RootEditorStore';
-
 const InflectionVerbCompositionEdit: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -77,18 +71,6 @@ const InflectionVerbCompositionEdit: FC = () => {
     confirmRejectFailure,
     clearConfirmRejectFailure,
   ] = useConfirmRejectInflectionVerbComposition();
-
-  //2. კომპონენტის თვისებები
-  // const { alert, user, masterData,
-  //     savingInflectionVerbComposition, loadingInflectionVerbComposition,
-  //     workingOnDeleteInflectionVerbComposition, inflectionVerbCompositionForEdit,
-  //     getOneInflectionVerbCompositionById, DeleteFailure, rootLoading, checkLoadMdTables,
-  //     CheckLoadRootsByInflectionVerbCompositionId, clearForConfirmRootsPagesMemo,
-  //     clearTablesFromRepo, clearRoot, clearMemo,
-  //     workingOnConfirmRejectInflectionVerbCompositionChange, confirmRejectFailure,
-  //     confirmRejectInflectionVerbCompositionChange, clearConfirmRejectFailure
-
-  // } = props;
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
     (state) => state.masterDataState
@@ -506,67 +488,3 @@ const InflectionVerbCompositionEdit: FC = () => {
 };
 
 export default InflectionVerbCompositionEdit;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const { user } = state.authentication;
-//   const masterData = state.masterData;
-//   const {
-//     savingInflectionVerbComposition,
-//     loadingInflectionVerbComposition,
-//     workingOnDeleteInflectionVerbComposition,
-//     inflectionVerbCompositionForEdit,
-//     getOneInflectionVerbCompositionById,
-//     DeleteFailure,
-//     confirmRejectFailure,
-//     workingOnConfirmRejectInflectionVerbCompositionChange,
-//   } = state.rootEditorStore;
-//   const { rootLoading } = state.derivTree;
-
-//   return {
-//     alert,
-//     user,
-//     masterData,
-//     savingInflectionVerbComposition,
-//     loadingInflectionVerbComposition,
-//     workingOnDeleteInflectionVerbComposition,
-//     inflectionVerbCompositionForEdit,
-//     getOneInflectionVerbCompositionById,
-//     DeleteFailure,
-//     confirmRejectFailure,
-//     workingOnConfirmRejectInflectionVerbCompositionChange,
-//     rootLoading,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-
-//         getOneInflectionVerbCompositionById: (dbrId) => dispatch(RootEditorActions.getOneInflectionVerbCompositionById(dbrId, true)),
-//         updateInflectionVerbComposition: (history, InflectionVerbCompositionForSave, infId, dbrId, rootId) => dispatch(RootEditorActions.updateInflectionVerbComposition(history, InflectionVerbCompositionForSave, infId, dbrId, rootId)),
-//         createInflectionVerbComposition: (history, InflectionVerbCompositionForSave, infId, dbrId, rootId) => dispatch(RootEditorActions.createInflectionVerbComposition(history, InflectionVerbCompositionForSave, infId, dbrId, rootId)),
-//         deleteInflectionVerbComposition: (history, ivcId, infId, dbrId, rootId) => dispatch(RootEditorActions.deleteInflectionVerbComposition(history, ivcId, infId, dbrId, rootId)),
-
-//         clearDeletingFailure: () => dispatch(RootEditorActions.clearDeletingFailure()),
-//         clearTablesFromRepo: (tableNamesForClear, tableNamesForLoad) => dispatch(MasterDataActions.clearTablesFromRepo(tableNamesForClear, tableNamesForLoad)),
-//         clearAlert: () => dispatch(alertActions.clear()),
-//         clearRoot: (rootId) => dispatch(DerivTreeActions.clearRoot(rootId)),
-//         clearMemo: () => dispatch(DerivTreeActions.clearMemo()),
-//         clearForConfirmRootsPagesMemo: () => dispatch(DerivTreeActions.clearForConfirmRootsPagesMemo()),
-
-//         CheckLoadRootsByInflectionVerbCompositionId: (infId) => dispatch(DerivTreeActions.CheckLoadRootsByInflectionVerbCompositionId(infId)),
-
-//         alertError: (errorMessage) => dispatch(alertActions.error(errorMessage)),
-
-//         confirmRejectInflectionVerbCompositionChange: (history, ivcId, infId, dbrId, rootId, confirm, withAllDescendants) => dispatch(RootEditorActions.confirmRejectInflectionVerbCompositionChange(history, ivcId, infId, dbrId, rootId, confirm, withAllDescendants)),
-
-//         clearConfirmRejectFailure: () => dispatch(RootEditorActions.clearConfirmRejectFailure()),
-
-//     };
-// }
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(InflectionVerbCompositionEdit);

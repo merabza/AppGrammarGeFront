@@ -130,22 +130,3 @@ const BaseSearchForm: FC = () => {
 };
 
 export default BaseSearchForm;
-
-// function mapStateToProps(state) {
-//   const { memoBasesDict, basesForDropdownloading } = state.derivTree;
-//   const { flatMenu } = state.navMenu;
-//   const { savedIssueDetailLine } = state.issuesStore;
-
-//   return { flatMenu, memoBasesDict, basesForDropdownloading, savedIssueDetailLine };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     GetBasesForDropDown: (val) => dispatch(DerivTreeActions.GetBasesForDropDown(val))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(BaseSearchForm);

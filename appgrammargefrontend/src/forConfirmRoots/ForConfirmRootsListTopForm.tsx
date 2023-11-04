@@ -8,14 +8,6 @@ import { useGetUsersListForConfirmQuery } from "../redux/api/rootsApi";
 import { createUrlForConfirmRoots } from "./ForConfirmRootsListModule";
 
 const ForConfirmRootsListTopForm: FC = () => {
-  // const {
-  //   flatMenu,
-  //   forConfirmRootsListDropdownloading,
-  //   UsersListForConfirmDropdownloading,
-  //   GetUsersListForConfirm,
-  //   UsersListForConfirm,
-  // } = props;
-
   const [rootStartsWith, setRootStartsWith] = useState("");
   const [createdUserName, setCreatedUserName] = useState("ყველა");
 
@@ -101,33 +93,3 @@ const ForConfirmRootsListTopForm: FC = () => {
 };
 
 export default ForConfirmRootsListTopForm;
-
-// function mapStateToProps(state) {
-//   const {
-//     forConfirmRootsListDropdownloading,
-//     UsersListForConfirmDropdownloading,
-//     UsersListForConfirm,
-//   } = state.derivTree;
-//   const { flatMenu } = state.navMenu;
-
-//   return {
-//     flatMenu,
-//     forConfirmRootsListDropdownloading,
-//     UsersListForConfirmDropdownloading,
-//     UsersListForConfirm,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     //GetBasesForDropDown: (val) => dispatch(DerivTreeActions.GetBasesForDropDown(val))
-//     //აქ დაგვჭირდება იმ მომხმარებლების სიის ჩატვირთვა, რომლებსაც არ აქვს დამოწმების უფლება
-//     GetUsersListForConfirm: () =>
-//       dispatch(DerivTreeActions.GetUsersListForConfirm()),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(ForConfirmRootsListTopForm);

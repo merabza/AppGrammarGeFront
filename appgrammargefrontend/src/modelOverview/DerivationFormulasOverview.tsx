@@ -1,6 +1,5 @@
 //DerivationFormulasOverview.tsx
 
-//DerivationFormulasOverview.js
 import { useEffect, useMemo, useCallback, FC } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
@@ -23,17 +22,6 @@ import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
 const DerivationFormulasOverview: FC = () => {
-  // const {
-  //   alert,
-  //   isMenuLoading,
-  //   flatMenu,
-  //   masterData,
-  //   derivFormulasLoading,
-  //   derivationFormulas,
-  //   checkLoadMdTables,
-  //   checkLoadDerivFormulas,
-  // } = props;
-
   const dispatch = useAppDispatch();
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
@@ -46,10 +34,6 @@ const DerivationFormulasOverview: FC = () => {
   const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
 
   const { tabKeyParam, recNameParam } = useParams<string>();
-
-  // const { datatypesLoading, datatypes } = masterData;
-
-  //console.log("DerivationFormulasOverview props=", props);
 
   const menLinkKey = useLocation().pathname.split("/")[1];
 
@@ -279,27 +263,3 @@ const DerivationFormulasOverview: FC = () => {
 };
 
 export default DerivationFormulasOverview;
-
-// function mapStateToProps(state) {
-
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const {isMenuLoading, flatMenu} = state.navMenu;
-//   const { derivFormulasLoading, derivationFormulas } = state.formulasStore;
-
-//   return {alert, isMenuLoading, flatMenu, masterData, derivFormulasLoading, derivationFormulas};
-
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     checkLoadDerivFormulas: () => dispatch(FormulasActions.checkLoadDerivFormulas()),
-//     saveReturnPageName: (pageName) => dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(DerivationFormulasOverview);

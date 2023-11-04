@@ -36,11 +36,6 @@ import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import OneTextControl from "../appcarcass/editorParts/OneTextControl";
 import OneNumberControl from "../appcarcass/editorParts/OneNumberControl";
 import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons";
-// import {
-//   classifierModel,
-//   DerivationType,
-//   PhoneticsChangeModel,
-// } from "../redux/types/masterDataTypes";
 import PhoneticsCombEditor from "../editorParts/PhoneticsCombEditor";
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { setDeleteFailureRoot } from "../redux/slices/rootCrudSlice";
@@ -49,7 +44,6 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
 import {
   DerivationType,
-  PhoneticsChangeModel,
   PhoneticsChangeQueryModel,
   classifierModel,
 } from "../masterData/mdTypes";
@@ -488,41 +482,3 @@ const RootEdit: FC = () => {
 };
 
 export default RootEdit;
-
-// function mapStateToProps(state) {
-//   const { mdWorkingOnLoad } = state.masterData;
-//   const {derivationTypes, classifiers, phoneticsChangesQuery} = state.masterData.mdRepo;
-//   const { savingRoot, loadingRoot, workingOnDeleteRoot, rootForEdit, getOneRootById, DeleteFailure,
-//     confirmRejectFailure,
-//     workingOnConfirmRejectRootChange } = state.rootEditorStore;
-//   const alert = state.alert;
-//   const { user } = state.authentication;
-
-//   return { alert, user, mdWorkingOnLoad, derivationTypes, classifiers, phoneticsChangesQuery,
-//     savingRoot, loadingRoot, workingOnDeleteRoot, rootForEdit, getOneRootById, DeleteFailure,
-//     confirmRejectFailure,
-//     workingOnConfirmRejectRootChange };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     getOneRootById: (rootId) => dispatch(RootEditorActions.getOneRootById(rootId, true)),
-//     updateRoot: (history, rootForSave) => dispatch(RootEditorActions.updateRoot(history, rootForSave)),
-//     createRoot: (history, rootForSave) => dispatch(RootEditorActions.createRoot(history, rootForSave)),
-//     deleteRoot: (history, rootId) => dispatch(RootEditorActions.deleteRoot(history, rootId)),
-//     clearDeletingFailure: () => dispatch(RootEditorActions.clearDeletingFailure()),
-//     clearTablesFromRepo: (tableNamesForClear, tableNamesForLoad) => dispatch(MasterDataActions.clearTablesFromRepo(tableNamesForClear, tableNamesForLoad)),
-//     clearAlert: () => dispatch(alertActions.clear()),
-//     clearRoot: (rootId) => dispatch(DerivTreeActions.clearRoot(rootId)),
-//     clearMemo: () => dispatch(DerivTreeActions.clearMemo()),
-//     clearForConfirmRootsPagesMemo: () => dispatch(DerivTreeActions.clearForConfirmRootsPagesMemo()),
-//     confirmRejectRootChange: (history, rootId, confirm, withAllDescendants) => dispatch(RootEditorActions.confirmRejectRootChange(history, rootId, confirm, withAllDescendants)),
-//     clearConfirmRejectFailure: () => dispatch(RootEditorActions.clearConfirmRejectFailure()),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(RootEdit);

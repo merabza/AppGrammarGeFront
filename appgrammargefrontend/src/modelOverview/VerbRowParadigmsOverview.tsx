@@ -1,13 +1,6 @@
 //VerbRowParadigmsOverview.tsx
 
 import { useEffect, useMemo, useCallback, FC } from "react";
-
-// import Loading from '../../carcass/common/Loading';
-// import { actionCreators as MasterDataActions } from '../../carcass/masterdata/MasterDataStore';
-// import { actionCreators as FormulasActions } from './FormulasStore';
-// import { useScroller } from '../../carcass/common/MyHooks';
-// import { NzInt } from '../../carcass/common/myFunctions';
-// import NameListEditor from './NameListEditor';
 import ParadigmListEditor from "./ParadigmListEditor";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
@@ -29,9 +22,6 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "./NameListEditor";
 
 const VerbRowParadigmsOverview: FC = () => {
-  // const {alert, isMenuLoading, flatMenu, masterData, checkLoadMdTables,
-  //   verbRowParadigmNamesLoading, verbRowParadigmNames, checkLoadVerbRowParadigmNames} = props;
-
   const dispatch = useAppDispatch();
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
@@ -209,36 +199,3 @@ const VerbRowParadigmsOverview: FC = () => {
 };
 
 export default VerbRowParadigmsOverview;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const { isMenuLoading, flatMenu } = state.navMenu;
-//   const { verbRowParadigmNamesLoading, verbRowParadigmNames } =
-//     state.formulasStore;
-
-//   return {
-//     alert,
-//     isMenuLoading,
-//     flatMenu,
-//     masterData,
-//     verbRowParadigmNamesLoading,
-//     verbRowParadigmNames,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) =>
-//       dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     saveReturnPageName: (pageName) =>
-//       dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//     checkLoadVerbRowParadigmNames: () =>
-//       dispatch(FormulasActions.checkLoadVerbRowParadigmNames()),
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(VerbRowParadigmsOverview);

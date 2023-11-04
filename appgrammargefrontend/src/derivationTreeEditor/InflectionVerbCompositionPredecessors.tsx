@@ -1,6 +1,5 @@
 //InflectionVerbCompositionPredecessors.tsx
 
-//InflectionVerbCompositionPredecessors.js
 import { FC } from "react";
 import { Form, Row, Col, Spinner } from "react-bootstrap";
 import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
@@ -19,14 +18,6 @@ import TextBoxAutoComplete, {
 import VerbInflectionLink, {
   VerbInflectionElement,
 } from "./VerbInflectionLink";
-// import VerbInflectionLink from "./VerbInflectionLink";
-// import OneStrongLabel from "../editorParts/OneStrongLabel";
-// import OneComboBoxControl from "../../carcass/editorParts/OneComboBoxControl";
-
-// import {
-//   actionCreators as DerivTreeActions,
-//   getVerbInflectionByIdFromStore,
-// } from "./DerivationTreeStore";
 
 type InflectionVerbCompositionPredecessorsProps = {
   predecessors: inflectionVerbCompositionPredecessorsModel[];
@@ -48,9 +39,6 @@ type InflectionVerbCompositionPredecessorsProps = {
 const InflectionVerbCompositionPredecessors: FC<
   InflectionVerbCompositionPredecessorsProps
 > = (props) => {
-  // //რედაქსიდან
-  // const { rootsRepo, memoVerbsDict, verbsForDropdownloading } = props;
-  // //კონტროლის თვისებებიდან
   const {
     predecessors,
     verbCompositionLastRanges,
@@ -87,7 +75,6 @@ const InflectionVerbCompositionPredecessors: FC<
   //რომ მხოლოდ ერთხელ მოხდეს ასეთი სახით შენახვა.
   //და ყოველ ჯერზე არ იყოს საჭირო ამ გარაქმნის გაკეთება.
   Object.keys(memoVerbsDict).forEach((key) => {
-    //memoDictConverted[key] = [] as BaseLinkElement[];
     memoDictConverted[key] = memoVerbsDict[key].map(
       (value: VerbInflectionModel) => {
         return {
@@ -210,19 +197,3 @@ const InflectionVerbCompositionPredecessors: FC<
 };
 
 export default InflectionVerbCompositionPredecessors;
-
-// function mapStateToProps(state) {
-//   const { rootsRepo, memoVerbsDict, verbsForDropdownloading } = state.derivTree;
-//   return { rootsRepo, memoVerbsDict, verbsForDropdownloading };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     GetVerbsForDropDown: (val) => dispatch(DerivTreeActions.GetVerbsForDropDown(val))
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(InflectionVerbCompositionPredecessors);

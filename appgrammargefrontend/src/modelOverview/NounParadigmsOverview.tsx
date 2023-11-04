@@ -1,6 +1,5 @@
 //NounParadigmsOverview.tsx
 
-//NounParadigmsOverview.js
 import { useEffect, useMemo, useCallback, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import {
@@ -12,7 +11,6 @@ import { useLocation, useParams } from "react-router-dom";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { NzInt } from "../appcarcass/common/myFunctions";
-// import { useCheckLoadNounParadigmNames } from "./formulasHooks/useCheckLoadNounParadigmNames";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
@@ -22,25 +20,7 @@ import NameListEditor from "./NameListEditor";
 import ParadigmListEditor from "./ParadigmListEditor";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
-// import Loading from "../../carcass/common/Loading";
-// import { actionCreators as MasterDataActions } from "../../carcass/masterdata/MasterDataStore";
-// import { actionCreators as FormulasActions } from "./FormulasStore";
-// import { useScroller } from "../../carcass/common/MyHooks";
-// import { NzInt } from "../../carcass/common/myFunctions";
-// import NameListEditor from "./NameListEditor";
-// import ParadigmListEditor from "./ParadigmListEditor";
-
 const NounParadigmsOverview: FC = () => {
-  // const {
-  //   alert,
-  //   isMenuLoading,
-  //   flatMenu,
-  //   masterData,
-  //   nounParadigmNamesLoading,
-  //   nounParadigmNames,
-  //   checkLoadMdTables,
-  //   CheckLoadNounParadigmNames,
-  // } = props;
   const dispatch = useAppDispatch();
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
@@ -199,26 +179,3 @@ const NounParadigmsOverview: FC = () => {
 };
 
 export default NounParadigmsOverview;
-
-// function mapStateToProps(state) {
-
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const {isMenuLoading, flatMenu} = state.navMenu;
-//   const { nounParadigmNamesLoading, nounParadigmNames } = state.formulasStore;
-
-//   return {alert, isMenuLoading, flatMenu, masterData, nounParadigmNamesLoading, nounParadigmNames};
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     saveReturnPageName: (pageName) => dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//     CheckLoadNounParadigmNames: () => dispatch(FormulasActions.CheckLoadNounParadigmNames())
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(NounParadigmsOverview);

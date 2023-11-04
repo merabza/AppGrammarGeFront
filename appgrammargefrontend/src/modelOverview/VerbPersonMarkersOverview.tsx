@@ -22,17 +22,6 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 
 const VerbPersonMarkersOverview: FC = () => {
-  // const {
-  //   alert,
-  //   isMenuLoading,
-  //   flatMenu,
-  //   masterData,
-  //   verbPersonMarkerParadigmNamesLoading,
-  //   verbPersonMarkerParadigmNames,
-  //   checkLoadMdTables,
-  //   checkLoadVerbPersonMarkerParadigmNames,
-  // } = props;
-
   const dispatch = useAppDispatch();
 
   const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
@@ -191,27 +180,3 @@ const VerbPersonMarkersOverview: FC = () => {
 };
 
 export default VerbPersonMarkersOverview;
-
-// function mapStateToProps(state) {
-
-//   const alert = state.alert;
-//   const masterData = state.masterData;
-//   const {isMenuLoading, flatMenu} = state.navMenu;
-//   const { verbPersonMarkerParadigmNamesLoading, verbPersonMarkerParadigmNames } = state.formulasStore;
-
-//   return {alert, isMenuLoading, flatMenu, masterData, verbPersonMarkerParadigmNamesLoading, verbPersonMarkerParadigmNames};
-
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     checkLoadMdTables: (tableNames) => dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     saveReturnPageName: (pageName) => dispatch(MasterDataActions.saveReturnPageName(pageName)),
-//     checkLoadVerbPersonMarkerParadigmNames: () => dispatch(FormulasActions.checkLoadVerbPersonMarkerParadigmNames())
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(VerbPersonMarkersOverview);

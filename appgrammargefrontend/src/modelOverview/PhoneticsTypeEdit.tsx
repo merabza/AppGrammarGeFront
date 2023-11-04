@@ -35,9 +35,7 @@ import OneTextControl from "../appcarcass/editorParts/OneTextControl";
 import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import OneNumberControl from "../appcarcass/editorParts/OneNumberControl";
 import OnePlusButton from "../appcarcass/editorParts/OnePlusButton";
-// import OneEditDeleteButtons from "../appcarcass/editorParts/OneEditDeleteButtons";
 import { GetOnePhoneticsTypeProhibitionDescription } from "./PhoneticsTypeModule";
-// import OneUpDownButtons from "../appcarcass/editorParts/OneUpDownButtons";
 import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons";
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import OneUpDownButtons from "../appcarcass/editorParts/OneUpDownButtons";
@@ -53,23 +51,6 @@ const PhoneticsTypeEdit: FC = () => {
     number | null
   >(null); //გახსნილი აკრძალვის ნომერი
 
-  // //2. კომპონენტის თვისებები
-  // const {
-  //   alert,
-  //   mdWorkingOnLoad,
-  //   datatypesLoading,
-  //   datatypes,
-  //   checkLoadMdTables,
-  //   phoneticsOptions,
-  //   savingPhoneticsType,
-  //   loadingPhoneticsType,
-  //   workingOnDeletePhoneticsType,
-  //   phoneticsTypeForEdit,
-  //   getOnePhoneticsTypeById,
-  //   DeleteFailure,
-  // } = props;
-
-  // const { phtId } = props.match.params;
   const { phtId } = useParams<string>();
 
   //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
@@ -535,55 +516,3 @@ const PhoneticsTypeEdit: FC = () => {
 };
 
 export default PhoneticsTypeEdit;
-
-// function mapStateToProps(state) {
-//   const alert = state.alert;
-//   const { mdWorkingOnLoad, datatypesLoading, datatypes } = state.masterData;
-//   const {
-//     savingPhoneticsType,
-//     loadingPhoneticsType,
-//     workingOnDeletePhoneticsType,
-//     phoneticsTypeForEdit,
-//     DeleteFailure,
-//   } = state.modelEditorStore;
-//   const phoneticsOptions = state.masterData.mdRepo.phoneticsOptions;
-//   return {
-//     alert,
-//     mdWorkingOnLoad,
-//     datatypesLoading,
-//     datatypes,
-//     phoneticsOptions,
-//     savingPhoneticsType,
-//     loadingPhoneticsType,
-//     workingOnDeletePhoneticsType,
-//     phoneticsTypeForEdit,
-//     DeleteFailure,
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     getOnePhoneticsTypeById: (phtId) =>
-//       dispatch(ModelEditorActions.getOnePhoneticsTypeById(phtId)),
-//     updatePhoneticsType: (history, pht) =>
-//       dispatch(ModelEditorActions.updatePhoneticsType(history, pht)),
-//     createPhoneticsType: (history, pht) =>
-//       dispatch(ModelEditorActions.createPhoneticsType(history, pht)),
-//     deletePhoneticsType: (history, phtId) =>
-//       dispatch(ModelEditorActions.deletePhoneticsType(history, phtId)),
-//     clearDeletingFailure: () =>
-//       dispatch(ModelEditorActions.clearDeletingFailure()),
-//     checkLoadMdTables: (tableNames) =>
-//       dispatch(MasterDataActions.checkLoadMdTables(tableNames)),
-//     clearTablesFromRepo: (tableNamesFroClear, tableNamesFroLoad) =>
-//       dispatch(
-//         MasterDataActions.clearTablesFromRepo(
-//           tableNamesFroClear,
-//           tableNamesFroLoad
-//         )
-//       ),
-//     clearAlert: () => dispatch(alertActions.clear()),
-//   };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(PhoneticsTypeEdit);
