@@ -177,29 +177,10 @@ export const issuesApi = createApi({
       },
     }),
     // //////////////////////////////////////////////////////
-    // loadIssueDetails: builder.query<any[], IloadIssueDetailsParameters>({
-    //   query(args) {
-    //     const { issueId, detailsName, tabWindowId, offset, rowsCount } = args;
-    //     return {
-    //       url: `/issues/getdetails/${issueId}/${detailsName}/${tabWindowId}/${offset}/${rowsCount}`,
-    //     };
-    //   },
-    //   async onQueryStarted(args, { dispatch, queryFulfilled }) {
-    //     try {
-    //       const { issueId, detailsName, offset } = args;
-    //       const { data } = await queryFulfilled;
-    //       // console.log("issuesApi loadIssueDetails data=", data);
-    //       dispatch(setOneIssueDetails({ issueId, detailsName, offset, data }));
-    //     } catch (error) {
-    //       dispatch(setAlertApiLoadError(buildErrorMessage(error)));
-    //     }
-    //   },
-    // }),
-    // //////////////////////////////////////////////////////
     checkDetail: builder.mutation<void, IcheckDetailParameters>({
-      query({ issueId, detailsName, id, checkedValue }) {
+      query({ detailsName, id, checkedValue }) {
         return {
-          url: `/issues/checkdetail/${issueId}/${detailsName}/${id}/${checkedValue}`,
+          url: `/issues/checkdetail/${detailsName}/${id}/${checkedValue}`,
           method: "PATCH",
         };
       },
