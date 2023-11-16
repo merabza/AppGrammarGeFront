@@ -32,23 +32,22 @@ import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import { GetDisplayValueForLookup } from "../appcarcass/modules/GetDisplayValue";
 
 const VerbRowParadigmFormulas: FC = () => {
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const inflectionBlocks = mdRepo.inflectionBlocks as InflectionBlock[];
-  const inflectionTypes = mdRepo.inflectionTypes as InflectionType[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+  const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
   const morphemeRangesByInflectionBlocks =
-    mdRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
+    mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
 
-  const verbTypes = mdRepo.verbTypes as VerbType[];
-  const verbRows = mdRepo.verbRows as VerbRows[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
+  const verbRows = mdataRepo.verbRows as VerbRows[];
 
-  const verbParadigms = mdRepo.verbParadigms as VerbParadigm[];
+  const verbParadigms = mdataRepo.verbParadigms as VerbParadigm[];
   const verbPersonMarkerParadigms =
-    mdRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+    mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
 
   const [curParadigmId, setCurParadigmId] = useState<number | null>(null);
 
@@ -201,6 +200,8 @@ const VerbRowParadigmFormulas: FC = () => {
   const verbPersonMarkerParadigmsSorted = verbPersonMarkerParadigms
     .slice()
     .sort((a, b) => a.sortId - b.sortId);
+
+  //ToDo აქაური Table გადასაკეთებელია GridView-ზე
 
   return (
     <div>

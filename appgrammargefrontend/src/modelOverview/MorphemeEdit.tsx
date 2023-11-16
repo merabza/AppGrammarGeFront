@@ -50,17 +50,16 @@ const MorphemeEdit: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const phoneticsChanges = mdRepo.phoneticsChanges as PhoneticsChangeModel[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const phoneticsChanges = mdataRepo.phoneticsChanges as PhoneticsChangeModel[];
   const phoneticsChangesQuery =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
-  const phoneticsOptions = mdRepo.phoneticsOptions as PhoneticsOption[];
+    mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
+  const phoneticsOptions = mdataRepo.phoneticsOptions as PhoneticsOption[];
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;

@@ -24,14 +24,13 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 const DerivationFormulasOverview: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const derivationTypes = mdRepo.derivationTypes as DerivationType[];
-  const morphemeGroups = mdRepo.morphemeGroups as MorphemeGroup[];
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
+  const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
+  const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
 
   const { tabKeyParam, recNameParam } = useParams<string>();
 

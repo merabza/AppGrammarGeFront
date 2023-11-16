@@ -1,25 +1,20 @@
 //IssuesGridColumns.tsx
 
 import CustomColumn from "./CustomColumn";
-import { IssueKind, IssuePriority, IssueStatus } from "./IssueTypes";
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import { useCallback } from "react";
-import {
-  IGridColumn,
-  IMdLookupColumnPart,
-} from "../appcarcass/grid/GridViewTypes";
+import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
 import DateTimeColumn from "./DateTimeColumn";
 import LinkColumn from "./LinkColumn";
 
 export type fnIssuesGridColumns = () => IGridColumn[];
 
 export function useIssuesGridColumns(): [fnIssuesGridColumns] {
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
-  const issueKinds = mdRepo.issueKinds as IssueKind[];
-  const issuePriorities = mdRepo.issuePriorities as IssuePriority[];
-  const issueStatuses = mdRepo.issueStatuses as IssueStatus[];
+  const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
+  const issueKinds = mdLookupRepo.issueKinds;
+  const issuePriorities = mdLookupRepo.issuePriorities;
+  const issueStatuses = mdLookupRepo.issueStatuses;
 
   const IssuesGridColumns = useCallback(() => {
     if (
@@ -65,11 +60,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
         sortable: true,
         nullable: false,
         fieldName: "issueKindId",
-        mdLookupColumnPart: {
-          dataTable: issueKinds,
-          valueMember: "iskId",
-          displayMember: "iskName",
-        } as IMdLookupColumnPart,
+        mdLookupColumnPart: issueKinds,
       } as IGridColumn,
       {
         caption: "პრიორიტეტი",
@@ -77,11 +68,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
         sortable: true,
         nullable: false,
         fieldName: "issuePriorityId",
-        mdLookupColumnPart: {
-          dataTable: issuePriorities,
-          valueMember: "ispId",
-          displayMember: "ispName",
-        } as IMdLookupColumnPart,
+        mdLookupColumnPart: issuePriorities,
       },
       {
         caption: "სტატუსი",
@@ -89,11 +76,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
         sortable: true,
         nullable: false,
         fieldName: "issueStatusId",
-        mdLookupColumnPart: {
-          dataTable: issueStatuses,
-          valueMember: "istId",
-          displayMember: "istName",
-        } as IMdLookupColumnPart,
+        mdLookupColumnPart: issueStatuses,
       },
       {
         caption: "ავტორი",

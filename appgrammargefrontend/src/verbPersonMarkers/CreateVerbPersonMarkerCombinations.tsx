@@ -3,17 +3,6 @@
 import { useEffect, useMemo, useCallback, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  ActantGrammarCase,
-  ActantGroup,
-  ActantPosition,
-  ActantType,
-  VerbPluralityType,
-  VerbSeries,
-  VerbTransition,
-  VerbType,
-} from "../masterData/mdTypes";
-import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
 import { useLocation, useParams } from "react-router-dom";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
@@ -31,9 +20,8 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const masterData = useAppSelector((state) => state.masterDataState);
@@ -48,16 +36,15 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
   //   mdRepo.pluralityChangesByVerbTypes as PluralityChangesByVerbType[];
   // const verbPersonMarkerCombinations =
   //   mdRepo.verbPersonMarkerCombinations as VerbPersonMarkerCombination[];
-  const actantGrammarCases = mdRepo.actantGrammarCases as ActantGrammarCase[];
-  const actantGroups = mdRepo.actantGroups as ActantGroup[];
-  const actantPositions = mdRepo.actantPositions as ActantPosition[];
-  const actantTypes = mdRepo.actantTypes as ActantType[];
-  const verbTransitions = mdRepo.verbTransitions as VerbTransition[];
-  const verbPluralityTypes = mdRepo.verbPluralityTypes as VerbPluralityType[];
-  const verbTypes = mdRepo.verbTypes as VerbType[];
-  const verbSeries = mdRepo.verbSeries as VerbSeries[];
-  const verbPersonMarkerParadigms =
-    mdRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+  const actantGrammarCases = mdLookupRepo.actantGrammarCases;
+  const actantGroups = mdLookupRepo.actantGroups;
+  const actantPositions = mdLookupRepo.actantPositions;
+  const actantTypes = mdLookupRepo.actantTypes;
+  const verbTransitions = mdLookupRepo.verbTransitions;
+  const verbPluralityTypes = mdLookupRepo.verbPluralityTypes;
+  const verbTypes = mdLookupRepo.verbTypes;
+  const verbSeries = mdLookupRepo.verbSeries;
+  const verbPersonMarkerParadigms = mdLookupRepo.verbPersonMarkerParadigms;
 
   //console.log("CreateVerbPersonMarkerCombinations props=", props);
 
@@ -203,43 +190,43 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
     );
   }
 
-  const actantTypesDict = {} as { [key: number]: ActantType };
+  // const actantTypesDict = {} as { [key: number]: ActantType };
 
-  actantTypes.forEach((element) => {
-    actantTypesDict[element.attId] = element;
-  });
+  // actantTypes.forEach((element) => {
+  //   actantTypesDict[element.attId] = element;
+  // });
 
-  const verbSeriesDict = {} as { [key: number]: VerbSeries };
+  // const verbSeriesDict = {} as { [key: number]: VerbSeries };
 
-  verbSeries.forEach((element) => {
-    verbSeriesDict[element.vsrId] = element;
-  });
+  // verbSeries.forEach((element) => {
+  //   verbSeriesDict[element.vsrId] = element;
+  // });
 
-  const verbTypesDict = {} as { [key: number]: VerbType };
+  // const verbTypesDict = {} as { [key: number]: VerbType };
 
-  verbTypes.forEach((element) => {
-    verbTypesDict[element.vtpId] = element;
-  });
+  // verbTypes.forEach((element) => {
+  //   verbTypesDict[element.vtpId] = element;
+  // });
 
-  const actantPositionsDict = {} as { [key: number]: ActantPosition };
+  // const actantPositionsDict = {} as { [key: number]: ActantPosition };
 
-  actantPositions.forEach((element) => {
-    actantPositionsDict[element.apnId] = element;
-  });
+  // actantPositions.forEach((element) => {
+  //   actantPositionsDict[element.apnId] = element;
+  // });
 
-  const verbPluralityTypesDict = {} as { [key: number]: VerbPluralityType };
+  // const verbPluralityTypesDict = {} as { [key: number]: VerbPluralityType };
 
-  verbPluralityTypes.forEach((element) => {
-    verbPluralityTypesDict[element.vptId] = element;
-  });
+  // verbPluralityTypes.forEach((element) => {
+  //   verbPluralityTypesDict[element.vptId] = element;
+  // });
 
-  const verbPersonMarkerParadigmsDict = {} as {
-    [key: number]: VerbPersonMarkerParadigm;
-  };
+  // const verbPersonMarkerParadigmsDict = {} as {
+  //   [key: number]: VerbPersonMarkerParadigm;
+  // };
 
-  verbPersonMarkerParadigms.forEach((element) => {
-    verbPersonMarkerParadigmsDict[element.vpmpnId] = element;
-  });
+  // verbPersonMarkerParadigms.forEach((element) => {
+  //   verbPersonMarkerParadigmsDict[element.vpmpnId] = element;
+  // });
 
   const listEditorTableNames = [
     "actantGrammarCases",
@@ -299,7 +286,7 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
             <NameListEditor
               key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={masterData.mdRepo[tn]}
+              tableForEdit={masterData.mdLookupRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}

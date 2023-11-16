@@ -51,21 +51,21 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const inflectionBlocks = mdRepo.inflectionBlocks as InflectionBlock[];
-  const inflectionTypes = mdRepo.inflectionTypes as InflectionType[];
-  const verbPluralityTypes = mdRepo.verbPluralityTypes as VerbPluralityType[];
-  const verbPersons = mdRepo.verbPersons as VerbPerson[];
-  const verbNumbers = mdRepo.verbNumbers as VerbNumber[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+  const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
+  const verbPluralityTypes =
+    mdataRepo.verbPluralityTypes as VerbPluralityType[];
+  const verbPersons = mdataRepo.verbPersons as VerbPerson[];
+  const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
   const verbPersonMarkerParadigms =
-    mdRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+    mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
   const morphemeRangesByInflectionBlocks =
-    mdRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
+    mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
 
   const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
   const [ranges, setRanges] = useState<MorphemeRange[]>([] as MorphemeRange[]);

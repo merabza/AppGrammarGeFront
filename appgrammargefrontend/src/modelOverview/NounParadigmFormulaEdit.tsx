@@ -63,19 +63,18 @@ const NounParadigmFormulaEdit: FC = () => {
   const [formDataPrepared, setFormDataPrepared] = useState(false);
   const [clearTablesFromRepo] = useClearTablesFromRepo();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const inflectionBlocks = mdRepo.inflectionBlocks as InflectionBlock[];
-  const inflectionTypes = mdRepo.inflectionTypes as InflectionType[];
-  const nounParadigms = mdRepo.nounParadigms as NounParadigm[];
-  const grammarCases = mdRepo.grammarCases as GrammarCase[];
-  const nounNumbers = mdRepo.nounNumbers as NounNumber[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+  const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
+  const nounParadigms = mdataRepo.nounParadigms as NounParadigm[];
+  const grammarCases = mdataRepo.grammarCases as GrammarCase[];
+  const nounNumbers = mdataRepo.nounNumbers as NounNumber[];
   const morphemeRangesByInflectionBlocks =
-    mdRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
+    mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
 
   const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
   const [ranges, setRanges] = useState<MorphemeRange[]>([] as MorphemeRange[]);

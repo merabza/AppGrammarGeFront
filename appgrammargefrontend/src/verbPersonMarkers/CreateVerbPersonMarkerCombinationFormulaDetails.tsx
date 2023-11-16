@@ -1,48 +1,27 @@
 //CreateVerbPersonMarkerCombinationFormulaDetails.tsx
 
 import { useEffect, useMemo, useCallback, FC } from "react";
-import { Table } from "react-bootstrap";
 
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  InflectionBlock,
-  InflectionType,
-  Morpheme,
-  MorphemeRange,
-  MorphemeRangesByInflectionBlock,
-  VerbPluralityType,
-  VerbSeries,
-  VerbType,
-} from "../masterData/mdTypes";
-import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
+import { InflectionBlock } from "../masterData/mdTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useCheckLoadFilteredVerbPersonMarkerCombinationFormulas } from "./useCheckLoadFilteredVerbPersonMarkerCombinationFormulas";
 import { useLocation, useParams } from "react-router-dom";
-import { NzInt, filterByHeader } from "../appcarcass/common/myFunctions";
+import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
-import { useForman } from "../appcarcass/hooks/useForman";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
-import BsComboBox from "../appcarcass/masterdata/BsComboBox";
 import NameListEditor from "../modelOverview/NameListEditor";
-import { getFormulaVisual2 } from "../modelOverview/FormulasModule";
-import {
-  CreateVerbPersonMarkerCombinationFormulaDetailsFormData,
-  createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema,
-} from "./CreateVerbPersonMarkerCombinationFormulaDetailsFormData";
-import { LookupCell } from "../appcarcass/redux/types/gridTypes";
-import { GetDisplayValue } from "../appcarcass/modules/GetDisplayValue";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 
 const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const { verbPersonMarkerCombinationFormulas } = useAppSelector(
     (state) => state.filteredState
@@ -53,23 +32,22 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const inflectionBlocks = mdRepo.inflectionBlocks as InflectionBlock[];
-  const inflectionTypes = mdRepo.inflectionTypes as InflectionType[];
+  const morphemeRanges = mdLookupRepo.morphemeRanges;
+  const morphemesQuery = mdLookupRepo.morphemesQuery;
+  const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+  const inflectionTypes = mdLookupRepo.inflectionTypes;
   const morphemeRangesByInflectionBlocks =
-    mdRepo.morphemeRangesByInflectionBlocks as MorphemeRangesByInflectionBlock[];
-  const verbPluralityTypes = mdRepo.verbPluralityTypes as VerbPluralityType[];
-  const verbPersonMarkerParadigms =
-    mdRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
-  const verbTypes = mdRepo.verbTypes as VerbType[];
-  const verbSeries = mdRepo.verbSeries as VerbSeries[];
+    mdLookupRepo.morphemeRangesByInflectionBlocks;
+  const verbPluralityTypes = mdLookupRepo.verbPluralityTypes;
+  const verbPersonMarkerParadigms = mdLookupRepo.verbPersonMarkerParadigms;
+  const verbTypes = mdLookupRepo.verbTypes;
+  const verbSeries = mdLookupRepo.verbSeries;
 
   //console.log("CreateVerbPersonMarkerCombinationFormulaDetails props=", props);
 
   const menLinkKey = useLocation().pathname.split("/")[1];
 
-  const tableNamesForLoad = useMemo(
+  const tableNamesForLookup = useMemo(
     () => [
       "morphemeRanges",
       "morphemesQuery",
@@ -83,6 +61,8 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     ],
     []
   );
+
+  const tableNamesForLoad = useMemo(() => ["inflectionBlocks"], []);
 
   const { isMenuLoading, flatMenu } = useAppSelector(
     (state) => state.navMenuState
@@ -131,10 +111,10 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     dispatch(saveReturnPageName(menLinkKey));
   }
 
-  const [frm, changeField, getError, , , ,] = useForman<
-    typeof createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema,
-    CreateVerbPersonMarkerCombinationFormulaDetailsFormData
-  >(createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema);
+  // const [frm, changeField, , , , ,] = useForman<
+  //   typeof createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema,
+  //   CreateVerbPersonMarkerCombinationFormulaDetailsFormData
+  // >(createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema);
 
   if (
     mdWorkingOnLoad ||
@@ -175,39 +155,39 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
   }
 
   const inflectionType = inflectionTypes.find(
-    (f) => f.iftId === inflectionBlock.inflectionTypeId
+    (f) => f.id === inflectionBlock.inflectionTypeId
   );
   if (!inflectionType) {
     return <h5>არასწორი ფლექსიის ტიპი</h5>;
   }
 
-  const MorphemeRangeIdsByIT = morphemeRangesByInflectionBlocks
-    .filter((f) => f.inflectionBlockId === inflectionBlock.inbId)
-    .map((m) => m.morphemeRangeId);
+  // const MorphemeRangeIdsByIT = morphemeRangesByInflectionBlocks
+  //   .filter((f) => f.inflectionBlockId === inflectionBlock.inbId)
+  //   .map((m) => m.morphemeRangeId);
 
-  const rangesInGroup = morphemeRanges
-    .filter(
-      (f) =>
-        f.morphemeGroupId === inflectionType.morphemeGroupId &&
-        MorphemeRangeIdsByIT.includes(f.mrId)
-    )
-    .sort((a, b) => a.mrPosition - b.mrPosition);
+  // const rangesInGroup = morphemeRanges
+  //   .filter(
+  //     (f) =>
+  //       f.morphemeGroupId === inflectionType.morphemeGroupId &&
+  //       MorphemeRangeIdsByIT.includes(f.mrId)
+  //   )
+  //   .sort((a, b) => a.mrPosition - b.mrPosition);
 
-  function onChangeFilterValue(fieldName: string, newValue: number) {
-    changeField(fieldName, newValue);
+  // function onChangeFilterValue(fieldName: string, newValue: number) {
+  //   changeField(fieldName, newValue);
 
-    const tfrm = JSON.parse(
-      JSON.stringify(frm)
-    ) as CreateVerbPersonMarkerCombinationFormulaDetailsFormData;
+  //   const tfrm = JSON.parse(
+  //     JSON.stringify(frm)
+  //   ) as CreateVerbPersonMarkerCombinationFormulaDetailsFormData;
 
-    tfrm[fieldName as keyof typeof tfrm] = newValue;
-    checkLoadFilteredVerbPersonMarkerCombinationFormulas(
-      frm.verbPluralityTypeId,
-      frm.verbPersonMarkerParadigmId,
-      frm.verbTypeId,
-      frm.verbSeriesId
-    );
-  }
+  //   tfrm[fieldName as keyof typeof tfrm] = newValue;
+  //   checkLoadFilteredVerbPersonMarkerCombinationFormulas(
+  //     frm.verbPluralityTypeId,
+  //     frm.verbPersonMarkerParadigmId,
+  //     frm.verbTypeId,
+  //     frm.verbSeriesId
+  //   );
+  // }
 
   const listEditorTableNames = [
     "verbPluralityTypes",
@@ -242,7 +222,7 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
             <NameListEditor
               key={tn}
               dataType={dataType}
-              tableForEdit={masterData.mdRepo[tn]}
+              tableForEdit={masterData.mdLookupRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}
@@ -252,11 +232,7 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
         return <></>;
       })}
 
-      <MdGridView
-        tableName="verbPersonMarkerCombinations"
-        readOnly
-        serverSidePagination
-      />
+      <MdGridView tableName="verbPersonMarkerCombinations" readOnly />
       <div>
         წინა ვერსიაში ამ ცხრილში დამატებით იყო კიდევ ფორმულის სვეტი, რომელიც
         დასამატებელი იქნება

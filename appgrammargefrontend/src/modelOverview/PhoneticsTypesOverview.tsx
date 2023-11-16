@@ -24,17 +24,16 @@ import {
 import { useAlert } from "../appcarcass/hooks/useAlert";
 
 const PhoneticsTypesOverview: FC = () => {
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const phoneticsOptions = mdRepo.phoneticsOptions as PhoneticsOption[];
-  const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
+  const phoneticsOptions = mdataRepo.phoneticsOptions as PhoneticsOption[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
   const phoneticsOptionDetails =
-    mdRepo.phoneticsOptionDetails as PhoneticsOptionDetail[];
+    mdataRepo.phoneticsOptionDetails as PhoneticsOptionDetail[];
   const phoneticsTypeProhibitions =
-    mdRepo.phoneticsTypeProhibitions as PhoneticsTypeProhibition[];
-  const phoneticsChanges = mdRepo.phoneticsChanges as PhoneticsChange[];
+    mdataRepo.phoneticsTypeProhibitions as PhoneticsTypeProhibition[];
+  const phoneticsChanges = mdataRepo.phoneticsChanges as PhoneticsChange[];
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;

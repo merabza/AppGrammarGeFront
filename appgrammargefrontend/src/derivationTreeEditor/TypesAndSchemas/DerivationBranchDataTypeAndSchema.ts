@@ -17,6 +17,7 @@ export interface DerivationCrudModel {
   classifierId: number;
   recordStatusId: number;
   creator: string;
+  applier: string | null;
 }
 
 export interface DerivationPredecessorModel {

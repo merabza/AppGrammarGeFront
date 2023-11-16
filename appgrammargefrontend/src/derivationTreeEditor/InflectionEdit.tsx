@@ -63,6 +63,7 @@ import {
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import { Err } from "../appcarcass/redux/types/errorTypes";
 import AlertMessages from "../appcarcass/common/AlertMessages";
+import { isAllowEditAndDelete } from "./dteFunctions";
 
 const InflectionEdit: FC = () => {
   const navigate = useNavigate();
@@ -75,31 +76,31 @@ const InflectionEdit: FC = () => {
     undefined
   );
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const { rootLoading } = useAppSelector((state) => state.rootsState);
 
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const pronouns = mdRepo.pronouns as Pronoun[];
-  const classifiers = mdRepo.classifiers as classifierModel[];
-  const morphemeGroups = mdRepo.morphemeGroups as MorphemeGroup[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const inflectionTypes = mdRepo.inflectionTypes as InflectionType[];
-  const inflectionBlocks = mdRepo.inflectionBlocks as InflectionBlock[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const pronouns = mdataRepo.pronouns as Pronoun[];
+  const classifiers = mdataRepo.classifiers as classifierModel[];
+  const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
+  const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
 
   const morphemeRangesByInflectionBlocks =
-    mdRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
-  const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
-  const nounParadigms = mdRepo.nounParadigms as NounParadigm[];
-  const verbParadigms = mdRepo.verbParadigms as VerbParadigm[];
+    mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
+  const nounParadigms = mdataRepo.nounParadigms as NounParadigm[];
+  const verbParadigms = mdataRepo.verbParadigms as VerbParadigm[];
 
-  const verbTypes = mdRepo.verbTypes as VerbType[];
-  const verbPluralityTypes = mdRepo.verbPluralityTypes as VerbPluralityType[];
-  const verbRowFilters = mdRepo.verbRowFilters as VerbRowFilter[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
+  const verbPluralityTypes =
+    mdataRepo.verbPluralityTypes as VerbPluralityType[];
+  const verbRowFilters = mdataRepo.verbRowFilters as VerbRowFilter[];
   const personVariabilityTypes =
-    mdRepo.personVariabilityTypes as PersonVariabilityType[];
+    mdataRepo.personVariabilityTypes as PersonVariabilityType[];
 
   const [curMorphemes, setCurMorphemes] = useState<number[]>([] as number[]);
   const [curRanges, setCurRanges] = useState<MorphemeRange[]>(
@@ -734,12 +735,16 @@ const InflectionEdit: FC = () => {
     frm && frm.inflection && frm.inflection.lemma
       ? `${frm.inflection.lemma}`
       : "";
-  const userHasConfirmRight = user?.appClaims.some((s) => s === "Confirm");
-  const allowEditAndDelete =
-    (userHasConfirmRight &&
-      frm.inflection.recordStatusId !== 1 &&
-      frm.inflection.recordStatusId !== 0) ||
-    (!userHasConfirmRight && frm.inflection.recordStatusId !== 1);
+  const userHasConfirmRight =
+    user?.appClaims.some((s) => s === "Confirm") ?? false;
+
+  const allowEditAndDelete = isAllowEditAndDelete(
+    curInfIdVal,
+    user?.userName,
+    frm.inflection.creator,
+    frm.inflection.recordStatusId,
+    userHasConfirmRight
+  );
 
   // console.log(
   //   "InflectionEdit verbRowParadigmsByVerbTypes=",
@@ -778,6 +783,7 @@ const InflectionEdit: FC = () => {
                 <StatusConfirmRejectPart
                   recordStatusId={frm.inflection.recordStatusId}
                   creator={frm.inflection.creator}
+                  applier={frm.inflection.applier}
                   workingOnConfirmReject={workingOnConfirmRejectInflection}
                   confirmRejectFailure={confirmRejectFailure}
                   onConfirmRejectClick={(confirm, withAllDescendants) => {

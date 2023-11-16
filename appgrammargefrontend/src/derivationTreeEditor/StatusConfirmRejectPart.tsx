@@ -13,6 +13,7 @@ import MessageBox from "../appcarcass/common/MessageBox";
 interface StatusConfirmRejectPartProps {
   recordStatusId: number;
   creator: string;
+  applier: string | null;
   workingOnConfirmReject: boolean;
   confirmRejectFailure: boolean;
   onConfirmRejectClick: (opIsConfirm: boolean, withAllDesc: boolean) => void;
@@ -40,6 +41,7 @@ const StatusConfirmRejectPart: FC<StatusConfirmRejectPartProps> = (props) => {
   const {
     recordStatusId,
     creator,
+    applier,
     workingOnConfirmReject,
     confirmRejectFailure,
     onConfirmRejectClick,
@@ -184,6 +186,15 @@ const StatusConfirmRejectPart: FC<StatusConfirmRejectPartProps> = (props) => {
         text={creator}
         color={editStatusColor}
       />
+
+      {!!applier && (
+        <OnePlaintextRow
+          controlId="applier"
+          label="დამდასტურებელი"
+          text={applier}
+          color={editStatusColor}
+        />
+      )}
 
       {buttonRow.map((btnRow, btnRowId) => {
         if (btnRow.visible)

@@ -128,7 +128,7 @@ export const rootCrudApi = createApi({
       void,
       { rootId: number; navigate: NavigateFunction }
     >({
-      query(rootId) {
+      query({ rootId }) {
         return {
           url: `/rootcrud/${rootId}`,
           method: "DELETE",
@@ -138,7 +138,7 @@ export const rootCrudApi = createApi({
         try {
           dispatch(clearAlert(EAlertKind.ApiMutation));
           await queryFulfilled;
-          navigate(`/root/${rootId}`);
+          navigate("/basesearch");
         } catch (error) {
           dispatch(setDeleteFailureRoot(true));
           dispatch(

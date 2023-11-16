@@ -44,9 +44,8 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const { forRecountVerbPersonMarkers } = useAppSelector(
     (state) => state.filteredState
@@ -57,20 +56,23 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const actantTypes = mdRepo.actantTypes as ActantType[];
-  const verbSeries = mdRepo.verbSeries as VerbSeries[];
-  const actantGrammarCases = mdRepo.actantGrammarCases as ActantGrammarCase[];
-  const actantGroups = mdRepo.actantGroups as ActantGroup[];
-  const verbTypes = mdRepo.verbTypes as VerbType[];
-  const verbTransitions = mdRepo.verbTransitions as VerbTransition[];
-  const actantPositions = mdRepo.actantPositions as ActantPosition[];
-  const verbPluralityTypes = mdRepo.verbPluralityTypes as VerbPluralityType[];
+  const actantTypes = mdataRepo.actantTypes as ActantType[];
+  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
+  const actantGrammarCases =
+    mdataRepo.actantGrammarCases as ActantGrammarCase[];
+  const actantGroups = mdataRepo.actantGroups as ActantGroup[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
+  const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
+  const actantPositions = mdataRepo.actantPositions as ActantPosition[];
+  const verbPluralityTypes =
+    mdataRepo.verbPluralityTypes as VerbPluralityType[];
   const verbPersonMarkerParadigms =
-    mdRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
-  const verbNumbers = mdRepo.verbNumbers as VerbNumber[];
-  const verbPersons = mdRepo.verbPersons as VerbPerson[];
-  const dominantActantsQuery = mdRepo.dominantActantsQuery as DominantActant[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
+    mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+  const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
+  const verbPersons = mdataRepo.verbPersons as VerbPerson[];
+  const dominantActantsQuery =
+    mdataRepo.dominantActantsQuery as DominantActant[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
 
   //console.log("CreateForRecountVerbPersonMarkers props=", props);
 
@@ -177,61 +179,61 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     );
   }
 
-  const actantGroupsDict = {} as { [key: number]: ActantGroup };
+  // const actantGroupsDict = {} as { [key: number]: ActantGroup };
 
-  actantGroups.forEach((element) => {
-    actantGroupsDict[element.agrId] = element;
-  });
+  // actantGroups.forEach((element) => {
+  //   actantGroupsDict[element.agrId] = element;
+  // });
 
-  const actantPositionsDict = {} as { [key: number]: ActantPosition };
+  // const actantPositionsDict = {} as { [key: number]: ActantPosition };
 
-  actantPositions.forEach((element) => {
-    actantPositionsDict[element.apnId] = element;
-  });
+  // actantPositions.forEach((element) => {
+  //   actantPositionsDict[element.apnId] = element;
+  // });
 
-  const actantTypesDict = {} as { [key: number]: ActantType };
+  // const actantTypesDict = {} as { [key: number]: ActantType };
 
-  actantTypes.forEach((element) => {
-    actantTypesDict[element.attId] = element;
-  });
+  // actantTypes.forEach((element) => {
+  //   actantTypesDict[element.attId] = element;
+  // });
 
-  const verbNumbersDict = {} as { [key: number]: VerbNumber };
+  // const verbNumbersDict = {} as { [key: number]: VerbNumber };
 
-  verbNumbers.forEach((element) => {
-    verbNumbersDict[element.vnmId] = element;
-  });
+  // verbNumbers.forEach((element) => {
+  //   verbNumbersDict[element.vnmId] = element;
+  // });
 
-  const verbPluralityTypesDict = {} as { [key: number]: VerbPluralityType };
+  // const verbPluralityTypesDict = {} as { [key: number]: VerbPluralityType };
 
-  verbPluralityTypes.forEach((element) => {
-    verbPluralityTypesDict[element.vptId] = element;
-  });
+  // verbPluralityTypes.forEach((element) => {
+  //   verbPluralityTypesDict[element.vptId] = element;
+  // });
 
-  const verbPersonsDict = {} as { [key: number]: VerbPerson };
+  // const verbPersonsDict = {} as { [key: number]: VerbPerson };
 
-  verbPersons.forEach((element) => {
-    verbPersonsDict[element.vprId] = element;
-  });
+  // verbPersons.forEach((element) => {
+  //   verbPersonsDict[element.vprId] = element;
+  // });
 
-  const verbPersonMarkerParadigmsDict = {} as {
-    [key: number]: VerbPersonMarkerParadigm;
-  };
+  // const verbPersonMarkerParadigmsDict = {} as {
+  //   [key: number]: VerbPersonMarkerParadigm;
+  // };
 
-  verbPersonMarkerParadigms.forEach((element) => {
-    verbPersonMarkerParadigmsDict[element.vpmpnId] = element;
-  });
+  // verbPersonMarkerParadigms.forEach((element) => {
+  //   verbPersonMarkerParadigmsDict[element.vpmpnId] = element;
+  // });
 
-  const verbSeriesDict = {} as { [key: number]: VerbSeries };
+  // const verbSeriesDict = {} as { [key: number]: VerbSeries };
 
-  verbSeries.forEach((element) => {
-    verbSeriesDict[element.vsrId] = element;
-  });
+  // verbSeries.forEach((element) => {
+  //   verbSeriesDict[element.vsrId] = element;
+  // });
 
-  const verbTypesDict = {} as { [key: number]: VerbType };
+  // const verbTypesDict = {} as { [key: number]: VerbType };
 
-  verbTypes.forEach((element) => {
-    verbTypesDict[element.vtpId] = element;
-  });
+  // verbTypes.forEach((element) => {
+  //   verbTypesDict[element.vtpId] = element;
+  // });
 
   const listEditorTableNames = [
     "actantGrammarCases",
@@ -300,7 +302,7 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
             <NameListEditor
               key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={masterData.mdRepo[tn]}
+              tableForEdit={masterData.mdataRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}
@@ -322,13 +324,7 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
         კომბინაციის იდენტიფიკატორი, დომინანტი აქტანტი, მორფემა
       </p>
 
-      {/* ეს ცხრილი ძალიან დიდია, ამიტომ საჭიროა ნაწილ ნაწილ ჩატვირთვის უზრუნველყოფა */}
-      {/* თვითონ ფილტრის არჩევანიც ცალკე უნდა ჩაიტვირთოს */}
-      <MdGridView
-        tableName="forRecountVerbPersonMarkers"
-        readOnly
-        serverSidePagination
-      />
+      <MdGridView tableName="forRecountVerbPersonMarkers" readOnly />
     </div>
   );
 };

@@ -20,9 +20,8 @@ const ActantCombinationsReCounter: FC = () => {
   //   props;
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const masterData = useAppSelector((state) => state.masterDataState);
@@ -30,10 +29,10 @@ const ActantCombinationsReCounter: FC = () => {
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const actantPositions = mdRepo.actantPositions as ActantPosition[];
-  const verbNumbers = mdRepo.verbNumbers as VerbNumber[];
+  const actantPositions = mdataRepo.actantPositions as ActantPosition[];
+  const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
 
-  const verbPersons = mdRepo.verbPersons as VerbPerson[];
+  const verbPersons = mdataRepo.verbPersons as VerbPerson[];
   // const actantCombinationDetails =
   //   mdRepo.actantCombinationDetails as ActantCombinationDetail[];
 
@@ -166,11 +165,11 @@ const ActantCombinationsReCounter: FC = () => {
 
   //debugger;
 
-  const actantPositionsDict = {} as { [key: number]: ActantPosition };
+  // const actantPositionsDict = {} as { [key: number]: ActantPosition };
 
-  actantPositions.forEach((element) => {
-    actantPositionsDict[element.apnId] = element;
-  });
+  // actantPositions.forEach((element) => {
+  //   actantPositionsDict[element.apnId] = element;
+  // });
 
   const listEditorTableNames = [
     "actantPositions",
@@ -200,7 +199,7 @@ const ActantCombinationsReCounter: FC = () => {
             <NameListEditor
               key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={masterData.mdRepo[tn]}
+              tableForEdit={masterData.mdataRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}

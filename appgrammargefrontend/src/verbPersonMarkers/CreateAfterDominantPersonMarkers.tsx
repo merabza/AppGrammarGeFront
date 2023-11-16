@@ -29,24 +29,24 @@ import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/u
 const CreateAfterDominantPersonMarkers: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const masterData = useAppSelector((state) => state.masterDataState);
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const actantGrammarCases = mdRepo.actantGrammarCases as ActantGrammarCase[];
-  const actantGroups = mdRepo.actantGroups as ActantGroup[];
-  const actantPositions = mdRepo.actantPositions as ActantPosition[];
-  const actantTypes = mdRepo.actantTypes as ActantType[];
-  const verbNumbers = mdRepo.verbNumbers as VerbNumber[];
-  const verbPersons = mdRepo.verbPersons as VerbPerson[];
-  const verbSeries = mdRepo.verbSeries as VerbSeries[];
-  const verbTransitions = mdRepo.verbTransitions as VerbTransition[];
-  const verbTypes = mdRepo.verbTypes as VerbType[];
+  const actantGrammarCases =
+    mdataRepo.actantGrammarCases as ActantGrammarCase[];
+  const actantGroups = mdataRepo.actantGroups as ActantGroup[];
+  const actantPositions = mdataRepo.actantPositions as ActantPosition[];
+  const actantTypes = mdataRepo.actantTypes as ActantType[];
+  const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
+  const verbPersons = mdataRepo.verbPersons as VerbPerson[];
+  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
+  const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
 
   //console.log("CreateAfterDominantPersonMarkers props=", props);
 
@@ -186,41 +186,41 @@ const CreateAfterDominantPersonMarkers: FC = () => {
     );
   }
 
-  const verbTypesDict = {} as { [key: number]: VerbType };
+  // const verbTypesDict = {} as { [key: number]: VerbType };
 
-  verbTypes.forEach((element) => {
-    verbTypesDict[element.vtpId] = element;
-  });
+  // verbTypes.forEach((element) => {
+  //   verbTypesDict[element.vtpId] = element;
+  // });
 
-  const actantTypesDict = {} as { [key: number]: ActantType };
+  // const actantTypesDict = {} as { [key: number]: ActantType };
 
-  actantTypes.forEach((element) => {
-    actantTypesDict[element.attId] = element;
-  });
+  // actantTypes.forEach((element) => {
+  //   actantTypesDict[element.attId] = element;
+  // });
 
-  const verbSeriesDict = {} as { [key: number]: VerbSeries };
+  // const verbSeriesDict = {} as { [key: number]: VerbSeries };
 
-  verbSeries.forEach((element) => {
-    verbSeriesDict[element.vsrId] = element;
-  });
+  // verbSeries.forEach((element) => {
+  //   verbSeriesDict[element.vsrId] = element;
+  // });
 
-  const actantGroupsDict = {} as { [key: number]: ActantGroup };
+  // const actantGroupsDict = {} as { [key: number]: ActantGroup };
 
-  actantGroups.forEach((element) => {
-    actantGroupsDict[element.agrId] = element;
-  });
+  // actantGroups.forEach((element) => {
+  //   actantGroupsDict[element.agrId] = element;
+  // });
 
-  const verbPersonsDict = {} as { [key: number]: VerbPerson };
+  // const verbPersonsDict = {} as { [key: number]: VerbPerson };
 
-  verbPersons.forEach((element) => {
-    verbPersonsDict[element.vprId] = element;
-  });
+  // verbPersons.forEach((element) => {
+  //   verbPersonsDict[element.vprId] = element;
+  // });
 
-  const actantPositionsDict = {} as { [key: number]: ActantPosition };
+  // const actantPositionsDict = {} as { [key: number]: ActantPosition };
 
-  actantPositions.forEach((element) => {
-    actantPositionsDict[element.apnId] = element;
-  });
+  // actantPositions.forEach((element) => {
+  //   actantPositionsDict[element.apnId] = element;
+  // });
 
   //console.log("actantTypesDict=", actantTypesDict);
   //console.log("verbSeriesDict=", verbSeriesDict);
@@ -297,7 +297,7 @@ const CreateAfterDominantPersonMarkers: FC = () => {
             <NameListEditor
               key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={masterData.mdRepo[tn]}
+              tableForEdit={masterData.mdataRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}

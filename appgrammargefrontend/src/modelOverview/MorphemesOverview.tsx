@@ -23,14 +23,13 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 const MorphemesOverview: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const morphemeGroups = mdRepo.morphemeGroups as MorphemeGroup[];
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemes = mdRepo.morphemes as Morpheme[];
-  const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
+  const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemes = mdataRepo.morphemes as Morpheme[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
@@ -279,6 +278,9 @@ const MorphemesOverview: FC = () => {
           list.push(i);
         }
         //console.log("MorphemesOverview {mrsfmin, mrsfmax, list} = ", {mrsfmin, mrsfmax, list});
+
+        //ToDo აქაური Table გადასაკეთებელია GridView-ზე
+
         return (
           <div key={mog.mogId.toString()}>
             <h5>{mog.mogName}</h5>

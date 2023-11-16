@@ -41,6 +41,7 @@ import {
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
+import { isAllowEditAndDelete } from "./dteFunctions";
 
 const InflectionVerbCompositionEdit: FC = () => {
   const navigate = useNavigate();
@@ -72,15 +73,14 @@ const InflectionVerbCompositionEdit: FC = () => {
     clearConfirmRejectFailure,
   ] = useConfirmRejectInflectionVerbComposition();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const { rootLoading } = useAppSelector((state) => state.rootsState);
 
-  const pronouns = mdRepo.pronouns as Pronoun[];
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const classifiers = mdRepo.classifiers as classifierModel[];
+  //const pronouns = mdRepo.pronouns as Pronoun[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const classifiers = mdataRepo.classifiers as classifierModel[];
 
   //console.log("InflectionVerbCompositionEdit props=", props);
 
@@ -90,7 +90,7 @@ const InflectionVerbCompositionEdit: FC = () => {
 
   //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
   const tableNamesForLoad = useMemo(
-    () => ["pronouns", "morphemeRanges", "classifiers"],
+    () => [/*"pronouns",*/ "morphemeRanges", "classifiers"],
     []
   );
 
@@ -202,7 +202,7 @@ const InflectionVerbCompositionEdit: FC = () => {
       !inflectionVerbCompositionForEdit ||
       mdWorkingOnLoad ||
       Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
-      !pronouns ||
+      //!pronouns ||
       !morphemeRanges ||
       !classifiers ||
       rootLoading
@@ -213,7 +213,7 @@ const InflectionVerbCompositionEdit: FC = () => {
 
     setFormData(inflectionVerbCompositionForEdit);
   }, [
-    pronouns,
+    //pronouns,
     morphemeRanges,
     classifiers,
     curIvcIdVal,
@@ -256,7 +256,7 @@ const InflectionVerbCompositionEdit: FC = () => {
 
   //8. ჩატვირთვის შემოწმება
   //თუ იდენტიფიკატორი წესიერია და ჩატვირთული ობიექტი ჯერ არ არის, ან საჭირო ცხრილები ჩატვირთული არ არის
-  if (!pronouns || !morphemeRanges || !classifiers) {
+  if (/*!pronouns ||*/ !morphemeRanges || !classifiers) {
     return (
       <div>
         <h5>ინფორმაციის ჩატვირთვის პრობლემა!</h5>
@@ -306,13 +306,16 @@ const InflectionVerbCompositionEdit: FC = () => {
     frm.inflectionVerbComposition.ivcName
       ? frm.inflectionVerbComposition.ivcName
       : "";
-  const userHasConfirmRight = user?.appClaims.some((s) => s === "Confirm");
-  const allowEditAndDelete =
-    (userHasConfirmRight &&
-      frm.inflectionVerbComposition.recordStatusId !== 1 &&
-      frm.inflectionVerbComposition.recordStatusId !== 0) ||
-    (!userHasConfirmRight &&
-      frm.inflectionVerbComposition.recordStatusId !== 1);
+  const userHasConfirmRight =
+    user?.appClaims.some((s) => s === "Confirm") ?? false;
+
+  const allowEditAndDelete = isAllowEditAndDelete(
+    curIvcIdVal,
+    user?.userName,
+    frm.inflectionVerbComposition.creator,
+    frm.inflectionVerbComposition.recordStatusId,
+    userHasConfirmRight
+  );
 
   const verbCompositionLastRanges = morphemeRanges
     .filter((f) => f.mrVerbCompositionSelectable)
@@ -356,6 +359,7 @@ const InflectionVerbCompositionEdit: FC = () => {
                 <StatusConfirmRejectPart
                   recordStatusId={frm.inflectionVerbComposition.recordStatusId}
                   creator={frm.inflectionVerbComposition.creator}
+                  applier={frm.inflectionVerbComposition.applier}
                   workingOnConfirmReject={
                     workingOnConfirmRejectInflectionVerbComposition
                   }

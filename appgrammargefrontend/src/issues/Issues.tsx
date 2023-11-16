@@ -19,14 +19,13 @@ import GridView from "../appcarcass/grid/GridView";
 import { useIssuesGridColumns } from "./IssuesGridColumns";
 
 const Issues: FC = () => {
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-  const issueKinds = mdRepo.issueKinds as IssueKind[];
-  const issuePriorities = mdRepo.issuePriorities as IssuePriority[];
-  const issueStatuses = mdRepo.issueStatuses as IssueStatus[];
+  const issueKinds = mdLookupRepo.issueKinds;
+  const issuePriorities = mdLookupRepo.issuePriorities;
+  const issueStatuses = mdLookupRepo.issueStatuses;
 
   const [
     getIssuesRowsData,

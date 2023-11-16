@@ -24,18 +24,17 @@ import NameListEditor from "./NameListEditor";
 const VerbRowParadigmsOverview: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const verbTransitions = mdRepo.verbTransitions as VerbTransition[];
-  const verbTypes = mdRepo.verbTypes as VerbType[];
-  const verbSeries = mdRepo.verbSeries as VerbSeries[];
-  const verbRows = mdRepo.verbRows as VerbRow[];
+  const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
+  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
+  const verbRows = mdataRepo.verbRows as VerbRow[];
   const verbParadigmNames =
-    mdRepo.verbParadigmNamesQuery as ParadigmNameModel[];
+    mdataRepo.verbParadigmNamesQuery as ParadigmNameModel[];
 
   //console.log("VerbRowParadigmsOverview props=", props);
 
@@ -178,7 +177,7 @@ const VerbRowParadigmsOverview: FC = () => {
           <NameListEditor
             key={dataType.dtName}
             dataType={dataType}
-            tableForEdit={mdRepo[tn]}
+            tableForEdit={mdataRepo[tn]}
             curscrollTo={curscrollTo}
             backLigth={backLigth}
             saveReturnPageName={funSaveReturnPageName}

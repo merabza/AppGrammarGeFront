@@ -47,6 +47,7 @@ import {
   PhoneticsChangeQueryModel,
   classifierModel,
 } from "../masterData/mdTypes";
+import { isAllowEditAndDelete } from "./dteFunctions";
 
 const RootEdit: FC = () => {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const RootEdit: FC = () => {
   const { rootId: fromParamsRootId } = useParams<string>();
 
   // console.log("RootEdit fromParamsRootId=", fromParamsRootId);
-  // console.log("RootEdit curRootIdVal=", curRootIdVal);
+  console.log("RootEdit curRootIdVal=", curRootIdVal);
 
   //console.log("RootEdit props=", props);
 
@@ -120,20 +121,19 @@ const RootEdit: FC = () => {
 
   //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
   const tableNamesForLoad = useMemo(
-    () => ["derivationTypes", "classifiers", "phoneticsChangesQuery"],
+    () => [/*"derivationTypes",*/ "classifiers", "phoneticsChangesQuery"],
     []
   );
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
   const [clearTablesFromRepo] = useClearTablesFromRepo();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
-  const derivationTypes = mdRepo.derivationTypes as DerivationType[];
-  const classifiers = mdRepo.classifiers as classifierModel[];
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
+  //const derivationTypes = mdRepo.derivationTypes as DerivationType[];
+  const classifiers = mdataRepo.classifiers as classifierModel[];
   const phoneticsChangesQuery =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
+    mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
 
   const { user } = useAppSelector((state) => state.userState);
 
@@ -296,7 +296,7 @@ const RootEdit: FC = () => {
 
   if (
     (curRootIdVal && !rootForEdit) ||
-    !derivationTypes ||
+    //!derivationTypes ||
     !classifiers ||
     !phoneticsChangesQuery ||
     !frm ||
@@ -334,21 +334,30 @@ const RootEdit: FC = () => {
           frm.root.rootHomonymIndex ? frm.root.rootHomonymIndex : 0
         }`
       : "";
-  const userHasConfirmRight = user?.appClaims.some((s) => s === "Confirm");
+  const userHasConfirmRight =
+    user?.appClaims.some((s) => s === "Confirm") ?? false;
 
   // console.log("RootEdit frm=", frm);
   // console.log("RootEdit frm.root=", frm.root);
+  // console.log("RootEdit frm.root.recordStatusId=", frm.root.recordStatusId);
+  // console.log("RootEdit frm.root.creator=", frm.root.creator);
+  // console.log("RootEdit user?.userName=", user?.userName);
+  // console.log("RootEdit userHasConfirmRight=", userHasConfirmRight);
 
-  const allowEditAndDelete =
-    (userHasConfirmRight &&
-      frm &&
-      frm.root.recordStatusId !== 1 &&
-      frm.root.recordStatusId !== 0) ||
-    (!userHasConfirmRight && frm.root.recordStatusId !== 1);
+  const allowEditAndDelete = isAllowEditAndDelete(
+    curRootIdVal,
+    user?.userName,
+    frm.root.creator,
+    frm.root.recordStatusId,
+    userHasConfirmRight
+  );
 
-  //console.log("RootEdit userHasConfirmRight=", userHasConfirmRight);
-  //console.log("RootEdit frm.root.recordStatusId=", frm.root.recordStatusId);
-  //console.log("RootEdit frm.root.allowEditAndDelete=", allowEditAndDelete);
+  // (!userHasConfirmRight && frm && frm.root.recordStatusId === 0) ||
+  // (userHasConfirmRight && frm && frm.root.recordStatusId !== 1);
+
+  // console.log("RootEdit userHasConfirmRight=", userHasConfirmRight);
+  // console.log("RootEdit frm.root.recordStatusId=", frm.root.recordStatusId);
+  // console.log("RootEdit frm.root.allowEditAndDelete=", allowEditAndDelete);
 
   return (
     <Row>
@@ -378,6 +387,7 @@ const RootEdit: FC = () => {
             <StatusConfirmRejectPart
               recordStatusId={frm.root.recordStatusId}
               creator={frm.root.creator}
+              applier={frm.root.applier}
               workingOnConfirmReject={workingOnConfirmRejectRootChange}
               confirmRejectFailure={confirmRejectFailure}
               onConfirmRejectClick={(confirm, withAllDescendants) => {
@@ -462,18 +472,16 @@ const RootEdit: FC = () => {
               setFormData(newFrm);
             }}
           />
-          {curRootIdVal && (
-            <OneSaveCancelButtons
-              curIdVal={curRootIdVal}
-              haveErrors={haveErrors}
-              savingNow={creatingRoot || updatingRoot}
-              onCloseClick={() => {
-                dispatch(clearAllAlerts());
-                navigate(-1); //go back
-              }}
-              allowEdit={allowEditAndDelete}
-            />
-          )}
+          <OneSaveCancelButtons
+            curIdVal={curRootIdVal}
+            haveErrors={haveErrors}
+            savingNow={creatingRoot || updatingRoot}
+            onCloseClick={() => {
+              dispatch(clearAllAlerts());
+              navigate(-1); //go back
+            }}
+            allowEdit={allowEditAndDelete}
+          />
           <OneErrorRow allErrors={allErrors} />
         </Form>
       </Col>

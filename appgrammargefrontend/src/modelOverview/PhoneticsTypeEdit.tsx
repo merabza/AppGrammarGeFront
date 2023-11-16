@@ -69,10 +69,9 @@ const PhoneticsTypeEdit: FC = () => {
   const [checkLoadMdTables] = useCheckLoadMdTables();
   const [clearTablesFromRepo] = useClearTablesFromRepo();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
-  const phoneticsOptions = mdRepo.phoneticsOptions as PhoneticsOption[];
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
+  const phoneticsOptions = mdataRepo.phoneticsOptions as PhoneticsOption[];
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;

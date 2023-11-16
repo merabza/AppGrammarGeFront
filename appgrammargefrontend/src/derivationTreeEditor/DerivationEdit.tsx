@@ -55,6 +55,7 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 import { Err } from "../appcarcass/redux/types/errorTypes";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
+import { isAllowEditAndDelete } from "./dteFunctions";
 
 const DerivationEdit: FC = () => {
   const navigate = useNavigate();
@@ -64,28 +65,27 @@ const DerivationEdit: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   const { rootLoading } = useAppSelector((state) => state.rootsState);
   const { derivationFormulas } = useAppSelector(
     (state) => state.modelDataState
   );
 
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const derivationTypes = mdRepo.derivationTypes as DerivationType[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
   const morphemeRangesByDerivationTypes =
-    mdRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
+    mdataRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
 
   const derivationFormulasQuery =
-    mdRepo.derivationFormulasQuery as DerivationFormulaQueryModel[];
-  const morphemeGroups = mdRepo.morphemeGroups as MorphemeGroup[];
-  const classifiers = mdRepo.classifiers as classifierModel[];
+    mdataRepo.derivationFormulasQuery as DerivationFormulaQueryModel[];
+  const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
+  const classifiers = mdataRepo.classifiers as classifierModel[];
   const phoneticsChangesQuery =
-    mdRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
-  const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
+    mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
 
   const [currentRootId, setCurrentRootId] = useState<number | undefined>(
     undefined
@@ -550,13 +550,23 @@ const DerivationEdit: FC = () => {
     frm && frm.derivationBranch && frm.derivationBranch.dbrBaseName
       ? frm.derivationBranch.dbrBaseName
       : "";
-  const userHasConfirmRight = user?.appClaims.some((s) => s === "Confirm");
-  const allowEditAndDelete =
-    (userHasConfirmRight &&
-      frm.derivationBranch &&
-      frm.derivationBranch.recordStatusId !== 1 &&
-      frm.derivationBranch.recordStatusId !== 0) ||
-    (!userHasConfirmRight && frm.derivationBranch.recordStatusId !== 1);
+  const userHasConfirmRight =
+    user?.appClaims.some((s) => s === "Confirm") ?? false;
+
+  const allowEditAndDelete = isAllowEditAndDelete(
+    curDbrIdVal,
+    user?.userName,
+    frm.derivationBranch.creator,
+    frm.derivationBranch.recordStatusId,
+    userHasConfirmRight
+  );
+
+  // const allowEditAndDelete =
+  //   (userHasConfirmRight &&
+  //     frm.derivationBranch &&
+  //     frm.derivationBranch.recordStatusId !== 1 &&
+  //     frm.derivationBranch.recordStatusId !== 0) ||
+  //   (!userHasConfirmRight && frm.derivationBranch.recordStatusId !== 1);
 
   return (
     <Row>
@@ -586,6 +596,7 @@ const DerivationEdit: FC = () => {
               <StatusConfirmRejectPart
                 recordStatusId={frm.derivationBranch.recordStatusId}
                 creator={frm.derivationBranch.creator}
+                applier={frm.derivationBranch.applier}
                 workingOnConfirmReject={workingOnConfirmRejectDerivationBranch}
                 confirmRejectFailure={confirmRejectFailure}
                 onConfirmRejectClick={(confirm, withAllDescendants) => {

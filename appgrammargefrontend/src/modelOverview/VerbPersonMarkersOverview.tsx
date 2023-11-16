@@ -24,18 +24,18 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 const VerbPersonMarkersOverview: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const verbPluralityTypes = mdRepo.verbPluralityTypes as VerbPluralityType[];
-  const actantGroups = mdRepo.actantGroups as ActantGroups[];
-  const verbPersons = mdRepo.verbPersons as VerbPersons[];
-  const verbNumbers = mdRepo.verbNumbers as VerbNumbers[];
+  const verbPluralityTypes =
+    mdataRepo.verbPluralityTypes as VerbPluralityType[];
+  const actantGroups = mdataRepo.actantGroups as ActantGroups[];
+  const verbPersons = mdataRepo.verbPersons as VerbPersons[];
+  const verbNumbers = mdataRepo.verbNumbers as VerbNumbers[];
   const verbPersonMarkerParadigmNames =
-    mdRepo.verbPersonMarkerParadigmNamesQuery as ParadigmNameModel[];
+    mdataRepo.verbPersonMarkerParadigmNamesQuery as ParadigmNameModel[];
 
   //console.log("VerbPersonMarkersOverview props=", props);
 
@@ -159,7 +159,7 @@ const VerbPersonMarkersOverview: FC = () => {
           <NameListEditor
             key={dataType.dtName}
             dataType={dataType}
-            tableForEdit={mdRepo[tn]}
+            tableForEdit={mdataRepo[tn]}
             curscrollTo={curscrollTo}
             backLigth={backLigth}
             saveReturnPageName={funSaveReturnPageName}

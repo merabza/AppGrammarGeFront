@@ -30,6 +30,7 @@ export interface InflectionCrudModel {
   recordStatusId: number;
   infNote: string | null;
   creator: string;
+  applier: string | null;
 }
 
 export interface VerbInflectionModel {

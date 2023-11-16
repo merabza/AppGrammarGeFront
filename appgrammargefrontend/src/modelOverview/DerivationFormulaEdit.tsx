@@ -52,16 +52,15 @@ const DerivationFormulaEdit: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
-  const morphemeRanges = mdRepo.morphemeRanges as MorphemeRange[];
-  const morphemesQuery = mdRepo.morphemesQuery as Morpheme[];
-  const derivationTypes = mdRepo.derivationTypes as DerivationType[];
-  const phoneticsTypes = mdRepo.phoneticsTypes as PhoneticsType[];
+  const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
+  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
   const morphemeRangesByDerivationTypes =
-    mdRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
+    mdataRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
   const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
 
   // console.log("DerivationFormulaEdit morphemes=", morphemes);

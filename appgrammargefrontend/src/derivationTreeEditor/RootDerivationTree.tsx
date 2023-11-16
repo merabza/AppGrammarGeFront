@@ -73,13 +73,13 @@ const RootDerivationTree: FC = () => {
     (state) => state.rootsState
   );
 
-  const { mdWorkingOnLoadingListData, mdWorkingOnLoadingTables, mdRepo } =
+  const { mdWorkingOnLoadingListData, mdWorkingOnLoadingTables, mdataRepo } =
     useAppSelector((state) => state.masterDataState);
 
-  const pronouns = mdRepo.pronouns as Pronoun[];
-  const classifiers = mdRepo.classifiers as Classifier[];
-  const derivationTypes = mdRepo.derivationTypes as DerivationType[];
-  const inflectionTypes = mdRepo.inflectionTypes as InflectionType[];
+  //const pronouns = mdRepo.pronouns as Pronoun[];
+  const classifiers = mdataRepo.classifiers as Classifier[];
+  const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
+  const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
 
   const menLinkKey = "basesearch";
 
@@ -126,7 +126,7 @@ const RootDerivationTree: FC = () => {
   ]); //, autoscroll
 
   const tableNamesForLoad = useMemo(
-    () => ["pronouns", "classifiers", "derivationTypes", "inflectionTypes"],
+    () => [/*"pronouns",*/ "classifiers", "derivationTypes", "inflectionTypes"],
     []
   );
 
@@ -161,7 +161,7 @@ const RootDerivationTree: FC = () => {
 
   if (
     !oneRootData ||
-    !pronouns ||
+    //!pronouns ||
     !classifiers ||
     !derivationTypes ||
     !inflectionTypes ||

@@ -15,6 +15,7 @@ export interface InflectionVerbCompositionCrudModel {
   classifierId: number;
   recordStatusId: number;
   creator: string;
+  applier: string | null;
 }
 
 export interface inflectionVerbCompositionPredecessorsModel {

@@ -21,6 +21,7 @@ export interface RootCrudModel {
   recordStatusId: number;
   classifierId: number;
   creator: string;
+  applier: string | null;
 }
 
 export const rootDataSchema = yup.object().shape({

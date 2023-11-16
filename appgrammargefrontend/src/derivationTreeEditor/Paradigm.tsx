@@ -71,9 +71,9 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     inflectionWorkingOnLoadParadigm,
     prdShowFormulas,
   } = useAppSelector((state) => state.rootsState);
-  const { mdRepo } = useAppSelector((state) => state.masterDataState);
+  const { mdataRepo } = useAppSelector((state) => state.masterDataState);
 
-  const pronouns = mdRepo.pronouns as Pronoun[];
+  const pronouns = mdataRepo.pronouns as Pronoun[];
 
   // const { infId, ivcId } = useParams();
   // const infIdNumber = NzInt(infId);

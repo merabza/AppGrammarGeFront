@@ -23,19 +23,18 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 const NounParadigmsOverview: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } = useAppSelector(
-    (state) => state.masterDataState
-  );
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+    useAppSelector((state) => state.masterDataState);
 
   // const { nounParadigmNames } = useAppSelector((state) => state.modelDataState);
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
   // const { mdWorkingOnLoad, datatypesLoading, datatypes } = masterData;
-  const grammarCases = mdRepo.grammarCases as GrammarCase[];
-  const nounNumbers = mdRepo.nounNumbers as NounNumber[];
+  const grammarCases = mdataRepo.grammarCases as GrammarCase[];
+  const nounNumbers = mdataRepo.nounNumbers as NounNumber[];
   const nounParadigmNames =
-    mdRepo.nounParadigmNamesQuery as ParadigmNameModel[];
+    mdataRepo.nounParadigmNamesQuery as ParadigmNameModel[];
 
   //console.log("NounParadigmsOverview props=", props);
 
@@ -157,7 +156,7 @@ const NounParadigmsOverview: FC = () => {
             <NameListEditor
               key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={mdRepo[tn]}
+              tableForEdit={mdataRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}
