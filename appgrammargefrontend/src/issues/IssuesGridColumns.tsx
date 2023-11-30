@@ -60,7 +60,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
         sortable: true,
         nullable: false,
         fieldName: "issueKindId",
-        mdLookupColumnPart: issueKinds,
+        lookupColumnPart: issueKinds,
       } as IGridColumn,
       {
         caption: "პრიორიტეტი",
@@ -68,7 +68,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
         sortable: true,
         nullable: false,
         fieldName: "issuePriorityId",
-        mdLookupColumnPart: issuePriorities,
+        lookupColumnPart: issuePriorities,
       },
       {
         caption: "სტატუსი",
@@ -76,7 +76,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
         sortable: true,
         nullable: false,
         fieldName: "issueStatusId",
-        mdLookupColumnPart: issueStatuses,
+        lookupColumnPart: issueStatuses,
       },
       {
         caption: "ავტორი",
