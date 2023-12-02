@@ -11,7 +11,7 @@ import {
 } from "./derivationCommonFunctionsModule";
 
 // export async function funAfterSaveInflectionVerbComposition(
-//   rootsRepo: RootFullModel[],
+//   rootsRepo: { [key: number]: RootFullModel },
 //   rootId: number | undefined,
 //   derivBranchId: number | undefined,
 //   inflectionId: number | undefined,
@@ -75,7 +75,7 @@ import {
 // }
 
 export async function funAfterSaveInflectionVerbComposition(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   rootId: number | undefined,
   derivBranchId: number | undefined,
   inflectionId: number | undefined,

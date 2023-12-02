@@ -25,7 +25,7 @@ export interface IRootsState {
   prdShowhyphens: boolean;
   prdShowFormulas: boolean;
   rootLoading: boolean;
-  rootsRepo: RootFullModel[];
+  rootsRepo: { [key: number]: RootFullModel };
   memoForConfirmRootsPages: {
     [key: string]: RootLinkQueryModel[];
   };
@@ -47,7 +47,7 @@ const initialState: IRootsState = {
   prdShowhyphens: false,
   prdShowFormulas: false,
   rootLoading: false,
-  rootsRepo: [] as RootFullModel[],
+  rootsRepo: {} as { [key: number]: RootFullModel },
   memoForConfirmRootsPages: {} as {
     [key: string]: RootLinkQueryModel[];
   },

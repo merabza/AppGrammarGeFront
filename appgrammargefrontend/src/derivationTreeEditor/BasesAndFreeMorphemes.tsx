@@ -26,12 +26,13 @@ import {
 import { fnGetError } from "../appcarcass/hooks/useForman";
 import { DerivationPredecessorModel } from "./TypesAndSchemas/DerivationBranchDataTypeAndSchema";
 import { InflectionPredecessorRedModel } from "./TypesAndSchemas/InflectionDataTypeAndSchema";
+import { ILookup } from "../appcarcass/redux/types/masterdataTypes";
 
 type BasesAndFreeMorphemesProps = {
   ranges: MorphemeRange[];
   morphemes: number[];
   morphemesQuery: Morpheme[];
-  phoneticsTypes: PhoneticsType[];
+  phoneticsTypes: ILookup[]; // PhoneticsType[];
   phoneticsChangesQuery?: PhoneticsChangeQueryModel[];
   forInflection?: boolean | undefined;
   selectPhoneticsType: boolean;

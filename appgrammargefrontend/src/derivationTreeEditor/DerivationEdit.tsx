@@ -56,6 +56,8 @@ import { Err } from "../appcarcass/redux/types/errorTypes";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
 import { isAllowEditAndDelete } from "./dteFunctions";
+import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
+import { ILookup } from "../appcarcass/redux/types/masterdataTypes";
 
 const DerivationEdit: FC = () => {
   const navigate = useNavigate();
@@ -80,12 +82,12 @@ const DerivationEdit: FC = () => {
     mdataRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
 
   const derivationFormulasQuery =
-    mdataRepo.derivationFormulasQuery as DerivationFormulaQueryModel[];
+    mdataRepo.derivationFormulasQuery as ILookup[];
   const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
-  const classifiers = mdataRepo.classifiers as classifierModel[];
+  const classifiers = mdataRepo.classifiers as ILookup[];
   const phoneticsChangesQuery =
     mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
-  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as ILookup[];
 
   const [currentRootId, setCurrentRootId] = useState<number | undefined>(
     undefined
@@ -115,21 +117,26 @@ const DerivationEdit: FC = () => {
   //   const tableNamesForClear = useMemo(() => [], []);
 
   //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
+  const tableNamesForLoadLookup = useMemo(
+    () => ["derivationFormulasQuery", "classifiers", "phoneticsTypes"],
+    []
+  );
+
+  //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
   const tableNamesForLoad = useMemo(
     () => [
-      "derivationFormulasQuery",
-      "morphemeRanges",
-      "classifiers",
-      "morphemeGroups",
       "derivationTypes",
-      "morphemesQuery",
+      "morphemeGroups",
+      "morphemeRanges",
       "morphemeRangesByDerivationTypes",
+      "morphemesQuery",
       "phoneticsChangesQuery",
-      "phoneticsTypes",
     ],
     []
   );
 
+  const [checkLoadLookupTables, loadingLookupTables] =
+    useCheckLoadLookupTables();
   const [checkLoadMdTables] = useCheckLoadMdTables();
   const [checkLoadDerivationFormulas, derivFormulasLoading] =
     useCheckLoadDerivationFormulas();
@@ -139,6 +146,7 @@ const DerivationEdit: FC = () => {
   const { user } = useAppSelector((state) => state.userState);
 
   useEffect(() => {
+    checkLoadLookupTables(tableNamesForLoadLookup);
     checkLoadMdTables(tableNamesForLoad);
     // console.log("DerivationEdit useEffect checkLoadDerivationFormulas started");
     checkLoadDerivationFormulas();
@@ -146,7 +154,7 @@ const DerivationEdit: FC = () => {
     //   "DerivationEdit useEffect checkLoadDerivationFormulas finished"
     // );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tableNamesForLoad]);
+  }, [tableNamesForLoad, tableNamesForLoadLookup]);
 
   //6. ფორმის მენეჯერი
   const [

@@ -64,6 +64,8 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 import { Err } from "../appcarcass/redux/types/errorTypes";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { isAllowEditAndDelete } from "./dteFunctions";
+import { ILookup } from "../appcarcass/redux/types/masterdataTypes";
+import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
 
 const InflectionEdit: FC = () => {
   const navigate = useNavigate();
@@ -91,7 +93,7 @@ const InflectionEdit: FC = () => {
 
   const morphemeRangesByInflectionBlocks =
     mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
-  const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
+  const phoneticsTypes = mdataRepo.phoneticsTypes as ILookup[];
   const nounParadigms = mdataRepo.nounParadigms as NounParadigm[];
   const verbParadigms = mdataRepo.verbParadigms as VerbParadigm[];
 
@@ -130,6 +132,8 @@ const InflectionEdit: FC = () => {
   // const tableNamesForClear = [];
 
   //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
+  const tableNamesForLoadLookup = useMemo(() => ["phoneticsTypes"], []);
+
   const tableNamesForLoad = useMemo(
     () => [
       "pronouns",
@@ -137,7 +141,6 @@ const InflectionEdit: FC = () => {
       "morphemeGroups",
       "morphemeRanges",
       "morphemesQuery",
-      "phoneticsTypes",
       "inflectionTypes",
       "inflectionBlocks",
       "morphemeRangesByInflectionBlocks",
@@ -151,6 +154,8 @@ const InflectionEdit: FC = () => {
     []
   );
 
+  const [checkLoadLookupTables, loadingLookupTables] =
+    useCheckLoadLookupTables();
   const [clearTablesFromRepo] = useClearTablesFromRepo();
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
@@ -158,9 +163,10 @@ const InflectionEdit: FC = () => {
   const { user } = useAppSelector((state) => state.userState);
 
   useEffect(() => {
+    checkLoadLookupTables(tableNamesForLoadLookup);
     checkLoadMdTables(tableNamesForLoad);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tableNamesForLoad]); //checkLoadMdTables - ჩამტვირთავი მეთოდების ჩანატება useEffect-ის დამოკიდებულებებში იწვევს ჩაციკვლას
+  }, [tableNamesForLoad, tableNamesForLoadLookup]); //checkLoadMdTables - ჩამტვირთავი მეთოდების ჩანატება useEffect-ის დამოკიდებულებებში იწვევს ჩაციკვლას
 
   const {
     data: verbRowParadigmsByVerbTypes,

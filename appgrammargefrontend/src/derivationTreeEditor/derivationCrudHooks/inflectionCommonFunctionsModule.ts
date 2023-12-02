@@ -9,7 +9,7 @@ import {
 } from "./derivationCommonFunctionsModule";
 
 export async function funAfterSaveInflection(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   rootId: number | undefined,
   derivBranchId: number | undefined,
   inflectionId: number | undefined,

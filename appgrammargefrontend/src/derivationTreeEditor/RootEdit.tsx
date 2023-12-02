@@ -112,7 +112,7 @@ const RootEdit: FC = () => {
   const { rootId: fromParamsRootId } = useParams<string>();
 
   // console.log("RootEdit fromParamsRootId=", fromParamsRootId);
-  console.log("RootEdit curRootIdVal=", curRootIdVal);
+  // console.log("RootEdit curRootIdVal=", curRootIdVal);
 
   //console.log("RootEdit props=", props);
 
@@ -140,49 +140,6 @@ const RootEdit: FC = () => {
   useEffect(() => {
     checkLoadMdTables(tableNamesForLoad);
   }, [tableNamesForLoad]); //, checkLoadMdTables - ჩამტვირთავი მეთოდების ჩანატება useEffect-ის დამოკიდებულებებში იწვევს ჩაციკვლას
-
-  //5. სარედაქტირებელი ობიექტის სქემა
-  // const yupSchema: yup.Schema<RootData> = yup.object().shape({
-  //   root: yup.object().shape({
-  //     rootId: yup.number().integer().default(0).required(),
-  //     classifierId: yup.number().integer().default(0),
-  //     rootName: yup
-  //       .string()
-  //       .required("ძირის სახელი შევსებული უნდა იყოს")
-  //       .max(50, "ძირის სახელის სიგრძე არ შეიძლება იყოს 50 სიმბოლოზე მეტი")
-  //       .default(""),
-  //     rootHomonymIndex: yup
-  //       .number()
-  //       .integer()
-  //       .min(0, "ომონიმიის ინდექსი შეიძლება იყოს დადებითი, ან 0")
-  //       .required("ომონიმიის ინდექსი შევსებული უნდა იყოს")
-  //       .default(0),
-  //     rootNote: yup
-  //       .string()
-  //       .max(255, "შენიშვნის სიგრძე არ შეიძლება იყოს 255 სიმბოლოზე მეტი")
-  //       .default("")
-  //       .nullable(),
-  //     recordStatusId: yup
-  //       .number()
-  //       .integer()
-  //       .min(0, "ჩანაწერის სტატუსი შეიძლება იყოს მხოლოდ 0, 1, 2")
-  //       .max(2, "ჩანაწერის სტატუსი შეიძლება იყოს მხოლოდ 0, 1, 2")
-  //       .required("ჩანაწერის სტატუსი შევსებული უნდა იყოს")
-  //       .default(0),
-  //     creator: yup.string().max(256).default(""),
-  //   }),
-  //   basePhoneticsCombDetails: yup
-  //     .array()
-  //     .ensure()
-  //     .of(
-  //       yup
-  //         .number()
-  //         .integer()
-  //         .positive("გამოყოფილ უჯრაში ფონეტიკური ცვლილება არჩეული უნდა იყოს")
-  //         .default(0)
-  //         .required()
-  //     ),
-  // });
 
   //console.log("RootEdit yupSchema=", yupSchema);
 

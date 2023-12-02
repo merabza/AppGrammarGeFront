@@ -11,7 +11,7 @@ import {
 } from "../../redux/types/rootsTypes";
 
 export function getBranchByIdFromStore(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   branchId: number
 ): DerivationBranchModel | null {
   for (var rootData of Object.values(rootsRepo)) {
@@ -26,7 +26,7 @@ export function getBranchByIdFromStore(
 }
 
 export function getInflectionByIdFromStore(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   infId: number
 ) {
   for (var rootData of Object.values(rootsRepo)) {
@@ -49,7 +49,7 @@ export function getInflectionByIdFromStore(
 }
 
 export function getInflectionVerbCompositionByIdFromStore(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   ivcId: number
 ) {
   for (var rootData of Object.values(rootsRepo)) {
@@ -68,7 +68,7 @@ export function getInflectionVerbCompositionByIdFromStore(
 }
 
 export function havePredRoots(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   branch: DerivationBranchModel
 ) {
   if (branch.derivationPredecessors.length === 0) {
@@ -90,7 +90,7 @@ export function havePredRoots(
 }
 
 export function haveInflectionPredRoots(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   inflection: VerbInflectionRedModel | NounInflectionRedModel
 ) {
   for (var pre of inflection.inflectionPredecessors.map((itm) =>
@@ -103,7 +103,7 @@ export function haveInflectionPredRoots(
 }
 
 export function haveInflectionVerbCompositionPredRoots(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   inflectionVerbComposition: InflectionVerbCompositionRedModel
 ) {
   for (var pre of inflectionVerbComposition.inflectionVerbCompositionPredecessors.map(
@@ -116,7 +116,7 @@ export function haveInflectionVerbCompositionPredRoots(
 }
 
 export function getVerbInflectionByIdFromStore(
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   infId: number
 ) {
   for (var rootData of Object.values(rootsRepo)) {
@@ -135,7 +135,7 @@ export function getVerbInflectionByIdFromStore(
 export async function funAfterSaveBranch(
   derivBranchId: number | undefined,
   rootId: number | undefined,
-  rootsRepo: RootFullModel[],
+  rootsRepo: { [key: number]: RootFullModel },
   duplicateDerivationBranchId: number | null,
   navigate: NavigateFunction
 ) {
@@ -174,7 +174,7 @@ export async function funAfterSaveBranch(
 
 export function funPredRoots(
   branch: DerivationBranchModel | null,
-  rootsRepo: RootFullModel[]
+  rootsRepo: { [key: number]: RootFullModel }
 ): number[] {
   if (!branch) return [] as number[];
   if (branch.derivationPredecessors.length === 0) {
