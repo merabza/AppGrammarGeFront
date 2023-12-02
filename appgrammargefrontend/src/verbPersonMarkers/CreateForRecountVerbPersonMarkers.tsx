@@ -70,9 +70,9 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
   const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
   const verbPersons = mdataRepo.verbPersons as VerbPerson[];
-  const dominantActantsQuery =
-    mdataRepo.dominantActantsQuery as DominantActant[];
-  const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+  // const dominantActantsQuery =
+  //   mdataRepo.dominantActantsQuery as DominantActant[];
+  // const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
 
   //console.log("CreateForRecountVerbPersonMarkers props=", props);
 
@@ -91,8 +91,8 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
       "verbPersonMarkerParadigms",
       "verbNumbers",
       "verbPersons",
-      "dominantActantsQuery",
-      "morphemesQuery",
+      // "dominantActantsQuery",
+      // "morphemesQuery",
     ],
     []
   );
@@ -153,6 +153,23 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     return <Loading />;
   }
 
+  // console.log("CreateForRecountVerbPersonMarkers LoadCheck ", {
+  //   curscrollTo,
+  //   actantTypes,
+  //   verbSeries,
+  //   actantGrammarCases,
+  //   actantGroups,
+  //   verbTypes,
+  //   verbTransitions,
+  //   actantPositions,
+  //   verbPluralityTypes,
+  //   verbPersonMarkerParadigms,
+  //   verbNumbers,
+  //   verbPersons,
+  //   dataTypes,
+  //   forRecountVerbPersonMarkers,
+  // });
+
   if (
     !curscrollTo ||
     !actantTypes ||
@@ -166,8 +183,8 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
     !verbPersonMarkerParadigms ||
     !verbNumbers ||
     !verbPersons ||
-    !dominantActantsQuery ||
-    !morphemesQuery ||
+    // !dominantActantsQuery ||
+    // !morphemesQuery ||
     !dataTypes ||
     !forRecountVerbPersonMarkers
   ) {
