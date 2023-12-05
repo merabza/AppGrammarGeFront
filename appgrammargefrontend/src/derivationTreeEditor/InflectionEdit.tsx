@@ -78,7 +78,7 @@ const InflectionEdit: FC = () => {
     undefined
   );
 
-  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+  const { mdataRepo, mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
 
   const { rootLoading } = useAppSelector((state) => state.rootsState);
@@ -93,7 +93,7 @@ const InflectionEdit: FC = () => {
 
   const morphemeRangesByInflectionBlocks =
     mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
-  const phoneticsTypes = mdataRepo.phoneticsTypes as ILookup[];
+  const phoneticsTypes = mdLookupRepo.phoneticsTypes as ILookup[];
   const nounParadigms = mdataRepo.nounParadigms as NounParadigm[];
   const verbParadigms = mdataRepo.verbParadigms as VerbParadigm[];
 
@@ -633,24 +633,33 @@ const InflectionEdit: FC = () => {
     // setVerbType,
   ]);
 
-  // console.log("InflectionEdit.js on check Load ", {
-  //   morphemeGroups,
-  //   morphemeRanges,
-  //   morphemesQuery,
-  //   phoneticsTypes,
-  //   inflectionTypes,
-  //   inflectionBlocks,
-  //   morphemeRangesByInflectionBlocks,
-  //   curDbrIdVal,
-  //   curInfIdVal,
-  //   currentRootId,
-  //   inflectionForEdit,
-  //   loadingInflection,
-  //   mdWorkingOnLoad,
-  //   mdWorkingOnLoadingTables,
-  //   rootLoading,
-  //   frm,
-  // });
+  console.log("InflectionEdit.js on check Load ", {
+    pronouns,
+    classifiers,
+    morphemeGroups,
+    morphemeRanges,
+    morphemesQuery,
+    phoneticsTypes,
+    inflectionTypes,
+    inflectionBlocks,
+    morphemeRangesByInflectionBlocks,
+    nounParadigms,
+    verbParadigms,
+    verbTypes,
+    verbPluralityTypes,
+    verbRowFilters,
+    personVariabilityTypes,
+    verbRowParadigmsByVerbTypes,
+    curDbrIdVal,
+    curInfIdVal,
+    currentRootId,
+    inflectionForEdit,
+    loadingInflection,
+    mdWorkingOnLoad,
+    mdWorkingOnLoadingTables,
+    rootLoading,
+    frm,
+  });
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
 
@@ -671,6 +680,8 @@ const InflectionEdit: FC = () => {
   )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
+
+  console.log("");
 
   //(curDbrIdVal && !inflectionForEdit) ||
   //8. ჩატვირთვის შემოწმება

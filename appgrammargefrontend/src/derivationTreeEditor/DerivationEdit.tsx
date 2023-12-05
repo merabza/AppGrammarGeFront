@@ -67,7 +67,7 @@ const DerivationEdit: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+  const { mdataRepo, mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
 
   const { rootLoading } = useAppSelector((state) => state.rootsState);
@@ -82,12 +82,12 @@ const DerivationEdit: FC = () => {
     mdataRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
 
   const derivationFormulasQuery =
-    mdataRepo.derivationFormulasQuery as ILookup[];
+    mdLookupRepo.derivationFormulasQuery as ILookup[];
   const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
-  const classifiers = mdataRepo.classifiers as ILookup[];
+  const classifiers = mdLookupRepo.classifiers as ILookup[];
   const phoneticsChangesQuery =
     mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
-  const phoneticsTypes = mdataRepo.phoneticsTypes as ILookup[];
+  const phoneticsTypes = mdLookupRepo.phoneticsTypes as ILookup[];
 
   const [currentRootId, setCurrentRootId] = useState<number | undefined>(
     undefined
