@@ -7,10 +7,11 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import "./BaseSearch.css";
 import WaitPage from "../appcarcass/common/WaitPage";
 import { useAppSelector } from "../appcarcass/redux/hooks";
-import { useBasesByPages } from "./RootsHooks/useBasesByPages";
+// import { useBasesByPages } from "./RootsHooks/useBasesByPages";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import AlertMessages from "../appcarcass/common/AlertMessages";
+import { useBasesByPages } from "./RootsHooks/useBasesByPages";
 
 const itemsPerPage = 30;
 
@@ -18,11 +19,16 @@ const BaseSearch: FC = () => {
   const { isMenuLoading, flatMenu } = useAppSelector(
     (state) => state.navMenuState
   );
-  const { basesPageLoading, memoBaseCounts, memoBasePages } = useAppSelector(
+  const { memoBaseCounts, memoBasePages } = useAppSelector(
     (state) => state.rootsState
   );
+  console.log(
+    "BaseSearch useEffect { basesPageLoading, memoBaseCounts, memoBasePages }=",
+    { memoBaseCounts, memoBasePages }
+  );
 
-  const [loadBasesByPages] = useBasesByPages();
+  const [loadBasesByPages, isLoadingBases] = useBasesByPages();
+  //const [getBasesByPages] = useLazyGetBasesByPagesQuery();
 
   function getPageKey(
     baseName: string,
@@ -55,7 +61,7 @@ const BaseSearch: FC = () => {
 
   useEffect(() => {
     const menuItem = isValidPage();
-    //console.log("BaseSearch useEffect menuItem=", menuItem);
+    // console.log("BaseSearch useEffect menuItem=", menuItem);
     if (!menuItem || !baseName) return;
 
     const { pageNom, pagekey } = getPageKey(baseName, itemsPerPage, page);
@@ -66,15 +72,7 @@ const BaseSearch: FC = () => {
       if (baseName && pageNom)
         loadBasesByPages(baseName, itemsPerPage, pageNom, pagekey);
     }
-  }, [
-    isMenuLoading,
-    flatMenu,
-    isValidPage,
-    baseName,
-    page,
-    loadBasesByPages,
-    currentPageKey,
-  ]);
+  }, [isMenuLoading, flatMenu, baseName, page, currentPageKey]);
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
 
@@ -103,14 +101,28 @@ const BaseSearch: FC = () => {
       memoBaseCounts[currentBaseName] &&
       memoBaseCounts[currentBaseName] > 1
     ) {
-      const pagesCount = memoBaseCounts[currentBaseName] / itemsPerPage;
+      const pagesCount = Math.floor(
+        (memoBaseCounts[currentBaseName] - 1) / itemsPerPage + 1
+      );
+
       let startWith = currentPageNom - 4;
-      if (startWith < 1) startWith = 1;
-      let endWith = startWith + 9;
-      if (endWith > pagesCount) endWith = pagesCount;
+      let endWith = currentPageNom + 4;
+      if (pagesCount < 10) {
+        startWith = 1;
+        endWith = pagesCount;
+      } else {
+        if (currentPageNom < 5) {
+          startWith = 1;
+          endWith = startWith + 8;
+        }
+        if (currentPageNom > pagesCount - 4) {
+          endWith = pagesCount;
+          startWith = endWith - 8;
+        }
+      }
       if (currentPageNom > 1)
         pageLinks.push(createLink(currentBaseName, currentPageNom - 1, "<"));
-      for (let i = startWith; i < endWith; i++) {
+      for (let i = startWith; i <= endWith; i++) {
         if (i === currentPageNom)
           pageLinks.push(
             <strong key="b">{createLink(currentBaseName, i)}</strong>
@@ -131,7 +143,12 @@ const BaseSearch: FC = () => {
       </div>
     );
 
-  if (basesPageLoading || isMenuLoading) return <WaitPage />;
+  console.log("BaseSearch before WaitPage {basesPageLoading, isMenuLoading}=", {
+    isLoadingBases,
+    isMenuLoading,
+  });
+
+  if (isLoadingBases || isMenuLoading) return <WaitPage />;
 
   if (!currentBaseName || !currentPageKey || !flatMenu) {
     return <div></div>;

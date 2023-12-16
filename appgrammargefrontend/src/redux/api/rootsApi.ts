@@ -8,9 +8,13 @@ import {
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
 import {
+  SetBasesForDropdown,
+  SetBasesForDropdownloading,
+  SetBasesForPages,
   clearParadigm,
   setBasesCount,
   setBasesCountPayloadType,
+  setBasesPayloadType,
   setParadigm,
 } from "../slices/rootsSlice";
 import {
@@ -35,6 +39,7 @@ export interface GetBasesbypagesReqType {
   searchValue: string;
   itemsPerPage: number;
   pageNom: number;
+  pagekey: string;
 }
 
 export interface GetVerbsbypagesReqType {
@@ -68,10 +73,17 @@ export const rootsApi = createApi({
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          // const queryResult =
-          await queryFulfilled;
-          // const { data } = queryResult;
-          // dispatch(setBasesForDropdown(data));
+          dispatch(SetBasesForDropdownloading(true));
+          const result = await queryFulfilled;
+          const data = result.data as BasesByPagesResponse;
+          console.log("rootsApi getBasesByPages data=", data);
+          const payload = {
+            pagekey: args.pagekey,
+            data: data.baseLinks,
+          } as setBasesPayloadType;
+          console.log("rootsApi getBasesByPages payload=", payload);
+          dispatch(SetBasesForPages(payload));
+          dispatch(SetBasesForDropdownloading(false));
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));
         }
@@ -107,6 +119,7 @@ export const rootsApi = createApi({
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
+          dispatch(SetBasesForDropdownloading(false));
           const queryResult = await queryFulfilled;
           const { data } = queryResult;
           dispatch(
@@ -115,6 +128,7 @@ export const rootsApi = createApi({
               data,
             } as setBasesCountPayloadType)
           );
+          dispatch(SetBasesForDropdownloading(false));
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));
         }

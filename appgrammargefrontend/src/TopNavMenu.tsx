@@ -57,6 +57,11 @@ const TopNavMenu: FC = () => {
           <Route path="/Rights" element={<RightsTopNavMenu />} />
           <Route path="/profile" element={<ProfileTopNavMenu />} />
           {/* Project */}
+          <Route
+            path="/basesearch/:baseName/:page"
+            element={<BaseSearchForm />}
+          />
+          <Route path="/basesearch/:baseName" element={<BaseSearchForm />} />
           <Route path="/basesearch" element={<BaseSearchForm />} />
           <Route
             path="/root/:rootId/:dbrId/:infId/:ivcId"

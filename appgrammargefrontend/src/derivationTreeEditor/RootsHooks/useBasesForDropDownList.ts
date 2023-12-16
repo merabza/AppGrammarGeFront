@@ -30,6 +30,7 @@ export function useBasesForDropDownList(): [fnloadBasesForDropDown] {
         searchValue,
         itemsPerPage: dropdownLinesCount,
         pageNom: 1,
+        pagekey: searchValue,
       });
       // console.log("result.data=", result.data);
       if (result.data) {

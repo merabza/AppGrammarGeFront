@@ -97,6 +97,15 @@ export const rootsSlice = createSlice({
       state.memoBasesDict[pagekey] = data;
     },
     //////////////////////////////////////
+    SetBasesForPages: (state, action: PayloadAction<setBasesPayloadType>) => {
+      const { pagekey, data } = action.payload;
+      // console.log("setBasesForDropdown { pagekey, data } = ", {
+      //   pagekey,
+      //   data,
+      // });
+      state.memoBasePages[pagekey] = data;
+    },
+    //////////////////////////////////////
     SetVerbsForDropdown: (
       state,
       action: PayloadAction<setVerbsPayloadType>
@@ -234,6 +243,7 @@ export default rootsSlice.reducer;
 
 export const {
   SetBasesForDropdown,
+  SetBasesForPages,
   SetVerbsForDropdown,
   SetBasesForDropdownloading,
   SetVerbsForDropdownloading,
