@@ -218,10 +218,10 @@ const InflectionEdit: FC = () => {
 
   const copyMorphemsToMainData = useCallback(
     (forForm: InflectionData, morphemes: number[], ranges: MorphemeRange[]) => {
-      console.log(
-        "InflectionEdit copyMorphemsToMainData morphemes=",
-        morphemes
-      );
+      // console.log(
+      //   "InflectionEdit copyMorphemsToMainData morphemes=",
+      //   morphemes
+      // );
 
       const newForm = { ...forForm } as InflectionData;
       newForm.freeMorphemeIds = morphemes
@@ -234,7 +234,7 @@ const InflectionEdit: FC = () => {
         )
         .map((m) => m.mrpId);
 
-      console.log("InflectionEdit copyMorphemsToMainData newForm=", newForm);
+      // console.log("InflectionEdit copyMorphemsToMainData newForm=", newForm);
 
       return newForm;
     },
@@ -342,7 +342,7 @@ const InflectionEdit: FC = () => {
 
       //დავამზადოთ ფორმის ახალი ობიექტი
       const newForm = JSON.parse(JSON.stringify(curForm)) as InflectionData; // { ...curForm } as InflectionData;
-      console.log("InflectionEdit setInflectionType newForm=", newForm);
+      // console.log("InflectionEdit setInflectionType newForm=", newForm);
 
       //ფლექსიის ტიპის იდენტიფიკატორის მიხედვით მოხდეს ფლექსიის ტიპის პოვნა
       const inflectionType = inflectionTypes.find(
@@ -449,10 +449,10 @@ const InflectionEdit: FC = () => {
         }
       }
 
-      console.log(
-        "InflectionEdit setInflectionType before createFormulaFormData newForm=",
-        newForm
-      );
+      // console.log(
+      //   "InflectionEdit setInflectionType before createFormulaFormData newForm=",
+      //   newForm
+      // );
 
       const formulaFormDataType = createFormulaFormData(
         curRanges,
@@ -464,10 +464,10 @@ const InflectionEdit: FC = () => {
         true
       );
 
-      console.log(
-        "InflectionEdit setInflectionType formulaFormDataType=",
-        formulaFormDataType
-      );
+      // console.log(
+      //   "InflectionEdit setInflectionType formulaFormDataType=",
+      //   formulaFormDataType
+      // );
       setCurMorphemes(formulaFormDataType.morphemes);
       setCurRanges(formulaFormDataType.ranges);
       if (formulaFormDataType.error)
@@ -633,33 +633,33 @@ const InflectionEdit: FC = () => {
     // setVerbType,
   ]);
 
-  console.log("InflectionEdit.js on check Load ", {
-    pronouns,
-    classifiers,
-    morphemeGroups,
-    morphemeRanges,
-    morphemesQuery,
-    phoneticsTypes,
-    inflectionTypes,
-    inflectionBlocks,
-    morphemeRangesByInflectionBlocks,
-    nounParadigms,
-    verbParadigms,
-    verbTypes,
-    verbPluralityTypes,
-    verbRowFilters,
-    personVariabilityTypes,
-    verbRowParadigmsByVerbTypes,
-    curDbrIdVal,
-    curInfIdVal,
-    currentRootId,
-    inflectionForEdit,
-    loadingInflection,
-    mdWorkingOnLoad,
-    mdWorkingOnLoadingTables,
-    rootLoading,
-    frm,
-  });
+  // console.log("InflectionEdit.js on check Load ", {
+  //   pronouns,
+  //   classifiers,
+  //   morphemeGroups,
+  //   morphemeRanges,
+  //   morphemesQuery,
+  //   phoneticsTypes,
+  //   inflectionTypes,
+  //   inflectionBlocks,
+  //   morphemeRangesByInflectionBlocks,
+  //   nounParadigms,
+  //   verbParadigms,
+  //   verbTypes,
+  //   verbPluralityTypes,
+  //   verbRowFilters,
+  //   personVariabilityTypes,
+  //   verbRowParadigmsByVerbTypes,
+  //   curDbrIdVal,
+  //   curInfIdVal,
+  //   currentRootId,
+  //   inflectionForEdit,
+  //   loadingInflection,
+  //   mdWorkingOnLoad,
+  //   mdWorkingOnLoadingTables,
+  //   rootLoading,
+  //   frm,
+  // });
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
 
@@ -680,8 +680,6 @@ const InflectionEdit: FC = () => {
   )
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
-
-  console.log("");
 
   //(curDbrIdVal && !inflectionForEdit) ||
   //8. ჩატვირთვის შემოწმება

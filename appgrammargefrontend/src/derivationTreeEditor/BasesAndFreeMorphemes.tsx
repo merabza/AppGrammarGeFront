@@ -264,8 +264,8 @@ const BasesAndFreeMorphemes: FC<BasesAndFreeMorphemesProps> = (props) => {
                 label={"ფონეტიკური ტიპი"}
                 value={phoneticsTypeId}
                 dataMember={phoneticsTypes}
-                valueMember="phtId"
-                displayMember="phtName"
+                valueMember="id"
+                displayMember="name"
                 sortByDisplayMember={true}
                 firstItem={{ id: 0, name: "უცვლელი" }}
                 firstItemIsSelectable
