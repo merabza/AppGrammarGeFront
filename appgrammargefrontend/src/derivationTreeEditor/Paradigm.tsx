@@ -222,6 +222,9 @@ const Paradigm: FC<ParadigmProps> = (props) => {
   //console.log("Paradigm pronouns=", pronouns);
   //console.log("Paradigm prons=", prons);
 
+  console.log("Paradigm prdIspMorphemeNom=", prdIspMorphemeNom);
+  console.log("Paradigm paradigm=", paradigm);
+
   let isp = "";
   const ispMorpheme = paradigm.ispMorphemes.find(
     (item) => item.ispMorphemeNom === prdIspMorphemeNom
