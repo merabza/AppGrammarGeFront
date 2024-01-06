@@ -142,8 +142,8 @@ export interface VerbPersonMarkerFormula {
 }
 
 export interface ParadigmNameModel {
-  id: number;
-  name: string;
+  prdId: number;
+  prdName: string;
   sortId: number;
   formulasCount: number;
 }

@@ -39,6 +39,11 @@ const ParadigmListEditor: FC<ParadigmListEditorProps> = (props) => {
     .slice()
     .sort((a, b) => a.sortId - b.sortId);
 
+  console.log(
+    "ParadigmListEditor paradigmNamesTableSorted=",
+    paradigmNamesTableSorted
+  );
+
   return (
     <div>
       <h4>
@@ -51,18 +56,19 @@ const ParadigmListEditor: FC<ParadigmListEditorProps> = (props) => {
           .map((m) => {
             const bl =
               curscrollTo.tabKey === tableName &&
-              (curscrollTo.recId === m.id || curscrollTo.recName === m.name);
+              (curscrollTo.recId === m.prdId ||
+                curscrollTo.recName === m.prdName);
             return (
-              <li key={m.id.toString()} ref={bl ? backLigth : null}>
+              <li key={m.prdId.toString()} ref={bl ? backLigth : null}>
                 {!dataType.update && !dataType.delete && (
                   <div>
-                    {m.name} ({m.formulasCount})
+                    {m.prdName} ({m.formulasCount})
                   </div>
                 )}
                 {(dataType.update || dataType.delete) && (
                   <div>
                     <Link
-                      to={`/mdItemEdit/${tableName}/${m.id}`}
+                      to={`/mdItemEdit/${tableName}/${m.prdId}`}
                       className={bl ? "backLigth" : undefined}
                       onClick={(e) => {
                         // e.preventDefault(); ეს საჭირო არ არის, რადგან ლინკზე აღარ გადადის
@@ -71,10 +77,10 @@ const ParadigmListEditor: FC<ParadigmListEditorProps> = (props) => {
                         saveReturnPageName();
                       }}
                     >
-                      {m.name}{" "}
+                      {m.prdName}{" "}
                     </Link>
                     <Link
-                      to={`/${formulasTableName}/${m.id}`}
+                      to={`/${formulasTableName}/${m.prdId}`}
                       className={bl ? "backLigth" : undefined}
                     >
                       ({m.formulasCount})
