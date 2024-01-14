@@ -3,9 +3,9 @@
 import { useEffect, useMemo, useCallback, FC } from "react";
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import { IssueKind, IssuePriority, IssueStatus } from "./IssueTypes";
+// import { IssueKind, IssuePriority, IssueStatus } from "./IssueTypes";
 import { useLocation } from "react-router-dom";
-import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+// import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import Loading from "../appcarcass/common/Loading";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
@@ -17,6 +17,7 @@ import {
 import { IFilterSortRequest } from "../appcarcass/grid/GridViewTypes";
 import GridView from "../appcarcass/grid/GridView";
 import { useIssuesGridColumns } from "./IssuesGridColumns";
+import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
 
 const Issues: FC = () => {
   const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
@@ -43,7 +44,7 @@ const Issues: FC = () => {
     (state) => state.navMenuState
   );
 
-  const [checkLoadMdTables] = useCheckLoadMdTables();
+  const [checkLoadMdTables] = useCheckLoadLookupTables();
   const { data: issuesCount, isLoading: issuesCountLoading } =
     useGetIssuesCountQuery();
 
@@ -81,6 +82,14 @@ const Issues: FC = () => {
   ) {
     return <Loading />;
   }
+
+  console.log("Issues Before Alert ", {
+    issueKinds,
+    issuePriorities,
+    issueStatuses,
+    dataTypes,
+    issuesCount,
+  });
 
   if (
     !issueKinds ||
