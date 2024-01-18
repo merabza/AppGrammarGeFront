@@ -48,7 +48,7 @@ const StatusConfirmRejectPart: FC<StatusConfirmRejectPartProps> = (props) => {
     onClearConfirmRejectFailure,
   } = props;
 
-  console.log("StatusConfirmRejectPart props=", props);
+  // console.log("StatusConfirmRejectPart props=", props);
 
   const [buttonRowId, setButtonRowId] = useState(0);
   const [buttonId, setButtonId] = useState(0);
@@ -169,8 +169,8 @@ const StatusConfirmRejectPart: FC<StatusConfirmRejectPartProps> = (props) => {
     ],
   };
 
-  console.log("StatusConfirmRejectPart buttonRow=", buttonRow);
-  console.log("StatusConfirmRejectPart editStatus=", editStatus);
+  // console.log("StatusConfirmRejectPart buttonRow=", buttonRow);
+  // console.log("StatusConfirmRejectPart editStatus=", editStatus);
 
   return (
     <div>

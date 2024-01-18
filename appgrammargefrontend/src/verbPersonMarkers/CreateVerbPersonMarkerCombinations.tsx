@@ -13,6 +13,18 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+import { useLazyGetLookupTablesQuery } from "../appcarcass/redux/api/masterdataApi";
+import {
+  ActantGrammarCase,
+  ActantGroup,
+  ActantPosition,
+  ActantType,
+  VerbPluralityType,
+  VerbSeries,
+  VerbTransition,
+  VerbType,
+} from "../masterData/mdTypes";
+import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
 
 const CreateVerbPersonMarkerCombinations: FC = () => {
   // const { alert, isMenuLoading, flatMenu, masterData, loadMultipleListData } =
@@ -20,11 +32,16 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+  const { mdataRepo, mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
+
+  const [checkLoadMdTables] = useCheckLoadMdTables();
 
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const masterData = useAppSelector((state) => state.masterDataState);
+
+  const [getLookupTables, { isLoading: loadingLookupTables }] =
+    useLazyGetLookupTablesQuery();
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
@@ -36,15 +53,18 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
   //   mdRepo.pluralityChangesByVerbTypes as PluralityChangesByVerbType[];
   // const verbPersonMarkerCombinations =
   //   mdRepo.verbPersonMarkerCombinations as VerbPersonMarkerCombination[];
-  const actantGrammarCases = mdLookupRepo.actantGrammarCases;
-  const actantGroups = mdLookupRepo.actantGroups;
-  const actantPositions = mdLookupRepo.actantPositions;
-  const actantTypes = mdLookupRepo.actantTypes;
-  const verbTransitions = mdLookupRepo.verbTransitions;
-  const verbPluralityTypes = mdLookupRepo.verbPluralityTypes;
-  const verbTypes = mdLookupRepo.verbTypes;
-  const verbSeries = mdLookupRepo.verbSeries;
-  const verbPersonMarkerParadigms = mdLookupRepo.verbPersonMarkerParadigms;
+  const actantGrammarCases =
+    mdataRepo.actantGrammarCases as ActantGrammarCase[];
+  const actantGroups = mdataRepo.actantGroups as ActantGroup[];
+  const actantPositions = mdataRepo.actantPositions as ActantPosition[];
+  const actantTypes = mdataRepo.actantTypes as ActantType[];
+  const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
+  const verbPluralityTypes =
+    mdataRepo.verbPluralityTypes as VerbPluralityType[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
+  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
+  const verbPersonMarkerParadigms =
+    mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
 
   //console.log("CreateVerbPersonMarkerCombinations props=", props);
 
@@ -90,7 +110,7 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
     return flatMenu.find((f) => f.menLinkKey === menLinkKey);
   }, [flatMenu, menLinkKey]);
 
-  const [checkLoadMdTables] = useCheckLoadMdTables();
+  //const [checkLoadMdTables] = useCheckLoadMdTables();
 
   useEffect(() => {
     const menuItem = isValidPage();
@@ -141,31 +161,27 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
   // });
 
   if (
-    mdWorkingOnLoad ||
+    // mdWorkingOnLoad ||
     isMenuLoading ||
+    loadingLookupTables ||
     Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
   ) {
     return <Loading />;
   }
 
-  // console.log("CreateVerbPersonMarkerCombinations Loaded Data => ", {
-  //   GridRules,
-  //   curscrollTo,
-  //   actantGrammarCasesByActantTypes,
-  //   actantTypesByVerbTypes,
-  //   pluralityChangesByVerbTypes,
-  //   verbPersonMarkerCombinations,
-  //   actantGrammarCases,
-  //   actantPositions,
-  //   actantTypes,
-  //   actantGroups,
-  //   verbTransitions,
-  //   verbPluralityTypes,
-  //   verbTypes,
-  //   verbSeries,
-  //   verbPersonMarkerParadigms,
-  //   dataTypes,
-  // });
+  console.log("CreateVerbPersonMarkerCombinations Loaded Data => ", {
+    curscrollTo,
+    actantGrammarCases,
+    actantPositions,
+    actantTypes,
+    actantGroups,
+    verbTransitions,
+    verbPluralityTypes,
+    verbTypes,
+    verbSeries,
+    verbPersonMarkerParadigms,
+    dataTypes,
+  });
 
   if (
     // !allDataTypesLoaded ||
@@ -286,7 +302,7 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
             <NameListEditor
               key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={masterData.mdLookupRepo[tn]}
+              tableForEdit={masterData.mdataRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}

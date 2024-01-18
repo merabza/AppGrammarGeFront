@@ -4,7 +4,12 @@ import { useEffect, useMemo, useCallback, FC } from "react";
 
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import { InflectionBlock } from "../masterData/mdTypes";
+import {
+  InflectionBlock,
+  VerbPluralityType,
+  VerbSeries,
+  VerbType,
+} from "../masterData/mdTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useCheckLoadFilteredVerbPersonMarkerCombinationFormulas } from "./useCheckLoadFilteredVerbPersonMarkerCombinationFormulas";
 import { useLocation, useParams } from "react-router-dom";
@@ -16,11 +21,12 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
+import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
 
 const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { mdataRepo, mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
 
   const { verbPersonMarkerCombinationFormulas } = useAppSelector(
@@ -32,16 +38,18 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
 
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const morphemeRanges = mdLookupRepo.morphemeRanges;
-  const morphemesQuery = mdLookupRepo.morphemesQuery;
+  // const morphemeRanges = mdLookupRepo.morphemeRanges;
+  // const morphemesQuery = mdLookupRepo.morphemesQuery;
   const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
-  const inflectionTypes = mdLookupRepo.inflectionTypes;
-  const morphemeRangesByInflectionBlocks =
-    mdLookupRepo.morphemeRangesByInflectionBlocks;
-  const verbPluralityTypes = mdLookupRepo.verbPluralityTypes;
-  const verbPersonMarkerParadigms = mdLookupRepo.verbPersonMarkerParadigms;
-  const verbTypes = mdLookupRepo.verbTypes;
-  const verbSeries = mdLookupRepo.verbSeries;
+  //  const inflectionTypes = mdLookupRepo.inflectionTypes;
+  // const morphemeRangesByInflectionBlocks =
+  //   mdLookupRepo.morphemeRangesByInflectionBlocks;
+  const verbPluralityTypes =
+    mdataRepo.verbPluralityTypes as VerbPluralityType[];
+  const verbPersonMarkerParadigms =
+    mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+  const verbTypes = mdataRepo.verbTypes as VerbType[];
+  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
 
   //console.log("CreateVerbPersonMarkerCombinationFormulaDetails props=", props);
 
@@ -49,11 +57,18 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
 
   const tableNamesForLookup = useMemo(
     () => [
-      "morphemeRanges",
-      "morphemesQuery",
+      // "morphemeRanges",
+      // "morphemesQuery",
+      //"inflectionBlocks",
+      //"inflectionTypes",
+      //"morphemeRangesByInflectionBlocks",
+    ],
+    []
+  );
+
+  const tableNamesForLoad = useMemo(
+    () => [
       "inflectionBlocks",
-      "inflectionTypes",
-      "morphemeRangesByInflectionBlocks",
       "verbPluralityTypes",
       "verbPersonMarkerParadigms",
       "verbTypes",
@@ -61,8 +76,6 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     ],
     []
   );
-
-  const tableNamesForLoad = useMemo(() => ["inflectionBlocks"], []);
 
   const { isMenuLoading, flatMenu } = useAppSelector(
     (state) => state.navMenuState
@@ -125,13 +138,31 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     return <Loading />;
   }
 
+  console.log(
+    "CreateVerbPersonMarkerCombinationFormulaDetails Loaded Data => ",
+    {
+      curscrollTo,
+      // morphemeRanges,
+      // morphemesQuery,
+      inflectionBlocks,
+      //inflectionTypes,
+      //morphemeRangesByInflectionBlocks,
+      verbPluralityTypes,
+      verbPersonMarkerParadigms,
+      verbTypes,
+      verbSeries,
+      verbPersonMarkerCombinationFormulas,
+      dataTypes,
+    }
+  );
+
   if (
     !curscrollTo ||
-    !morphemeRanges ||
-    !morphemesQuery ||
+    // !morphemeRanges ||
+    // !morphemesQuery ||
     !inflectionBlocks ||
-    !inflectionTypes ||
-    !morphemeRangesByInflectionBlocks ||
+    //!inflectionTypes ||
+    //!morphemeRangesByInflectionBlocks ||
     !verbPluralityTypes ||
     !verbPersonMarkerParadigms ||
     !verbTypes ||
@@ -147,19 +178,19 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     );
   }
 
-  const inflectionBlock = inflectionBlocks.find(
-    (f) => f.inbKey === "PersonMarkersBlock"
-  );
-  if (!inflectionBlock) {
-    return <h5>არასწორი ფლექსიის ბლოკი</h5>;
-  }
+  // const inflectionBlock = inflectionBlocks.find(
+  //   (f) => f.inbKey === "PersonMarkersBlock"
+  // );
+  // if (!inflectionBlock) {
+  //   return <h5>არასწორი ფლექსიის ბლოკი</h5>;
+  // }
 
-  const inflectionType = inflectionTypes.find(
-    (f) => f.id === inflectionBlock.inflectionTypeId
-  );
-  if (!inflectionType) {
-    return <h5>არასწორი ფლექსიის ტიპი</h5>;
-  }
+  // const inflectionType = inflectionTypes.find(
+  //   (f) => f.id === inflectionBlock.inflectionTypeId
+  // );
+  // if (!inflectionType) {
+  //   return <h5>არასწორი ფლექსიის ტიპი</h5>;
+  // }
 
   // const MorphemeRangeIdsByIT = morphemeRangesByInflectionBlocks
   //   .filter((f) => f.inflectionBlockId === inflectionBlock.inbId)
@@ -220,9 +251,9 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
         if (dataType) {
           return (
             <NameListEditor
-              key={tn}
+              key={dataType.dtName}
               dataType={dataType}
-              tableForEdit={masterData.mdLookupRepo[tn]}
+              tableForEdit={masterData.mdataRepo[tn]}
               curscrollTo={curscrollTo}
               backLigth={backLigth}
               saveReturnPageName={funSaveReturnPageName}
