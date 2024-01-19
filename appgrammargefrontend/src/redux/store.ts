@@ -1,7 +1,6 @@
 //store.ts
 
 import { configureStore } from "@reduxjs/toolkit";
-//import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 //Slices carcass
 import alertReducer from "../appcarcass/redux/slices/alertSlice";

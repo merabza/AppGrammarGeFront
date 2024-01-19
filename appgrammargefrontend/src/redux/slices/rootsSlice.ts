@@ -143,7 +143,7 @@ export const rootsSlice = createSlice({
     },
 
     //////////////////////////////////////
-    clearParadigm: (state) => {
+    clearParadigm: (state, action: PayloadAction<void>) => {
       state.paradigm = null;
       state.inflectionWorkingOnLoadParadigm = false;
     },

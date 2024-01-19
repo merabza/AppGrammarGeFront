@@ -53,7 +53,7 @@ const ParadigmTopNavMenu: FC = () => {
   return (
     <Nav>
       <Navbar.Brand> პარადიგმა </Navbar.Brand>
-      <ToggleButton type="checkbox" value="დეფისებით">
+      <ToggleButton id="withhyphens" type="checkbox" value="დეფისებით">
         <Form.Check
           type="checkbox"
           checked={prdShowhyphens ? true : false}
@@ -84,7 +84,7 @@ const ParadigmTopNavMenu: FC = () => {
         })}
       </DropdownButton>
 
-      <ToggleButton type="checkbox" value="1">
+      <ToggleButton id="formulas" type="checkbox" value="1">
         <Form.Check
           type="checkbox"
           checked={prdShowFormulas ? true : false}

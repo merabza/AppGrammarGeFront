@@ -147,7 +147,7 @@ export const rootsApi = createApi({
             const queryResult = await queryFulfilled;
             const { data } = queryResult;
             dispatch(setParadigm(data as ParadigmModel));
-          } else dispatch(clearParadigm);
+          } else dispatch(clearParadigm());
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));
         }
@@ -163,7 +163,7 @@ export const rootsApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           if (args) await queryFulfilled;
-          else dispatch(clearParadigm);
+          else dispatch(clearParadigm());
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));
         }
@@ -200,7 +200,7 @@ export const rootsApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           if (args.infId) await queryFulfilled;
-          else dispatch(clearParadigm);
+          else dispatch(clearParadigm());
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
@@ -221,7 +221,7 @@ export const rootsApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           if (args.ivcId) await queryFulfilled;
-          else dispatch(clearParadigm);
+          else dispatch(clearParadigm());
         } catch (error) {
           dispatch(setAlertApiMutationError(buildErrorMessage(error)));
         }
