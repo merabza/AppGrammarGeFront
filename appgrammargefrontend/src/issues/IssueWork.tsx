@@ -72,7 +72,7 @@ const IssueWork: FC = () => {
 
   // console.log("IssueWork curIssueIdVal=", curIssueIdVal);
   // console.log("IssueWork issuesRepo=", issuesRepo);
-  console.log("IssueWork issuesDetailsRepo=", issuesDetailsRepo);
+  // console.log("IssueWork issuesDetailsRepo=", issuesDetailsRepo);
 
   if (
     !curIssueIdVal ||
@@ -97,7 +97,7 @@ const IssueWork: FC = () => {
   //console.log("IssueWork issuesRepo[curIssueIdVal]=", issuesRepo[curIssueIdVal]);
   // console.log("IssueWork oneIssueOffsets=", oneIssueOffsets);
   // console.log("IssueWork oneIssue=", oneIssue);
-  console.log("IssueWork oneIssuesDetails=", oneIssuesDetails);
+  // console.log("IssueWork oneIssuesDetails=", oneIssuesDetails);
 
   const strFormat = "YYYY-MM-DDTHH:mm:ss";
 

@@ -22,10 +22,10 @@ const BaseSearch: FC = () => {
   const { memoBaseCounts, memoBasePages } = useAppSelector(
     (state) => state.rootsState
   );
-  console.log(
-    "BaseSearch useEffect { basesPageLoading, memoBaseCounts, memoBasePages }=",
-    { memoBaseCounts, memoBasePages }
-  );
+  // console.log(
+  //   "BaseSearch useEffect { basesPageLoading, memoBaseCounts, memoBasePages }=",
+  //   { memoBaseCounts, memoBasePages }
+  // );
 
   const [loadBasesByPages, isLoadingBases] = useBasesByPages();
   //const [getBasesByPages] = useLazyGetBasesByPagesQuery();
@@ -143,10 +143,10 @@ const BaseSearch: FC = () => {
       </div>
     );
 
-  console.log("BaseSearch before WaitPage {basesPageLoading, isMenuLoading}=", {
-    isLoadingBases,
-    isMenuLoading,
-  });
+  // console.log("BaseSearch before WaitPage {basesPageLoading, isMenuLoading}=", {
+  //   isLoadingBases,
+  //   isMenuLoading,
+  // });
 
   if (isLoadingBases || isMenuLoading) return <WaitPage />;
 

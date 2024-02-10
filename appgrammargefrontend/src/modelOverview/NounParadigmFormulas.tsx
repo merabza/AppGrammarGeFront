@@ -161,7 +161,7 @@ const NounParadigmFormulas: FC = () => {
     !curParadigmId ||
     !(curParadigmId in nounParadigmFormulas) ||
     !nounParadigmFormulas[curParadigmId] ||
-    nounParadigmFormulas[curParadigmId].length === 0 ||
+    // nounParadigmFormulas[curParadigmId].length === 0 ||
     (recNameNumber && !curscrollTo) ||
     !dataTypes ||
     !dataType ||

@@ -16,7 +16,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
-import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
+import {
+  saveReturnPageName,
+  setTablesForClearAfterCrudOperations,
+} from "../appcarcass/redux/slices/masterdataSlice";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
@@ -170,6 +173,7 @@ const VerbPersonMarkersOverview: FC = () => {
       <ParadigmListEditor
         dataType={verbPersonMarkerParadigmsDataType}
         paradigmNamesTable={verbPersonMarkerParadigmNames}
+        paradigmNamesTableName={"verbPersonMarkerParadigmNamesQuery"}
         formulasTableName="verbPersonMarkerFormulas"
         curscrollTo={curscrollTo}
         backLigth={backLigth}

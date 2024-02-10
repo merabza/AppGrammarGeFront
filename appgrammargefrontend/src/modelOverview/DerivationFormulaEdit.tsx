@@ -68,7 +68,7 @@ const DerivationFormulaEdit: FC = () => {
   const [ranges, setRanges] = useState<MorphemeRange[]>([] as MorphemeRange[]);
   const dataTypesState = useAppSelector((state) => state.dataTypesState);
   const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const [getOneDerivationFormulaById, { isLoading: loadingDerivationFormula }] =
     useLazyGetOneDerivationFormulaByIdQuery();
@@ -130,7 +130,7 @@ const DerivationFormulaEdit: FC = () => {
   >(DerivationFormulaFormDataSchema);
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, tableNamesForLoad);
+    clearTables(tableNamesForClear, tableNamesForLoad);
     dispatch(clearDerivFormulas());
   }
 

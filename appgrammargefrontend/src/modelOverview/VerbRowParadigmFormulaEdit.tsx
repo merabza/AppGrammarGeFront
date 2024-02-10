@@ -91,7 +91,7 @@ const VerbRowParadigmFormulaEdit: FC = () => {
 
   const [formDataPrepared, setFormDataPrepared] = useState(false);
 
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   //  console.log("VerbRowParadigmFormulaEdit props=", props);
 
@@ -149,7 +149,7 @@ const VerbRowParadigmFormulaEdit: FC = () => {
   >(VerbParadigmFormulaFormDataSchema);
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, tableNamesForLoad);
+    clearTables(tableNamesForClear, tableNamesForLoad);
     dispatch(clearVerbParadigmFormulas(paradigmIdsForClear));
   }
 

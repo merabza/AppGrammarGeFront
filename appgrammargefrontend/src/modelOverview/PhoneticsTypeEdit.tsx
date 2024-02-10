@@ -67,7 +67,7 @@ const PhoneticsTypeEdit: FC = () => {
   const tableNamesForLoad = useMemo(() => ["phoneticsOptions"], []);
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
@@ -109,7 +109,7 @@ const PhoneticsTypeEdit: FC = () => {
   >(phoneticsTypeEditFormDataSchema);
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, tableNamesForLoad);
+    clearTables(tableNamesForClear, tableNamesForLoad);
   }
 
   const [getOnePhoneticsTypeById, { isLoading: loadingPhoneticsType }] =

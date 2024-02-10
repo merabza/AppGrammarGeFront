@@ -126,7 +126,7 @@ const RootEdit: FC = () => {
   );
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
@@ -154,7 +154,7 @@ const RootEdit: FC = () => {
   ] = useForman<typeof rootDataSchema, RootData>(rootDataSchema); //ToDo აქ სასურველია <any, any> შეიცვალოს <სქემის ტიპი, გასაგზავნი ინფორმაციის ტიპი>
 
   function clearUsedTables() {
-    clearTablesFromRepo(null, tableNamesForLoad);
+    clearTables(null, tableNamesForLoad);
     dispatch(clearRoot(curRootIdVal));
     dispatch(clearMemo());
     dispatch(clearForConfirmRootsPagesMemo());

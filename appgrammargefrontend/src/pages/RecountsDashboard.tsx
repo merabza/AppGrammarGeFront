@@ -1,20 +1,10 @@
 //RecountsDashboard.tsx
 
-//RecountsDashboard
 import { useState, useEffect, FC, useCallback } from "react";
 import { Button, Spinner, ProgressBar } from "react-bootstrap";
-// import {
-//   HubConnection,
-//   HubConnectionBuilder,
-//   LogLevel,
-//   HttpTransportType,
-// } from "@aspnet/signalr";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { Err } from "../appcarcass/redux/types/errorTypes";
-import {
-  EAlertKind,
-  setAlertClientRunTimeError,
-} from "../appcarcass/redux/slices/alertSlice";
+import { setAlertClientRunTimeError } from "../appcarcass/redux/slices/alertSlice";
 import { useLocation } from "react-router-dom";
 import {
   useCancelCurrentProcessMutation,
@@ -24,7 +14,6 @@ import {
   useRecountInflectionSamplesMutation,
 } from "../redux/api/recountApi";
 import { ProgressData } from "./RecountDashboardTypes";
-import AlertMessages from "../appcarcass/common/AlertMessages";
 import {
   HttpTransportType,
   HubConnection,
@@ -60,7 +49,7 @@ const RecountsDashboard: FC = () => {
   const [byLevelLength, setByLevelLength] = useState(0);
   const [byLevelPosition, setByLevelPosition] = useState(0);
 
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage] = useState("");
   const [hubConnection, setHubConnection] = useState<HubConnection>();
   const { baseUrl } = useAppSelector((state) => state.appParametersState);
 
@@ -93,13 +82,7 @@ const RecountsDashboard: FC = () => {
     },
   ] = useDatabaseIntegrityCheckMutation();
 
-  const [
-    CancelCurrentProcess,
-    {
-      isLoading: rcWorkingOnCancelCurrentProcess,
-      isError: failureCancelCurrentProcess,
-    },
-  ] = useCancelCurrentProcessMutation();
+  const [CancelCurrentProcess] = useCancelCurrentProcessMutation();
 
   const { user } = useAppSelector((state) => state.userState);
 
@@ -128,11 +111,11 @@ const RecountsDashboard: FC = () => {
           .build();
         try {
           await hubConnect.start();
-          console.log("hub Connection successful!");
+          // console.log("hub Connection successful!");
 
           // Bind event handlers to the hubConnection.
           hubConnect.on("sendtoall", (receivedData: ProgressData | null) => {
-            console.log("RecountsDashboard receivedMessage=", receivedData);
+            // console.log("RecountsDashboard receivedMessage=", receivedData);
             if (!receivedData) {
               // setProcName("");
               // setLevelName("");
@@ -146,7 +129,7 @@ const RecountsDashboard: FC = () => {
               return;
             }
             const { StrData, IntData } = receivedData;
-            console.log("RecountsDashboard StrData=", StrData);
+            // console.log("RecountsDashboard StrData=", StrData);
             if (StrData) {
               if (StrData.procName) setProcName(StrData.procName);
               if (StrData.levelName) setLevelName(StrData.levelName);
@@ -154,7 +137,7 @@ const RecountsDashboard: FC = () => {
               if (StrData.changedBase) setChangedBase(StrData.changedBase);
               if (StrData.error) setErrorMessage(StrData.error);
             }
-            console.log("RecountsDashboard IntData=", IntData);
+            // console.log("RecountsDashboard IntData=", IntData);
             if (IntData) {
               if (IntData.procLength) setProcLength(IntData.procLength);
               if (IntData.procPosition) setProcPosition(IntData.procPosition);
@@ -183,7 +166,7 @@ const RecountsDashboard: FC = () => {
             } as Err)
           );
 
-          console.log("Error while establishing connection: " + { err });
+          // console.log("Error while establishing connection: " + { err });
         }
         setHubConnection(hubConnect);
       };
@@ -218,14 +201,13 @@ const RecountsDashboard: FC = () => {
   const procPercentage = Math.round((procPosition / procLength) * 100);
   const byLevelPercentage = Math.round((byLevelPosition / byLevelLength) * 100);
 
-  console.log("RecountsDashboard procPercentage=", procPercentage);
-  console.log("RecountsDashboard byLevelPosition=", byLevelPosition);
-  console.log("RecountsDashboard byLevelLength=", byLevelLength);
-  console.log("RecountsDashboard byLevelPercentage=", byLevelPercentage);
+  // console.log("RecountsDashboard procPercentage=", procPercentage);
+  // console.log("RecountsDashboard byLevelPosition=", byLevelPosition);
+  // console.log("RecountsDashboard byLevelLength=", byLevelLength);
+  // console.log("RecountsDashboard byLevelPercentage=", byLevelPercentage);
   return (
     <div>
       <h3>გადაანგარიშებები</h3>
-      {/* <AlertMessages alertKind={EAlertKind.ClientRunTime} /> */}
       <Button
         className="mr-1 mb-1"
         type="button"

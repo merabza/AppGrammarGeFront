@@ -21,10 +21,10 @@ export async function funAfterSaveInflection(
   //   await getRootByInflectionId(dispatch, getState, inflectionId);
   // }
 
-  console.log(
-    "funAfterSaveInflection {rootsRepo, rootId, derivBranchId, inflectionId, duplicateInflectionId}",
-    { rootsRepo, rootId, derivBranchId, inflectionId, duplicateInflectionId }
-  );
+  // console.log(
+  //   "funAfterSaveInflection {rootsRepo, rootId, derivBranchId, inflectionId, duplicateInflectionId}",
+  //   { rootsRepo, rootId, derivBranchId, inflectionId, duplicateInflectionId }
+  // );
 
   //მივიღოთ ფლექსია იდენტიფიკატორის მიხედვით
   const inflection = !!inflectionId
@@ -52,7 +52,7 @@ export async function funAfterSaveInflection(
       ? derivBranchId
       : preBranches[0];
 
-  console.log("funAfterSaveInflection dbrId", dbrId);
+  // console.log("funAfterSaveInflection dbrId", dbrId);
 
   //დადგენილი დერივაციისათვის მივიღოთ წინაპარი ძირების სია
   if (!dbrId) navigate("/basesearch");
@@ -68,10 +68,10 @@ export async function funAfterSaveInflection(
         ? rootId
         : predRootIds[0];
 
-    console.log(
-      "funAfterSaveInflection {forOpenRootId, dbrId, duplicateInflectionId, mustBeinflectionId}",
-      { forOpenRootId, dbrId, duplicateInflectionId, mustBeinflectionId }
-    );
+    // console.log(
+    //   "funAfterSaveInflection {forOpenRootId, dbrId, duplicateInflectionId, mustBeinflectionId}",
+    //   { forOpenRootId, dbrId, duplicateInflectionId, mustBeinflectionId }
+    // );
 
     if (forOpenRootId) {
       if (dbrId) {

@@ -156,7 +156,7 @@ const InflectionEdit: FC = () => {
 
   const [checkLoadLookupTables, loadingLookupTables] =
     useCheckLoadLookupTables();
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
 
@@ -211,7 +211,7 @@ const InflectionEdit: FC = () => {
 
   function clearUsedTables() {
     dispatch(clearMemo());
-    clearTablesFromRepo(null, tableNamesForLoad);
+    clearTables(null, tableNamesForLoad);
     if (currentRootId) dispatch(clearRoot(currentRootId));
     dispatch(clearForConfirmRootsPagesMemo());
   }

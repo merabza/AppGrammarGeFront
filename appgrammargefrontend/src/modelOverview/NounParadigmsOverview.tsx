@@ -11,7 +11,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useScroller } from "../appcarcass/hooks/useScroller";
 import { NzInt } from "../appcarcass/common/myFunctions";
-import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
+import {
+  saveReturnPageName,
+  setTablesForClearAfterCrudOperations,
+} from "../appcarcass/redux/slices/masterdataSlice";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
@@ -39,6 +42,7 @@ const NounParadigmsOverview: FC = () => {
   //console.log("NounParadigmsOverview props=", props);
 
   const menLinkKey = useLocation().pathname.split("/")[1];
+  //console.log("NounParadigmsOverview menLinkKey=", menLinkKey);
 
   const tableNamesForLoad = useMemo(
     () => ["grammarCases", "nounNumbers", "nounParadigmNamesQuery"],
@@ -168,6 +172,7 @@ const NounParadigmsOverview: FC = () => {
       <ParadigmListEditor
         dataType={nounParadigmsDataType}
         paradigmNamesTable={nounParadigmNames}
+        paradigmNamesTableName={"nounParadigmNamesQuery"}
         formulasTableName="nounParadigmFormulas"
         curscrollTo={curscrollTo}
         backLigth={backLigth}

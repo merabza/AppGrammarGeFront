@@ -83,13 +83,13 @@ const Issues: FC = () => {
     return <Loading />;
   }
 
-  console.log("Issues Before Alert ", {
-    issueKinds,
-    issuePriorities,
-    issueStatuses,
-    dataTypes,
-    issuesCount,
-  });
+  // console.log("Issues Before Alert ", {
+  //   issueKinds,
+  //   issuePriorities,
+  //   issueStatuses,
+  //   dataTypes,
+  //   issuesCount,
+  // });
 
   if (
     !issueKinds ||

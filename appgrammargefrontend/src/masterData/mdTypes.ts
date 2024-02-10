@@ -146,6 +146,7 @@ export interface ParadigmNameModel {
   prdName: string;
   sortId: number;
   formulasCount: number;
+  inflectionsCount: number;
 }
 
 export interface DerivationFormulaQueryModel {

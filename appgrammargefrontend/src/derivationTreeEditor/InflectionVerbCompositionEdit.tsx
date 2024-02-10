@@ -94,7 +94,7 @@ const InflectionVerbCompositionEdit: FC = () => {
     []
   );
 
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const { user } = useAppSelector((state) => state.userState);
 
@@ -131,7 +131,7 @@ const InflectionVerbCompositionEdit: FC = () => {
 
   function clearUsedTables() {
     dispatch(clearMemo());
-    clearTablesFromRepo(null, tableNamesForLoad);
+    clearTables(null, tableNamesForLoad);
     if (currentRootId) dispatch(clearRoot(currentRootId));
     dispatch(clearForConfirmRootsPagesMemo());
   }

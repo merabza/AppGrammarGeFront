@@ -61,7 +61,7 @@ const NounParadigmFormulaEdit: FC = () => {
   );
 
   const [formDataPrepared, setFormDataPrepared] = useState(false);
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
     useAppSelector((state) => state.masterDataState);
@@ -144,7 +144,7 @@ const NounParadigmFormulaEdit: FC = () => {
   >(NounParadigmFormulaFormDataSchema);
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, tableNamesForLoad);
+    clearTables(tableNamesForClear, tableNamesForLoad);
     dispatch(clearNounParadigmFormulas(paradigmIdsForClear));
   }
 
@@ -270,10 +270,10 @@ const NounParadigmFormulaEdit: FC = () => {
     if (curFormulaIdVal !== formulaIdVal) {
       //შეცვლილა
       //დავიმახსოვროთ შეცვლილი იდენტიფიკატორი
-      console.log(
-        "setCurFormulaIdVal(formulaIdVal); formulaIdVal=",
-        formulaIdVal
-      );
+      // console.log(
+      //   "setCurFormulaIdVal(formulaIdVal); formulaIdVal=",
+      //   formulaIdVal
+      // );
       setCurFormulaIdVal(formulaIdVal);
       setFormDataPrepared(false);
       setParadigmIdsForClear([]);
@@ -427,7 +427,7 @@ const NounParadigmFormulaEdit: FC = () => {
             workingOnDelete={deletingNounParadigmFormula}
             DeleteFailure={DeleteFailure}
             onDelete={() => {
-              console.log("onDelete curFormulaIdVal=", curFormulaIdVal);
+              // console.log("onDelete curFormulaIdVal=", curFormulaIdVal);
               if (!!curFormulaIdVal)
                 deleteNounParadigmFormula({ nprId: curFormulaIdVal, navigate });
               clearUsedTables();
@@ -531,6 +531,7 @@ const NounParadigmFormulaEdit: FC = () => {
             }
             onCloseClick={() => {
               dispatch(clearAllAlerts());
+              if (frm.nounParadigmFormula.nounParadigmId === 0) navigate(-1);
               navigate(
                 `/nounParadigmFormulas/${frm.nounParadigmFormula.nounParadigmId}/${curFormulaIdVal}`
               );

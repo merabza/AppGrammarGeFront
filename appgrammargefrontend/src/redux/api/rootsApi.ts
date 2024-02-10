@@ -8,7 +8,6 @@ import {
 } from "../../appcarcass/redux/slices/alertSlice";
 import { buildErrorMessage } from "../../appcarcass/redux/types/errorTypes";
 import {
-  SetBasesForDropdown,
   SetBasesForDropdownloading,
   SetBasesForPages,
   clearParadigm,
@@ -33,7 +32,7 @@ import { RootLinkQueryModel } from "../../derivationTreeEditor/TypesAndSchemas/I
 // } from "../slices/dataTypesSlice";
 // import { DataTypeFfModel } from "../types/dataTypesTypes";
 // import { ISetGridAction, ISetMultipleGrids } from "../types/rightsTypes";
-// import { SetWorkingOnLoad } from "../slices/masterdataSlice";
+// import { setWorkingOnLoad } from "../slices/masterdataSlice";
 
 export interface GetBasesbypagesReqType {
   searchValue: string;
@@ -76,12 +75,12 @@ export const rootsApi = createApi({
           dispatch(SetBasesForDropdownloading(true));
           const result = await queryFulfilled;
           const data = result.data as BasesByPagesResponse;
-          console.log("rootsApi getBasesByPages data=", data);
+          // console.log("rootsApi getBasesByPages data=", data);
           const payload = {
             pagekey: args.pagekey,
             data: data.baseLinks,
           } as setBasesPayloadType;
-          console.log("rootsApi getBasesByPages payload=", payload);
+          // console.log("rootsApi getBasesByPages payload=", payload);
           dispatch(SetBasesForPages(payload));
           dispatch(SetBasesForDropdownloading(false));
         } catch (error) {

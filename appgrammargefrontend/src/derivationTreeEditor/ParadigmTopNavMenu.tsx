@@ -40,7 +40,7 @@ const ParadigmTopNavMenu: FC = () => {
     useAppSelector((state) => state.rootsState);
 
   const dispatch = useAppDispatch();
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   if (!infId || !paradigm || !user) return null;
 
@@ -129,10 +129,10 @@ const ParadigmTopNavMenu: FC = () => {
               setShowParadigmSaveAsSampleConfirmMessage(false);
               ParadigmSaveSamples(paradigm.inflectionId);
               if (paradigm.nounParadigmId) {
-                clearTablesFromRepo(["nounParadigmNamesQuery"], null);
+                clearTables(["nounParadigmNamesQuery"], null);
               }
               if (paradigm.verbParadigmId) {
-                clearTablesFromRepo(["verbParadigmNamesQuery"], null);
+                clearTables(["verbParadigmNamesQuery"], null);
               }
             }}
             onClosed={() => setShowParadigmSaveAsSampleConfirmMessage(false)}

@@ -140,7 +140,7 @@ const DerivationEdit: FC = () => {
   const [checkLoadMdTables] = useCheckLoadMdTables();
   const [checkLoadDerivationFormulas, derivFormulasLoading] =
     useCheckLoadDerivationFormulas();
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
   const [clearRootsByDerivation] = useClearRootsByDerivation();
 
   const { user } = useAppSelector((state) => state.userState);
@@ -170,7 +170,7 @@ const DerivationEdit: FC = () => {
 
   function clearUsedTables() {
     dispatch(clearMemo());
-    clearTablesFromRepo(null, tableNamesForLoad);
+    clearTables(null, tableNamesForLoad);
     if (curDbrIdVal) clearRootsByDerivation(curDbrIdVal);
     dispatch(clearForConfirmRootsPagesMemo());
   }

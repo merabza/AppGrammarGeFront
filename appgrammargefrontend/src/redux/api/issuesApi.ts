@@ -23,7 +23,6 @@ import {
   IFilterSortRequest,
   IRowsData,
 } from "../../appcarcass/grid/GridViewTypes";
-import { string } from "yup";
 
 export interface IloadIssueDetailsParameters {
   issueId: number;
@@ -80,7 +79,7 @@ export const issuesApi = createApi({
     //////////////////////////////////////////////////////
     getissuesRowsData: builder.query<IRowsData, IFilterSortRequest>({
       query(filterSortRequest) {
-        console.log("getissuesRowsData filterSortRequest=", filterSortRequest);
+        // console.log("getissuesRowsData filterSortRequest=", filterSortRequest);
         // console.log(
         //   "getissuesRowsData JSON.stringify(filterSortRequest)=",
         //   JSON.stringify(filterSortRequest)
@@ -98,10 +97,10 @@ export const issuesApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(
-            "getissuesRowsData onQueryStarted queryFulfilled data=",
-            data
-          );
+          // console.log(
+          //   "getissuesRowsData onQueryStarted queryFulfilled data=",
+          //   data
+          // );
           dispatch(setIssuesRowsData(data));
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));

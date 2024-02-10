@@ -77,7 +77,7 @@ const PhoneticsOptionEdit: FC = () => {
     { isLoading: workingOnDeletePhoneticsOption, isError: DeleteFailure },
   ] = useDeletePhoneticsOptionMutation();
 
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
   const [checkLoadMdTables] = useCheckLoadMdTables();
 
   //4. ამ რედაქტორს არ სჭირდება ინფორმაცია ცხრილებიდან
@@ -97,7 +97,7 @@ const PhoneticsOptionEdit: FC = () => {
   >(phoneticsOptionEditFormDataSchema);
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, null);
+    clearTables(tableNamesForClear, null);
   }
 
   useEffect(() => {

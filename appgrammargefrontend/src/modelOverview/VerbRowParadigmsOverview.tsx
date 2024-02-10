@@ -188,6 +188,7 @@ const VerbRowParadigmsOverview: FC = () => {
       <ParadigmListEditor
         dataType={verbParadigmsDataType}
         paradigmNamesTable={verbParadigmNames}
+        paradigmNamesTableName={"verbParadigmNamesQuery"}
         formulasTableName="verbRowParadigmFormulas"
         curscrollTo={curscrollTo}
         backLigth={backLigth}

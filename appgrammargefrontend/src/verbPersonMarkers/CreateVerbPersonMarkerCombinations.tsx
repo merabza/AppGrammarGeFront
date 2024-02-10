@@ -32,8 +32,9 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mdataRepo, mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
-    useAppSelector((state) => state.masterDataState);
+  const { mdataRepo, mdWorkingOnLoadingTables } = useAppSelector(
+    (state) => state.masterDataState
+  );
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
 
@@ -169,19 +170,19 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
     return <Loading />;
   }
 
-  console.log("CreateVerbPersonMarkerCombinations Loaded Data => ", {
-    curscrollTo,
-    actantGrammarCases,
-    actantPositions,
-    actantTypes,
-    actantGroups,
-    verbTransitions,
-    verbPluralityTypes,
-    verbTypes,
-    verbSeries,
-    verbPersonMarkerParadigms,
-    dataTypes,
-  });
+  // console.log("CreateVerbPersonMarkerCombinations Loaded Data => ", {
+  //   curscrollTo,
+  //   actantGrammarCases,
+  //   actantPositions,
+  //   actantTypes,
+  //   actantGroups,
+  //   verbTransitions,
+  //   verbPluralityTypes,
+  //   verbTypes,
+  //   verbSeries,
+  //   verbPersonMarkerParadigms,
+  //   dataTypes,
+  // });
 
   if (
     // !allDataTypesLoaded ||

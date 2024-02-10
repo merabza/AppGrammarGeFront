@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
+import { useAppDispatch } from "../appcarcass/redux/hooks";
+import { setTablesForClearAfterCrudOperations } from "../appcarcass/redux/slices/masterdataSlice";
 
 type NameListEditorProps = {
   dataType: DataTypeFfModel;
@@ -27,6 +29,8 @@ const NameListEditor: FC<NameListEditorProps> = (props) => {
 
   //console.log("NameListEditor props=", props);
 
+  const dispatch = useAppDispatch();
+
   const tableName = dataType.dtTable;
   const { idFieldName, nameFieldName, keyFieldName } = dataType;
   const caption = dataType.dtName;
@@ -48,7 +52,20 @@ const NameListEditor: FC<NameListEditorProps> = (props) => {
     <div>
       <h4>
         {caption} ({tableForEditSorted.length}){" "}
-        {dataType.create && <Link to={`/mdItemEdit/${tableName}`}> + </Link>}
+        {dataType.create && (
+          <Link
+            to={`/mdItemEdit/${tableName}`}
+            onClick={(e) => {
+              dispatch(
+                setTablesForClearAfterCrudOperations([dataType.dtTable])
+              );
+              saveReturnPageName();
+            }}
+          >
+            {" "}
+            +{" "}
+          </Link>
+        )}
       </h4>
       <ol>
         {tableForEditSorted.map((m) => {
@@ -70,6 +87,9 @@ const NameListEditor: FC<NameListEditorProps> = (props) => {
                     // e.preventDefault(); ეს საჭირო არ არის, რადგან ამ ინსტრუქციის არსებობისას ლინკზე აღარ გადადის.
                     //ვინახავთ გვერდის სახელს, საიდანაც მოხდა რედაქტორის გახსნა. იმისათვის, რომ კორექტულად მოხდეს უკან დაბრუნება
                     //props.saveReturnPageName(props.match.url.split('/')[1]);
+                    dispatch(
+                      setTablesForClearAfterCrudOperations([dataType.dtTable])
+                    );
                     saveReturnPageName();
                   }}
                 >

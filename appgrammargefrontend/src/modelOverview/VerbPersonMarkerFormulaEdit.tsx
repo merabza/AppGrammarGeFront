@@ -92,7 +92,7 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
 
   const [formDataPrepared, setFormDataPrepared] = useState(false);
 
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   const [
     createVerbPersonMarkerFormula,
@@ -153,7 +153,7 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
   >(VerbPersonMarkerFormulaFormDataSchema);
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, tableNamesForLoad);
+    clearTables(tableNamesForClear, tableNamesForLoad);
     dispatch(clearVerbPersonMarkerFormulas(paradigmIdsForClear));
   }
 

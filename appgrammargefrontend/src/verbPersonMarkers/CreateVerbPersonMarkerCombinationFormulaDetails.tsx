@@ -55,16 +55,16 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
 
   const menLinkKey = useLocation().pathname.split("/")[1];
 
-  const tableNamesForLookup = useMemo(
-    () => [
-      // "morphemeRanges",
-      // "morphemesQuery",
-      //"inflectionBlocks",
-      //"inflectionTypes",
-      //"morphemeRangesByInflectionBlocks",
-    ],
-    []
-  );
+  // const tableNamesForLookup = useMemo(
+  //   () => [
+  //     // "morphemeRanges",
+  //     // "morphemesQuery",
+  //     //"inflectionBlocks",
+  //     //"inflectionTypes",
+  //     //"morphemeRangesByInflectionBlocks",
+  //   ],
+  //   []
+  // );
 
   const tableNamesForLoad = useMemo(
     () => [
@@ -138,23 +138,23 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     return <Loading />;
   }
 
-  console.log(
-    "CreateVerbPersonMarkerCombinationFormulaDetails Loaded Data => ",
-    {
-      curscrollTo,
-      // morphemeRanges,
-      // morphemesQuery,
-      inflectionBlocks,
-      //inflectionTypes,
-      //morphemeRangesByInflectionBlocks,
-      verbPluralityTypes,
-      verbPersonMarkerParadigms,
-      verbTypes,
-      verbSeries,
-      verbPersonMarkerCombinationFormulas,
-      dataTypes,
-    }
-  );
+  // console.log(
+  //   "CreateVerbPersonMarkerCombinationFormulaDetails Loaded Data => ",
+  //   {
+  //     curscrollTo,
+  //     // morphemeRanges,
+  //     // morphemesQuery,
+  //     inflectionBlocks,
+  //     //inflectionTypes,
+  //     //morphemeRangesByInflectionBlocks,
+  //     verbPluralityTypes,
+  //     verbPersonMarkerParadigms,
+  //     verbTypes,
+  //     verbSeries,
+  //     verbPersonMarkerCombinationFormulas,
+  //     dataTypes,
+  //   }
+  // );
 
   if (
     !curscrollTo ||

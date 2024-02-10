@@ -80,8 +80,8 @@ const MorphemeEdit: FC = () => {
     (state) => state.modelEditorMorphemesCrudState
   );
 
-  console.log("MorphemeEdit phoneticsChanges=", phoneticsChanges);
-  console.log("MorphemeEdit phoneticsChangesQuery=", phoneticsChangesQuery);
+  // console.log("MorphemeEdit phoneticsChanges=", phoneticsChanges);
+  // console.log("MorphemeEdit phoneticsChangesQuery=", phoneticsChangesQuery);
 
   //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
   const tableNamesForClear = useMemo(
@@ -108,7 +108,7 @@ const MorphemeEdit: FC = () => {
   );
 
   const [checkLoadMdTables] = useCheckLoadMdTables();
-  const [clearTablesFromRepo] = useClearTablesFromRepo();
+  const [clearTables] = useClearTablesFromRepo();
 
   useEffect(() => {
     checkLoadMdTables(tableNamesForLoad);
@@ -127,7 +127,7 @@ const MorphemeEdit: FC = () => {
   );
 
   function clearUsedTables() {
-    clearTablesFromRepo(tableNamesForClear, tableNamesForLoad);
+    clearTables(tableNamesForClear, tableNamesForLoad);
   }
 
   const setPhoneticsType = useCallback(
@@ -203,8 +203,8 @@ const MorphemeEdit: FC = () => {
     mdWorkingOnLoadingTables,
   ]);
 
-  console.log("MorphemeEdit curMrpIdVal=", curMrpIdVal);
-  console.log("MorphemeEdit frm=", frm);
+  // console.log("MorphemeEdit curMrpIdVal=", curMrpIdVal);
+  // console.log("MorphemeEdit frm=", frm);
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
 
