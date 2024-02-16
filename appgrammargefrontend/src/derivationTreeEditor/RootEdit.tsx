@@ -419,12 +419,13 @@ const RootEdit: FC = () => {
             getError={getError}
             onChangeValue={changeField}
             onTrashButtonClick={(index) => {
-              const newFrm = { ...frm };
+              const newFrm = JSON.parse(JSON.stringify(frm)) as RootData;
+
               newFrm.basePhoneticsCombDetails.splice(index, 1);
               setFormData(newFrm);
             }}
             onPlusButtonClick={() => {
-              const newFrm = { ...frm };
+              const newFrm = JSON.parse(JSON.stringify(frm)) as RootData;
               newFrm.basePhoneticsCombDetails.push(0);
               setFormData(newFrm);
             }}

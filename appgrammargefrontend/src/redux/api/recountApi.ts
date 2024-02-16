@@ -10,6 +10,22 @@ export const recountApi = createApi({
   baseQuery: jwtBaseQuery,
   endpoints: (builder) => ({
     //////////////////////////////////////////////////////
+    databaseRecounter: builder.mutation<void, string>({
+      query(recountName) {
+        return {
+          url: `/databaserecounter/${recountName}`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(setAlertApiMutationError(buildErrorMessage(error)));
+        }
+      },
+    }),
+    //////////////////////////////////////////////////////
     RecountBases: builder.mutation<void, void>({
       query(args) {
         return {
@@ -97,6 +113,7 @@ export const recountApi = createApi({
 });
 
 export const {
+  useDatabaseRecounterMutation,
   useRecountBasesMutation,
   useRecountFindDerivationBranchesWithoutDescendantsMutation,
   useRecountInflectionSamplesMutation,

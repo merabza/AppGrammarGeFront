@@ -1,7 +1,7 @@
 //RecountsDashboard.tsx
 
 import { useState, useEffect, FC, useCallback } from "react";
-import { Button, Spinner, ProgressBar } from "react-bootstrap";
+import { Button, Spinner, ProgressBar, Row, Col, Form } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { Err } from "../appcarcass/redux/types/errorTypes";
 import { setAlertClientRunTimeError } from "../appcarcass/redux/slices/alertSlice";
@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import {
   useCancelCurrentProcessMutation,
   useDatabaseIntegrityCheckMutation,
+  useDatabaseRecounterMutation,
   useRecountBasesMutation,
   useRecountFindDerivationBranchesWithoutDescendantsMutation,
   useRecountInflectionSamplesMutation,
@@ -44,6 +45,8 @@ const RecountsDashboard: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [procLength, setProcLength] = useState(0);
+  const [processRun, setProcessRun] = useState(false);
+
   const [procPosition, setProcPosition] = useState(0);
 
   const [byLevelLength, setByLevelLength] = useState(0);
@@ -52,6 +55,14 @@ const RecountsDashboard: FC = () => {
   const [alertMessage] = useState("");
   const [hubConnection, setHubConnection] = useState<HubConnection>();
   const { baseUrl } = useAppSelector((state) => state.appParametersState);
+
+  const [
+    databaseRecounter,
+    {
+      isLoading: rcWorkingOnDatabaseRecounter,
+      isError: failureDatabaseRecounter,
+    },
+  ] = useDatabaseRecounterMutation();
 
   const [
     RecountBases,
@@ -128,16 +139,11 @@ const RecountsDashboard: FC = () => {
               // setByLevelPosition(0);
               return;
             }
-            const { StrData, IntData } = receivedData;
-            // console.log("RecountsDashboard StrData=", StrData);
-            if (StrData) {
-              if (StrData.procName) setProcName(StrData.procName);
-              if (StrData.levelName) setLevelName(StrData.levelName);
-              if (StrData.checkBase) setCheckBase(StrData.checkBase);
-              if (StrData.changedBase) setChangedBase(StrData.changedBase);
-              if (StrData.error) setErrorMessage(StrData.error);
-            }
+            const { BoolData, IntData, StrData } = receivedData;
             // console.log("RecountsDashboard IntData=", IntData);
+            if (BoolData) {
+              if (BoolData.ProcessRun) setProcessRun(BoolData.ProcessRun);
+            }
             if (IntData) {
               if (IntData.procLength) setProcLength(IntData.procLength);
               if (IntData.procPosition) setProcPosition(IntData.procPosition);
@@ -145,6 +151,14 @@ const RecountsDashboard: FC = () => {
                 setByLevelLength(IntData.byLevelLength);
               if (IntData.byLevelPosition)
                 setByLevelPosition(IntData.byLevelPosition);
+            }
+            // console.log("RecountsDashboard StrData=", StrData);
+            if (StrData) {
+              if (StrData.procName) setProcName(StrData.procName);
+              if (StrData.levelName) setLevelName(StrData.levelName);
+              if (StrData.checkBase) setCheckBase(StrData.checkBase);
+              if (StrData.changedBase) setChangedBase(StrData.changedBase);
+              if (StrData.error) setErrorMessage(StrData.error);
             }
             //setLastMessage(receivedMessage);
           });
@@ -208,116 +222,214 @@ const RecountsDashboard: FC = () => {
   return (
     <div>
       <h3>გადაანგარიშებები</h3>
-      <Button
-        className="mr-1 mb-1"
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          RecountBases();
-        }}
-      >
-        {rcWorkingOnRecountBases && (
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          />
+      <Row className="ml-1 mb-1 mt-1">
+        <Col sm="4">
+          <Form.Select disabled={processRun}>
+            <option key={"recountbases"} value={"recountbases"}>
+              {"ფუძეების გადათვლა"}
+            </option>
+            <option
+              key={"recountinflectionsamples"}
+              value={"recountinflectionsamples"}
+            >
+              {"ფლექსიის ნიმუშების გადათვლა"}
+            </option>
+            <option
+              key={"findderivationbrancheswithoutdescendants"}
+              value={"findderivationbrancheswithoutdescendants"}
+            >
+              {"უშვილო დერივაციების პოვნა"}
+            </option>
+            <option
+              key={"databaseintegritycheck"}
+              value={"databaseintegritycheck"}
+            >
+              {"მონაცემთა ბაზის მთლიანობის შემოწმება"}
+            </option>
+            <option
+              key={"databaseintegritycheck"}
+              value={"databaseintegritycheck"}
+            >
+              {"მონაცემთა ბაზის მთლიანობის შემოწმება"}
+            </option>
+          </Form.Select>
+        </Col>
+        <Col sm="2">
+          <Button
+            disabled={processRun}
+            className="mr-1 mb-1"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              RecountBases();
+            }}
+          >
+            {rcWorkingOnRecountBases && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+            დაწყება
+          </Button>
+        </Col>
+        <Col sm="2">
+          <Button
+            disabled={!processRun}
+            className="mr-1 mb-1"
+            type="button"
+            variant="danger"
+            onClick={(e) => {
+              e.preventDefault();
+              CancelCurrentProcess();
+            }}
+          >
+            გაჩერება
+          </Button>
+        </Col>
+      </Row>
+      <Row className="ml-1 mb-1 mt-1">
+        {failureRecountBases && (
+          <p>გადათვლის გაშვების ბოლო მცდელობა წარუმატებლად დასრულდა.</p>
         )}
-        ფუძეების გადათვლა
-      </Button>
-      {failureRecountBases && (
-        <p>ფუძეების გადათვლის გაშვების ბოლო მცდელობა წარუმატებლად დასრულდა.</p>
-      )}
-      <Button
-        className="mr-1 mb-1"
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          RecountInflectionSamples();
-        }}
-      >
-        {rcWorkingOnRecountInflectionSamples && (
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          />
+      </Row>
+      {/* <Row className="ml-1 mb-1 mt-1">
+        <Col sm="2">
+          <Button
+            className="mr-1 mb-1"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              RecountBases();
+            }}
+          >
+            {rcWorkingOnRecountBases && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+            ფუძეების გადათვლა
+          </Button>
+        </Col>
+        {failureRecountBases && (
+          <p>
+            ფუძეების გადათვლის გაშვების ბოლო მცდელობა წარუმატებლად დასრულდა.
+          </p>
         )}
-        ფლექსიის ნიმუშების გადათვლა
-      </Button>
-      {failureRecountInflectionSamples && (
-        <p>
-          ფლექსიის ნიმუშების გადათვლის გაშვების ბოლო მცდელობა წარუმატებლად
-          დასრულდა.
-        </p>
-      )}
+      </Row>
+      <Row className="ml-1 mb-1 mt-1">
+        <Col sm="2">
+          <Button
+            className="mr-1 mb-1"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              RecountInflectionSamples();
+            }}
+          >
+            {rcWorkingOnRecountInflectionSamples && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+            ფლექსიის ნიმუშების გადათვლა
+          </Button>
+        </Col>
 
-      <Button
-        className="mr-1 mb-1"
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          RecountFindDerivationBranchesWithoutDescendants();
-        }}
-      >
-        {rcWorkingOnRecountFindDerivationBranchesWithoutDescendants && (
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          />
+        {failureRecountInflectionSamples && (
+          <p>
+            ფლექსიის ნიმუშების გადათვლის გაშვების ბოლო მცდელობა წარუმატებლად
+            დასრულდა.
+          </p>
         )}
-        უშვილო დერივაციების პოვნა
-      </Button>
-      {failureFindDerivationBranchesWithoutDescendants && (
-        <p>
-          უშვილო დერივაციების პოვნის პროცესის გაშვების ბოლო მცდელობა
-          წარუმატებლად დასრულდა.
-        </p>
-      )}
-
-      <Button
-        className="mr-1 mb-1"
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          DatabaseIntegrityCheck();
-        }}
-      >
-        {rcWorkingOnDatabaseIntegrityCheck && (
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          />
+      </Row>
+      <Row className="ml-1 mb-1 mt-1">
+        <Col sm="2">
+          <Button
+            className="mr-1 mb-1"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              RecountFindDerivationBranchesWithoutDescendants();
+            }}
+          >
+            {rcWorkingOnRecountFindDerivationBranchesWithoutDescendants && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+            უშვილო დერივაციების პოვნა
+          </Button>
+        </Col>
+        {failureFindDerivationBranchesWithoutDescendants && (
+          <p>
+            უშვილო დერივაციების პოვნის პროცესის გაშვების ბოლო მცდელობა
+            წარუმატებლად დასრულდა.
+          </p>
         )}
-        მონაცემთა ბაზის მთლიანობის შემოწმება
-      </Button>
-      {failureDatabaseIntegrityCheck && (
-        <p>
-          მონაცემთა ბაზის მთლიანობის შემოწმების ბოლო მცდელობა წარუმატებლად
-          დასრულდა.
-        </p>
-      )}
+      </Row>
 
-      <Button
-        className="mr-1 mb-1"
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          CancelCurrentProcess();
-        }}
-      >
-        პროცესის შეჩერება
-      </Button>
+      <Row className="ml-1 mb-1 mt-1">
+        <Col sm="2">
+          <Button
+            className="mr-1 mb-1"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              DatabaseIntegrityCheck();
+            }}
+          >
+            {rcWorkingOnDatabaseIntegrityCheck && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+            მონაცემთა ბაზის მთლიანობის შემოწმება
+          </Button>
+        </Col>
+
+        {failureDatabaseIntegrityCheck && (
+          <p>
+            მონაცემთა ბაზის მთლიანობის შემოწმების ბოლო მცდელობა წარუმატებლად
+            დასრულდა.
+          </p>
+        )}
+      </Row>
+
+      <Row className="ml-1 mb-1 mt-1">
+        <Col sm="2">
+          <Button
+            className="mr-1 mb-1"
+            type="button"
+            variant="danger"
+            onClick={(e) => {
+              e.preventDefault();
+              CancelCurrentProcess();
+            }}
+          >
+            პროცესის შეჩერება
+          </Button>
+        </Col>
+      </Row> */}
 
       {!!procName && (
         <div>

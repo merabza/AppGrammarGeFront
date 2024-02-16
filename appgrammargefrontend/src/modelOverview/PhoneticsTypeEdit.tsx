@@ -329,7 +329,9 @@ const PhoneticsTypeEdit: FC = () => {
                   getError={getError}
                   onChangeValue={changeField}
                   onTrashButtonClick={() => {
-                    const newFrm = { ...frm };
+                    const newFrm = JSON.parse(
+                      JSON.stringify(frm)
+                    ) as PhoneticsTypeEditFormData;
                     newFrm.phoneticsOptionIds.splice(index, 1);
                     setFormData(newFrm);
                   }}
@@ -339,7 +341,9 @@ const PhoneticsTypeEdit: FC = () => {
 
           <OnePlusButton
             onClick={() => {
-              const newFrm = { ...frm };
+              const newFrm = JSON.parse(
+                JSON.stringify(frm)
+              ) as PhoneticsTypeEditFormData;
               newFrm.phoneticsOptionIds.push(0);
               setFormData(newFrm);
             }}
@@ -366,7 +370,9 @@ const PhoneticsTypeEdit: FC = () => {
                         }}
                         onDeleteClick={(e) => {
                           e.preventDefault();
-                          const newFrm = { ...frm };
+                          const newFrm = JSON.parse(
+                            JSON.stringify(frm)
+                          ) as PhoneticsTypeEditFormData;
                           newFrm.phoneticsTypeProhibitions.splice(index, 1);
                           setFormData(newFrm);
                         }}
@@ -477,7 +483,9 @@ const PhoneticsTypeEdit: FC = () => {
           <OnePlusButton
             onClick={(e) => {
               e.preventDefault();
-              const newFrm = { ...frm };
+              const newFrm = JSON.parse(
+                JSON.stringify(frm)
+              ) as PhoneticsTypeEditFormData;
               let newPtp = yup
                 .reach(
                   phoneticsTypeEditFormDataSchema,

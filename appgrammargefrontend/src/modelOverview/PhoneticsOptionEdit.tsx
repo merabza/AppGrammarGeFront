@@ -269,7 +269,9 @@ const PhoneticsOptionEdit: FC = () => {
                         }}
                         onDeleteClick={(e) => {
                           e.preventDefault();
-                          const newFrm = { ...frm };
+                          const newFrm = JSON.parse(
+                            JSON.stringify(frm)
+                          ) as PhoneticsOptionEditFormData;
                           newFrm.phoneticsOptionDetails.splice(index, 1);
                           setFormData(newFrm);
                         }}
@@ -370,8 +372,9 @@ const PhoneticsOptionEdit: FC = () => {
             <OnePlusButton
               onClick={(e) => {
                 e.preventDefault();
-
-                const newFrm = { ...frm };
+                const newFrm = JSON.parse(
+                  JSON.stringify(frm)
+                ) as PhoneticsOptionEditFormData;
                 let newPod = yup
                   .reach(
                     phoneticsOptionEditFormDataSchema,

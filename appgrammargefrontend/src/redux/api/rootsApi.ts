@@ -287,7 +287,7 @@ export const rootsApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    GetForConfirmRootsCount: builder.query<number, string>({
+    getForConfirmRootsCount: builder.query<number, string>({
       query(queryString) {
         return {
           url: `/roots/getforconfirmrootscount${queryString}`,
@@ -302,7 +302,7 @@ export const rootsApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    GetForConfirmRootsByPages: builder.query<RootLinkQueryModel[], string>({
+    getForConfirmRootsByPages: builder.query<RootLinkQueryModel[], string>({
       query(queryString) {
         return {
           url: `/roots/getforconfirmrootsbypages${queryString}`,
@@ -317,7 +317,7 @@ export const rootsApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    GetUsersListForConfirm: builder.query<string[], void>({
+    getUsersListForConfirm: builder.query<string[], void>({
       query() {
         return {
           url: `/roots/getuserslistforconfirm`,

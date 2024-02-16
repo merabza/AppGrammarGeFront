@@ -28,7 +28,7 @@ export const modelDataApi = createApi({
   baseQuery: jwtBaseQuery,
   endpoints: (builder) => ({
     //////////////////////////////////////////////////////
-    GetVerbRowParadigmsByVerbTypes: builder.query<
+    getVerbRowParadigmsByVerbTypes: builder.query<
       { [key: number]: number[] },
       void
     >({
@@ -46,7 +46,7 @@ export const modelDataApi = createApi({
       },
     }),
     //////////////////////////////////////////////////////
-    CheckLoadDerivationFormulas: builder.query<DerivationFormula[], void>({
+    checkLoadDerivationFormulas: builder.query<DerivationFormula[], void>({
       query() {
         return {
           url: "/modeldata/getallderivationformulas",
@@ -84,7 +84,7 @@ export const modelDataApi = createApi({
     //   },
     // }),
     //////////////////////////////////////////////////////
-    CheckLoadNounParadigmFormulas: builder.query<NounParadigmFormula[], number>(
+    checkLoadNounParadigmFormulas: builder.query<NounParadigmFormula[], number>(
       {
         query(paradigmId) {
           return {
@@ -105,7 +105,7 @@ export const modelDataApi = createApi({
       }
     ),
     //////////////////////////////////////////////////////
-    CheckLoadVerbParadigmFormulas: builder.query<VerbParadigmFormula[], number>(
+    checkLoadVerbParadigmFormulas: builder.query<VerbParadigmFormula[], number>(
       {
         query(paradigmId) {
           return {
@@ -126,7 +126,7 @@ export const modelDataApi = createApi({
       }
     ),
     //////////////////////////////////////////////////////
-    CheckLoadVerbPersonMarkerFormulas: builder.query<
+    checkLoadVerbPersonMarkerFormulas: builder.query<
       VerbPersonMarkerFormula[],
       number
     >({

@@ -32,7 +32,7 @@ export const rootCrudApi = createApi({
   baseQuery: jwtBaseQuery,
   endpoints: (builder) => ({
     //////////////////////////////////////////////////////
-    OnlyRootById: builder.query<RootData, number>({
+    onlyRootById: builder.query<RootData, number>({
       query(rootId) {
         return {
           url: `/rootcrud/${rootId}`,

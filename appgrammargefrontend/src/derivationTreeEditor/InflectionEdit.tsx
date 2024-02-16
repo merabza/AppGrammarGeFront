@@ -18,7 +18,6 @@ import {
   MorphemeRangeByInflectionBlock,
   NounParadigm,
   PersonVariabilityType,
-  PhoneticsType,
   Pronoun,
   VerbParadigm,
   VerbPluralityType,

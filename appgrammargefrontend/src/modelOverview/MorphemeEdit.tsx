@@ -405,12 +405,16 @@ const MorphemeEdit: FC = () => {
             getError={getError}
             onChangeValue={changeField}
             onTrashButtonClick={(index) => {
-              const newFrm = { ...frm };
+              const newFrm = JSON.parse(
+                JSON.stringify(frm)
+              ) as MorphemeEditFormData;
               newFrm.morphemeOccasionPhoneticsChangeIds.splice(index, 1);
               setFormData(newFrm);
             }}
             onPlusButtonClick={() => {
-              const newFrm = { ...frm };
+              const newFrm = JSON.parse(
+                JSON.stringify(frm)
+              ) as MorphemeEditFormData;
               newFrm.morphemeOccasionPhoneticsChangeIds.push(0);
               setFormData(newFrm);
             }}
