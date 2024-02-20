@@ -23,19 +23,6 @@ import {
 } from "@microsoft/signalr";
 
 const RecountsDashboard: FC = () => {
-  // const {
-  //   flatMenu,
-  //   rcWorkingOnRecountBases,
-  //   failureRecountBases,
-  //   RecountBases,
-  //   rcWorkingOnRecountInflectionSamples,
-  //   failureRecountInflectionSamples,
-  //   RecountInflectionSamples,
-  //   rcWorkingOnRecountFindDerivationBranchesWithoutDescendants,
-  //   failureFindDerivationBranchesWithoutDescendants,
-  //   RecountFindDerivationBranchesWithoutDescendants,
-  // } = props;
-  //console.log("RecountsDashboard props=", props);
   const dispatch = useAppDispatch();
 
   const [procName, setProcName] = useState("");
@@ -43,6 +30,7 @@ const RecountsDashboard: FC = () => {
   const [checkBase, setCheckBase] = useState("");
   const [changedBase, setChangedBase] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [curRecounterName, setCurRecounterName] = useState("recountbases");
 
   const [procLength, setProcLength] = useState(0);
   const [processRun, setProcessRun] = useState(false);
@@ -122,11 +110,11 @@ const RecountsDashboard: FC = () => {
           .build();
         try {
           await hubConnect.start();
-          // console.log("hub Connection successful!");
+          console.log("hub Connection successful!");
 
           // Bind event handlers to the hubConnection.
           hubConnect.on("sendtoall", (receivedData: ProgressData | null) => {
-            // console.log("RecountsDashboard receivedMessage=", receivedData);
+            console.log("RecountsDashboard receivedMessage=", receivedData);
             if (!receivedData) {
               // setProcName("");
               // setLevelName("");
@@ -140,25 +128,33 @@ const RecountsDashboard: FC = () => {
               return;
             }
             const { BoolData, IntData, StrData } = receivedData;
-            // console.log("RecountsDashboard IntData=", IntData);
+            console.log("RecountsDashboard IntData=", IntData);
             if (BoolData) {
-              if (BoolData.ProcessRun) setProcessRun(BoolData.ProcessRun);
+              if (BoolData.ProcessRun === true || BoolData.ProcessRun === false)
+                setProcessRun(BoolData.ProcessRun);
             }
             if (IntData) {
-              if (IntData.procLength) setProcLength(IntData.procLength);
-              if (IntData.procPosition) setProcPosition(IntData.procPosition);
-              if (IntData.byLevelLength)
+              if (IntData.procLength || IntData.procLength === 0)
+                setProcLength(IntData.procLength);
+              if (IntData.procPosition || IntData.procPosition === 0)
+                setProcPosition(IntData.procPosition);
+              if (IntData.byLevelLength || IntData.byLevelLength === 0)
                 setByLevelLength(IntData.byLevelLength);
-              if (IntData.byLevelPosition)
+              if (IntData.byLevelPosition || IntData.byLevelPosition === 0)
                 setByLevelPosition(IntData.byLevelPosition);
             }
-            // console.log("RecountsDashboard StrData=", StrData);
+            console.log("RecountsDashboard StrData=", StrData);
             if (StrData) {
-              if (StrData.procName) setProcName(StrData.procName);
-              if (StrData.levelName) setLevelName(StrData.levelName);
-              if (StrData.checkBase) setCheckBase(StrData.checkBase);
-              if (StrData.changedBase) setChangedBase(StrData.changedBase);
-              if (StrData.error) setErrorMessage(StrData.error);
+              if (StrData.procName || StrData.procName === "")
+                setProcName(StrData.procName);
+              if (StrData.levelName || StrData.levelName === "")
+                setLevelName(StrData.levelName);
+              if (StrData.checkBase || StrData.checkBase === "")
+                setCheckBase(StrData.checkBase);
+              if (StrData.changedBase || StrData.changedBase === "")
+                setChangedBase(StrData.changedBase);
+              if (StrData.error || StrData.error === "")
+                setErrorMessage(StrData.error);
             }
             //setLastMessage(receivedMessage);
           });
@@ -180,7 +176,7 @@ const RecountsDashboard: FC = () => {
             } as Err)
           );
 
-          // console.log("Error while establishing connection: " + { err });
+          console.log("Error while establishing connection: " + { err });
         }
         setHubConnection(hubConnect);
       };
@@ -224,7 +220,15 @@ const RecountsDashboard: FC = () => {
       <h3>გადაანგარიშებები</h3>
       <Row className="ml-1 mb-1 mt-1">
         <Col sm="4">
-          <Form.Select disabled={processRun}>
+          <Form.Select
+            id={"RecounterSelect"}
+            disabled={processRun}
+            onChange={(e) => {
+              e.preventDefault();
+              const newValue = e.target.value;
+              setCurRecounterName(newValue);
+            }}
+          >
             <option key={"recountbases"} value={"recountbases"}>
               {"ფუძეების გადათვლა"}
             </option>
@@ -246,11 +250,8 @@ const RecountsDashboard: FC = () => {
             >
               {"მონაცემთა ბაზის მთლიანობის შემოწმება"}
             </option>
-            <option
-              key={"databaseintegritycheck"}
-              value={"databaseintegritycheck"}
-            >
-              {"მონაცემთა ბაზის მთლიანობის შემოწმება"}
+            <option key={"uploadlanguagemodel"} value={"uploadlanguagemodel"}>
+              {"ენის მოდელის ატვირთვა"}
             </option>
           </Form.Select>
         </Col>
@@ -261,7 +262,8 @@ const RecountsDashboard: FC = () => {
             type="button"
             onClick={(e) => {
               e.preventDefault();
-              RecountBases();
+              console.log("curRecounterName=", curRecounterName);
+              databaseRecounter(curRecounterName);
             }}
           >
             {rcWorkingOnRecountBases && (
