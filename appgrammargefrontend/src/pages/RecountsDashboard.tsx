@@ -8,11 +8,11 @@ import { setAlertClientRunTimeError } from "../appcarcass/redux/slices/alertSlic
 import { useLocation } from "react-router-dom";
 import {
   useCancelCurrentProcessMutation,
-  useDatabaseIntegrityCheckMutation,
+  // useDatabaseIntegrityCheckMutation,
   useDatabaseRecounterMutation,
-  useRecountBasesMutation,
-  useRecountFindDerivationBranchesWithoutDescendantsMutation,
-  useRecountInflectionSamplesMutation,
+  // useRecountBasesMutation,
+  // useRecountFindDerivationBranchesWithoutDescendantsMutation,
+  // useRecountInflectionSamplesMutation,
 } from "../redux/api/recountApi";
 import { ProgressData } from "./RecountDashboardTypes";
 import {
@@ -52,34 +52,34 @@ const RecountsDashboard: FC = () => {
     },
   ] = useDatabaseRecounterMutation();
 
-  const [
-    RecountBases,
-    { isLoading: rcWorkingOnRecountBases, isError: failureRecountBases },
-  ] = useRecountBasesMutation();
+  // const [
+  //   RecountBases,
+  //   { isLoading: rcWorkingOnRecountBases, isError: failureRecountBases },
+  // ] = useRecountBasesMutation();
 
-  const [
-    RecountInflectionSamples,
-    {
-      isLoading: rcWorkingOnRecountInflectionSamples,
-      isError: failureRecountInflectionSamples,
-    },
-  ] = useRecountInflectionSamplesMutation();
+  // const [
+  //   RecountInflectionSamples,
+  //   {
+  //     isLoading: rcWorkingOnRecountInflectionSamples,
+  //     isError: failureRecountInflectionSamples,
+  //   },
+  // ] = useRecountInflectionSamplesMutation();
 
-  const [
-    RecountFindDerivationBranchesWithoutDescendants,
-    {
-      isLoading: rcWorkingOnRecountFindDerivationBranchesWithoutDescendants,
-      isError: failureFindDerivationBranchesWithoutDescendants,
-    },
-  ] = useRecountFindDerivationBranchesWithoutDescendantsMutation();
+  // const [
+  //   RecountFindDerivationBranchesWithoutDescendants,
+  //   {
+  //     isLoading: rcWorkingOnRecountFindDerivationBranchesWithoutDescendants,
+  //     isError: failureFindDerivationBranchesWithoutDescendants,
+  //   },
+  // ] = useRecountFindDerivationBranchesWithoutDescendantsMutation();
 
-  const [
-    DatabaseIntegrityCheck,
-    {
-      isLoading: rcWorkingOnDatabaseIntegrityCheck,
-      isError: failureDatabaseIntegrityCheck,
-    },
-  ] = useDatabaseIntegrityCheckMutation();
+  // const [
+  //   DatabaseIntegrityCheck,
+  //   {
+  //     isLoading: rcWorkingOnDatabaseIntegrityCheck,
+  //     isError: failureDatabaseIntegrityCheck,
+  //   },
+  // ] = useDatabaseIntegrityCheckMutation();
 
   const [CancelCurrentProcess] = useCancelCurrentProcessMutation();
 
@@ -266,7 +266,7 @@ const RecountsDashboard: FC = () => {
               databaseRecounter(curRecounterName);
             }}
           >
-            {rcWorkingOnRecountBases && (
+            {rcWorkingOnDatabaseRecounter && (
               <Spinner
                 as="span"
                 animation="border"
@@ -294,7 +294,7 @@ const RecountsDashboard: FC = () => {
         </Col>
       </Row>
       <Row className="ml-1 mb-1 mt-1">
-        {failureRecountBases && (
+        {failureDatabaseRecounter && (
           <p>გადათვლის გაშვების ბოლო მცდელობა წარუმატებლად დასრულდა.</p>
         )}
       </Row>
