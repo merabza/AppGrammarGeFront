@@ -28,6 +28,8 @@ type ParadigmProps = {
 const Paradigm: FC<ParadigmProps> = (props) => {
   const { InflectionIdentifier, InflectionVerbComposition } = props;
 
+  console.log("Paradigm props=", props);
+
   const [currentInflectionlId, setcurrentInflectionlId] = useState<
     number | null
   >(null);
@@ -141,16 +143,16 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     return (
       <Col md="4" id="inflection-paradigm">
         <div className="paradigm-scroll">
-          <h5>ჩატვირთვის პრობლემა</h5>
+          <h5>ჩატვირთვის პრობლემა 1</h5>
           <AlertMessages alertKind={EAlertKind.ApiLoad} />
         </div>
       </Col>
     );
 
-  // console.log(
-  //   "Paradigm {isParadigmLoading, isVerbCompositionParadigmLoading, pronouns, paradigm}=",
-  //   { isParadigmLoading, isVerbCompositionParadigmLoading, pronouns, paradigm }
-  // );
+  console.log(
+    "Paradigm {isParadigmLoading, isVerbCompositionParadigmLoading, pronouns, paradigm}=",
+    { isParadigmLoading, isVerbCompositionParadigmLoading, pronouns, paradigm }
+  );
 
   if (!pronouns || !paradigm) {
     if (isParadigmLoading || isVerbCompositionParadigmLoading)
@@ -165,7 +167,7 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     return (
       <Col md="4" id="inflection-paradigm">
         <div className="paradigm-scroll">
-          <h5>ჩატვირთვის პრობლემა</h5>
+          <h5>ჩატვირთვის პრობლემა 2</h5>
           <AlertMessages alertKind={EAlertKind.ApiLoad} />
         </div>
       </Col>

@@ -145,6 +145,7 @@ export const rootsApi = createApi({
           if (args) {
             const queryResult = await queryFulfilled;
             const { data } = queryResult;
+            console.log("getParadigm queryResult=", queryResult);
             dispatch(setParadigm(data as ParadigmModel));
           } else dispatch(clearParadigm());
         } catch (error) {
@@ -161,8 +162,12 @@ export const rootsApi = createApi({
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          if (args) await queryFulfilled;
-          else dispatch(clearParadigm());
+          if (args) {
+            const queryResult = await queryFulfilled;
+            const { data } = queryResult;
+            console.log("getParadigm queryResult=", queryResult);
+            dispatch(setParadigm(data as ParadigmModel));
+          } else dispatch(clearParadigm());
         } catch (error) {
           dispatch(setAlertApiLoadError(buildErrorMessage(error)));
         }

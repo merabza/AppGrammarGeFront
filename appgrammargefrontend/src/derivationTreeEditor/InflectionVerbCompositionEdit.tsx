@@ -90,7 +90,7 @@ const InflectionVerbCompositionEdit: FC = () => {
 
   //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
   const tableNamesForLoad = useMemo(
-    () => [/*"pronouns",*/ "morphemeRanges", "classifiers"],
+    () => ["pronouns", "morphemeRanges", "classifiers"],
     []
   );
 
