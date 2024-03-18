@@ -83,7 +83,7 @@ const InflectionEdit: FC = () => {
   const { rootLoading } = useAppSelector((state) => state.rootsState);
 
   const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-  const pronouns = mdataRepo.pronouns as Pronoun[];
+  // const pronouns = mdataRepo.pronouns as Pronoun[];
   const classifiers = mdataRepo.classifiers as classifierModel[];
   const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
   const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
@@ -135,7 +135,7 @@ const InflectionEdit: FC = () => {
 
   const tableNamesForLoad = useMemo(
     () => [
-      "pronouns",
+      // "pronouns",
       "classifiers",
       "morphemeGroups",
       "morphemeRanges",
@@ -575,7 +575,7 @@ const InflectionEdit: FC = () => {
       Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s) ||
       !inflectionBlocks ||
       !inflectionTypes ||
-      !pronouns ||
+      // !pronouns ||
       !classifiers ||
       !morphemeGroups ||
       !morphemeRanges ||
@@ -603,7 +603,7 @@ const InflectionEdit: FC = () => {
     if (newForm) setFormData(newForm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    pronouns,
+    // pronouns,
     classifiers,
     morphemeGroups,
     morphemeRanges,
@@ -684,7 +684,7 @@ const InflectionEdit: FC = () => {
   //8. ჩატვირთვის შემოწმება
   //თუ იდენტიფიკატორი წესიერია და ჩატვირთული ობიექტი ჯერ არ არის, ან საჭირო ცხრილები ჩატვირთული არ არის
   if (
-    !pronouns ||
+    // !pronouns ||
     !classifiers ||
     !morphemeGroups ||
     !morphemeRanges ||

@@ -1,6 +1,6 @@
 //Paradigm.tsx
 
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useEffect, useState } from "react";
 import { Col, Spinner, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +19,7 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { Pronoun } from "../masterData/mdTypes";
+import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 
 type ParadigmProps = {
   InflectionIdentifier: number;
@@ -92,7 +93,7 @@ const Paradigm: FC<ParadigmProps> = (props) => {
   ] = useSaveVerbCompositionParadigmSamplePositionsMutation();
   //console.log("Paradigm props=", props);
 
-  //const tableNamesForLoad = useMemo(() => ["pronouns"], []);
+  const tableNamesForLoad = useMemo(() => ["pronouns"], []);
 
   useEffect(() => {
     //დავადგინოთ მიმდინარე იდენტიფიკატორი
@@ -123,8 +124,8 @@ const Paradigm: FC<ParadigmProps> = (props) => {
   }, [
     InflectionIdentifier,
     InflectionVerbComposition,
-    getParadigm,
-    getVerbCompositionParadigm,
+    // getParadigm,
+    // getVerbCompositionParadigm,
     currentInflectionlId,
     IsInflectionVerbComposition,
     isParadigmLoading,
@@ -132,10 +133,15 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     paradigm,
   ]);
 
-  // useEffect(() => {
-  //   console.log("Paradigm useEffect checkLoadMdTables tableNamesForLoad=", tableNamesForLoad);
-  //   checkLoadMdTables(tableNamesForLoad);
-  // }, [checkLoadMdTables, tableNamesForLoad]);
+  const [checkLoadMdTables] = useCheckLoadMdTables();
+
+  useEffect(() => {
+    console.log(
+      "Paradigm useEffect checkLoadMdTables tableNamesForLoad=",
+      tableNamesForLoad
+    );
+    checkLoadMdTables(tableNamesForLoad);
+  }, [checkLoadMdTables, tableNamesForLoad]);
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
 
