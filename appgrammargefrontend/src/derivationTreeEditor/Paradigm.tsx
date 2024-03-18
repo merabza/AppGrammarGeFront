@@ -221,11 +221,11 @@ const Paradigm: FC<ParadigmProps> = (props) => {
   //   for(let i = 0; i < paradigm.samplePositions.length; i++)
   //     paradigm.segments[paradigm.samplePositions[i].segmentId].words[paradigm.samplePositions[i].sequentialNumber].sampleNom = i+1;
 
-  //console.log("Paradigm pronouns=", pronouns);
-  //console.log("Paradigm prons=", prons);
+  console.log("Paradigm pronouns=", pronouns);
+  console.log("Paradigm prons=", prons);
 
-  // console.log("Paradigm prdIspMorphemeNom=", prdIspMorphemeNom);
-  // console.log("Paradigm paradigm=", paradigm);
+  console.log("Paradigm prdIspMorphemeNom=", prdIspMorphemeNom);
+  console.log("Paradigm paradigm=", paradigm);
 
   let isp = "";
   const ispMorpheme = paradigm.ispMorphemes.find(
