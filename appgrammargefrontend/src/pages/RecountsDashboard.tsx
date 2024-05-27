@@ -134,27 +134,27 @@ const RecountsDashboard: FC = () => {
                 setProcessRun(BoolData.ProcessRun);
             }
             if (IntData) {
-              if (IntData.procLength || IntData.procLength === 0)
+              if (IntData.procLength || IntData.ProcLength === 0)
                 setProcLength(IntData.procLength);
-              if (IntData.procPosition || IntData.procPosition === 0)
+              if (IntData.procPosition || IntData.ProcPosition === 0)
                 setProcPosition(IntData.procPosition);
-              if (IntData.byLevelLength || IntData.byLevelLength === 0)
+              if (IntData.byLevelLength || IntData.ByLevelLength === 0)
                 setByLevelLength(IntData.byLevelLength);
-              if (IntData.byLevelPosition || IntData.byLevelPosition === 0)
-                setByLevelPosition(IntData.byLevelPosition);
+              if (IntData.byLevelPosition || IntData.ByLevelPosition === 0)
+                setByLevelPosition(IntData.ByLevelPosition);
             }
             console.log("RecountsDashboard StrData=", StrData);
             if (StrData) {
-              if (StrData.procName || StrData.procName === "")
+              if (StrData.procName || StrData.ProcName === "")
                 setProcName(StrData.procName);
-              if (StrData.levelName || StrData.levelName === "")
+              if (StrData.levelName || StrData.LevelName === "")
                 setLevelName(StrData.levelName);
-              if (StrData.checkBase || StrData.checkBase === "")
+              if (StrData.checkBase || StrData.CheckBase === "")
                 setCheckBase(StrData.checkBase);
-              if (StrData.changedBase || StrData.changedBase === "")
-                setChangedBase(StrData.changedBase);
-              if (StrData.error || StrData.error === "")
-                setErrorMessage(StrData.error);
+              if (StrData.changedBase || StrData.ChangedBase === "")
+                setChangedBase(StrData.ChangedBase);
+              if (StrData.Error || StrData.Error === "")
+                setErrorMessage(StrData.Error);
             }
             //setLastMessage(receivedMessage);
           });
