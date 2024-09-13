@@ -1,0 +1,15 @@
+/*
+  Layout_Parameters.css
+*/
+
+
+/*
+Usage
+var(--sidebar-color);
+var(--sidebar-background-color);
+*/
+:root {
+  --sidebar-color: #7386D5;
+  --sidebar-background-color: #6d7fcc;
+  --sidebar-border-bottom-color: #47748b;
+}
