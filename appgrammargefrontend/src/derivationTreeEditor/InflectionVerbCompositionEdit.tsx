@@ -327,9 +327,9 @@ const InflectionVerbCompositionEdit: FC = () => {
   // debugger;
 
   return (
-    <Row className="root-editor-row">
-      <Col md="8" className="root-editor-column">
-        <div id="root-deriv-tree" className="root-editor-scroll">
+    <Row className="editor-row">
+      <Col md="8" className="editor-column">
+        <div id="root-deriv-tree" className="editor-scroll">
           {/* {alertMessage && <Alert variant={alertType}>{alertMessage}</Alert>} */}
           <Form onSubmit={handleSubmit}>
             <EditorHeader

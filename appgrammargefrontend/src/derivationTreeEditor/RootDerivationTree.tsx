@@ -437,11 +437,12 @@ const RootDerivationTree: FC = () => {
     !curscrollTo.ivcId &&
     !curscrollTo.infId &&
     !curscrollTo.dbrId;
+
   return (
     //autoscroll &&
-    <Row className="root-editor-row">
-      <Col md="6" className="root-editor-column">
-        <div id="root-deriv-tree" className="root-editor-scroll">
+    <Row className="editor-row">
+      <Col md="6" className="editor-column">
+        <div id="root-deriv-tree" className="editor-scroll">
           <h5 ref={rootBackLight ? backLigth : undefined}>
             <Link
               to={`/root/${currentRootId}`}

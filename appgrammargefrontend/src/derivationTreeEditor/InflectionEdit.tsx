@@ -770,9 +770,9 @@ const InflectionEdit: FC = () => {
   // );
 
   return (
-    <Row className="root-editor-row">
-      <Col md="8" className="root-editor-column">
-        <div id="root-deriv-tree" className="root-editor-scroll">
+    <Row className="editor-row">
+      <Col md="8" className="editor-column">
+        <div id="root-deriv-tree" className="editor-scroll">
           <AlertMessages alertKind={EAlertKind.ClientRunTime} />
           <Form onSubmit={handleSubmit}>
             <EditorHeader

@@ -148,7 +148,7 @@ const Paradigm: FC<ParadigmProps> = (props) => {
   if (ApiLoadHaveErrors)
     return (
       <Col md="4" id="inflection-paradigm">
-        <div className="paradigm-scroll">
+        <div className="second-scroll">
           <h5>ჩატვირთვის პრობლემა 1</h5>
           <AlertMessages alertKind={EAlertKind.ApiLoad} />
         </div>
@@ -165,14 +165,14 @@ const Paradigm: FC<ParadigmProps> = (props) => {
       //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
       return (
         <Col md="4" id="inflection-paradigm">
-          <div className="paradigm-scroll">
+          <div className="second-scroll">
             <WaitPage />
           </div>
         </Col>
       );
     return (
       <Col md="4" id="inflection-paradigm">
-        <div className="paradigm-scroll">
+        <div className="second-scroll">
           <h5>ჩატვირთვის პრობლემა 2</h5>
           <AlertMessages alertKind={EAlertKind.ApiLoad} />
         </div>
@@ -242,7 +242,7 @@ const Paradigm: FC<ParadigmProps> = (props) => {
 
   return (
     <Col md="4" id="inflection-paradigm">
-      <div className="paradigm-scroll">
+      <div className="second-scroll">
         {inflectionWorkingOnLoadParadigm && (
           <Spinner
             as="span"
