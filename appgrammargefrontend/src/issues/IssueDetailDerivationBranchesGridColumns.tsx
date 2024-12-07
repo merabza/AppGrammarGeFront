@@ -1,13 +1,13 @@
 //IssueDetailDerivationBranchesGridColumns.tsx
 
-import CustomColumn from "./CustomColumn";
+import CustomColumn from "../appcarcass/grid/columns/CustomColumn";
 import { useCallback } from "react";
 import LinkColumn from "./LinkColumn";
 import { saveIssueDetailLine } from "../redux/slices/issuesSlice";
 import { issueDetailTypes } from "./IssueDetailsEnums";
 import { IIssueDetailLine } from "../redux/types/issuesTypes";
 import { Link } from "react-router-dom";
-import CheckboxColumn from "./CheckboxColumn";
+import CheckboxColumn from "../appcarcass/grid/columns/CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
 import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
 

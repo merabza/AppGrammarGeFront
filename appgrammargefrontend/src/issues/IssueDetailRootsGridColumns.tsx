@@ -1,7 +1,7 @@
 //IssueDetailRootsGridColumns.tsx
 
 import { Link } from "react-router-dom";
-import CustomColumn from "./CustomColumn";
+import CustomColumn from "../appcarcass/grid/columns/CustomColumn";
 import { issueDetailTypes } from "./IssueDetailsEnums";
 import { IRoot } from "./IssueTypes";
 import { useAppDispatch } from "../appcarcass/redux/hooks";
@@ -11,7 +11,7 @@ import {
   IcheckDetailParameters,
 } from "../redux/types/issuesTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CheckboxColumn from "./CheckboxColumn";
+import CheckboxColumn from "../appcarcass/grid/columns/CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
 import { useCallback } from "react";
 import { IGridColumn } from "../appcarcass/grid/GridViewTypes";

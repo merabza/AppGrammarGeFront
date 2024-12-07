@@ -1,7 +1,7 @@
 //IssueDetailNotesGridColumns.tsx
 
 import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
-import CustomColumn from "./CustomColumn";
+import CustomColumn from "../appcarcass/grid/columns/CustomColumn";
 import { useCallback } from "react";
 
 export type fnIssueDetailNotesGridColumns = (issId: number) => IGridColumn[];

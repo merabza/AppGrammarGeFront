@@ -1,9 +1,9 @@
 //IssueDetailInflectionsGridColumns.tsx
 
 import { Link } from "react-router-dom";
-import CustomColumn from "./CustomColumn";
+import CustomColumn from "../appcarcass/grid/columns/CustomColumn";
 import { useCallback } from "react";
-import CheckboxColumn from "./CheckboxColumn";
+import CheckboxColumn from "../appcarcass/grid/columns/CheckboxColumn";
 import { useCheckDetailMutation } from "../redux/api/issuesApi";
 import { issueDetailTypes } from "./IssueDetailsEnums";
 import { IcheckDetailParameters } from "../redux/types/issuesTypes";

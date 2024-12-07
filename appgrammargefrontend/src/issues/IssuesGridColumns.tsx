@@ -1,10 +1,10 @@
 //IssuesGridColumns.tsx
 
-import CustomColumn from "./CustomColumn";
+import CustomColumn from "../appcarcass/grid/columns/CustomColumn";
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import { useCallback } from "react";
 import { IGridColumn } from "../appcarcass/grid/GridViewTypes";
-import DateTimeColumn from "./DateTimeColumn";
+import DateTimeColumn from "../appcarcass/grid/columns/DateTimeColumn";
 import LinkColumn from "./LinkColumn";
 
 export type fnIssuesGridColumns = () => IGridColumn[];
