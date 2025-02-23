@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback, useMemo, FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Row, Col } from "react-bootstrap";
 
-import PhoneticsCombEditor from "../editorParts/PhoneticsCombEditor";
 import StatusConfirmRejectPart from "./StatusConfirmRejectPart";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useCheckLoadDerivationFormulas } from "../modelOverview/formulasHooks/useCheckLoadDerivationFormulas";
