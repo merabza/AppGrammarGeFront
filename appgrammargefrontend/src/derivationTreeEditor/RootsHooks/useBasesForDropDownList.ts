@@ -5,47 +5,47 @@ import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../appcarcass/redux/hooks";
 import { useLazyGetBasesByPagesQuery } from "../../redux/api/rootsApi";
 import {
-  SetBasesForDropdown,
-  SetBasesForDropdownloading,
-  setBasesPayloadType,
+    SetBasesForDropdown,
+    SetBasesForDropdownloading,
+    type setBasesPayloadType,
 } from "../../redux/slices/rootsSlice";
-import { BasesByPagesResponse } from "../../redux/types/rootsTypes";
+import type { BasesByPagesResponse } from "../../redux/types/rootsTypes";
 
 export type fnloadBasesForDropDown = (searchValue: string) => void;
 
 export function useBasesForDropDownList(): [fnloadBasesForDropDown] {
-  const dispatch = useAppDispatch();
-  const rootsState = useAppSelector((state) => state.rootsState);
-  const dropdownLinesCount = 8;
+    const dispatch = useAppDispatch();
+    const rootsState = useAppSelector((state) => state.rootsState);
+    const dropdownLinesCount = 8;
 
-  const [getBasesByPages] = useLazyGetBasesByPagesQuery();
+    const [getBasesByPages] = useLazyGetBasesByPagesQuery();
 
-  const loadBasesForDropDownList = useCallback(
-    async (searchValue: string) => {
-      if (rootsState.basesForDropdownloading) return;
+    const loadBasesForDropDownList = useCallback(
+        async (searchValue: string) => {
+            if (rootsState.basesForDropdownloading) return;
 
-      dispatch(SetBasesForDropdownloading(true));
+            dispatch(SetBasesForDropdownloading(true));
 
-      const result = await getBasesByPages({
-        searchValue,
-        itemsPerPage: dropdownLinesCount,
-        pageNom: 1,
-        pagekey: searchValue,
-      });
-      // console.log("result.data=", result.data);
-      if (result.data) {
-        const data = result.data as BasesByPagesResponse;
-        const payload = {
-          pagekey: searchValue,
-          data: data.baseLinks,
-        } as setBasesPayloadType;
-        dispatch(SetBasesForDropdown(payload));
-      }
+            const result = await getBasesByPages({
+                searchValue,
+                itemsPerPage: dropdownLinesCount,
+                pageNom: 1,
+                pagekey: searchValue,
+            });
+            // console.log("result.data=", result.data);
+            if (result.data) {
+                const data = result.data as BasesByPagesResponse;
+                const payload = {
+                    pagekey: searchValue,
+                    data: data.baseLinks,
+                } as setBasesPayloadType;
+                dispatch(SetBasesForDropdown(payload));
+            }
 
-      dispatch(SetBasesForDropdownloading(false));
-    },
-    [rootsState, dispatch, getBasesByPages]
-  );
+            dispatch(SetBasesForDropdownloading(false));
+        },
+        [rootsState, dispatch, getBasesByPages]
+    );
 
-  return [loadBasesForDropDownList];
+    return [loadBasesForDropDownList];
 }

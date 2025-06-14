@@ -4,12 +4,12 @@ export interface IssueKind {}
 export interface IssuePriority {}
 export interface IssueStatus {}
 export interface IRecord {
-  isdId: number;
+    isdId: number;
 }
 
 export interface IRoot extends IRecord {
-  rootId: number;
-  rootName: string;
-  rootHomonymIndex: number;
-  rootNote: string;
+    rootId: number;
+    rootName: string;
+    rootHomonymIndex: number;
+    rootNote: string;
 }

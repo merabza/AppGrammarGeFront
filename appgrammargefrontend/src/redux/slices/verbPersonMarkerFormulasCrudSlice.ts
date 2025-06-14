@@ -1,34 +1,34 @@
 //verbPersonMarkerFormulasCrudSlice.ts
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { VerbPersonMarkerFormulaFormData } from "../../modelOverview/VerbPersonMarkerFormulaData";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { VerbPersonMarkerFormulaFormData } from "../../modelOverview/VerbPersonMarkerFormulaData";
 
 export interface IVerbPersonMarkerFormulasCrudState {
-  derivFormulasLoading: boolean;
-  verbPersonMarkerFormulaForEdit: VerbPersonMarkerFormulaFormData | null;
+    derivFormulasLoading: boolean;
+    verbPersonMarkerFormulaForEdit: VerbPersonMarkerFormulaFormData | null;
 }
 
 const initialState: IVerbPersonMarkerFormulasCrudState = {
-  derivFormulasLoading: false,
-  verbPersonMarkerFormulaForEdit: null,
+    derivFormulasLoading: false,
+    verbPersonMarkerFormulaForEdit: null,
 };
 
 export const verbPersonMarkerFormulasCrudSlice = createSlice({
-  initialState,
-  name: "verbPersonMarkerFormulasCrudSlice",
-  reducers: {
-    //////////////////////////////////////
-    setVerbPersonMarkerFormulaForEdit: (
-      state,
-      action: PayloadAction<VerbPersonMarkerFormulaFormData>
-    ) => {
-      state.verbPersonMarkerFormulaForEdit = action.payload;
+    initialState,
+    name: "verbPersonMarkerFormulasCrudSlice",
+    reducers: {
+        //////////////////////////////////////
+        setVerbPersonMarkerFormulaForEdit: (
+            state,
+            action: PayloadAction<VerbPersonMarkerFormulaFormData>
+        ) => {
+            state.verbPersonMarkerFormulaForEdit = action.payload;
+        },
+        //////////////////////////////////////
     },
-    //////////////////////////////////////
-  },
 });
 
 export default verbPersonMarkerFormulasCrudSlice.reducer;
 
 export const { setVerbPersonMarkerFormulaForEdit } =
-  verbPersonMarkerFormulasCrudSlice.actions;
+    verbPersonMarkerFormulasCrudSlice.actions;

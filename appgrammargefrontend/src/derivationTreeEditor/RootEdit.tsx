@@ -1,6 +1,6 @@
 //RootEdit.tsx
 
-import { useState, useEffect, useMemo, FC } from "react";
+import { useState, useEffect, useMemo, type FC } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -14,7 +14,7 @@ import {
     clearRoot,
 } from "../redux/slices/rootsSlice";
 import {
-    RootData,
+    type RootData,
     rootDataSchema,
 } from "./TypesAndSchemas/RootDataTypeAndSchema";
 import {
@@ -41,8 +41,7 @@ import { setDeleteFailureRoot } from "../redux/slices/rootCrudSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
-import {
-    DerivationType,
+import type {
     PhoneticsChangeQueryModel,
     classifierModel,
 } from "../masterData/mdTypes";

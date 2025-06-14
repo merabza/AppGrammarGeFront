@@ -5,36 +5,39 @@ import { useAppDispatch, useAppSelector } from "../../appcarcass/redux/hooks";
 import { useLazyGetRootByInflectionIdQuery } from "../../redux/api/rootsApi";
 import { setRootLoading } from "../../redux/slices/rootsSlice";
 import {
-  getInflectionByIdFromStore,
-  haveInflectionPredRoots,
+    getInflectionByIdFromStore,
+    haveInflectionPredRoots,
 } from "./derivationCommonFunctionsModule";
 
 export type fnCheckLoadRootsByInflectionId = (
-  dbrId: number | undefined
+    dbrId: number | undefined
 ) => void;
 
 export function useCheckLoadRootsByInflectionId(): [
-  fnCheckLoadRootsByInflectionId
+    fnCheckLoadRootsByInflectionId
 ] {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const { rootsRepo } = useAppSelector((state) => state.rootsState);
+    const { rootsRepo } = useAppSelector((state) => state.rootsState);
 
-  const [getRootByInflectionId] = useLazyGetRootByInflectionIdQuery();
+    const [getRootByInflectionId] = useLazyGetRootByInflectionIdQuery();
 
-  const checkLoadRootsByInflectionId = useCallback(
-    async (dbrId: number | undefined) => {
-      if (dbrId) {
-        const inflection = getInflectionByIdFromStore(rootsRepo, dbrId);
-        if (!inflection || !haveInflectionPredRoots(rootsRepo, inflection)) {
-          dispatch(setRootLoading(true));
-          getRootByInflectionId(dbrId);
-          dispatch(setRootLoading(false));
-        }
-      }
-    },
-    [dispatch, getRootByInflectionId, rootsRepo]
-  );
+    const checkLoadRootsByInflectionId = useCallback(
+        async (dbrId: number | undefined) => {
+            if (dbrId) {
+                const inflection = getInflectionByIdFromStore(rootsRepo, dbrId);
+                if (
+                    !inflection ||
+                    !haveInflectionPredRoots(rootsRepo, inflection)
+                ) {
+                    dispatch(setRootLoading(true));
+                    getRootByInflectionId(dbrId);
+                    dispatch(setRootLoading(false));
+                }
+            }
+        },
+        [dispatch, getRootByInflectionId, rootsRepo]
+    );
 
-  return [checkLoadRootsByInflectionId];
+    return [checkLoadRootsByInflectionId];
 }

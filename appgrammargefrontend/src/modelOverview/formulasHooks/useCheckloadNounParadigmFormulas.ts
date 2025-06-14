@@ -8,48 +8,48 @@ import { useLazyCheckLoadNounParadigmFormulasQuery } from "../../redux/api/model
 export type fnloadCheckLoadNounParadigmFormulas = (paradigmId: number) => void;
 
 export function useCheckLoadNounParadigmFormulas(): [
-  fnloadCheckLoadNounParadigmFormulas,
-  boolean
+    fnloadCheckLoadNounParadigmFormulas,
+    boolean
 ] {
-  const modelDataState = useAppSelector((state) => state.modelDataState);
+    const modelDataState = useAppSelector((state) => state.modelDataState);
 
-  const [
-    CheckLoadNounParadigmFormulas,
-    { isLoading: nounParadigmFormulasLoading },
-  ] = useLazyCheckLoadNounParadigmFormulasQuery();
+    const [
+        CheckLoadNounParadigmFormulas,
+        { isLoading: nounParadigmFormulasLoading },
+    ] = useLazyCheckLoadNounParadigmFormulasQuery();
 
-  const checkLoadNounParadigmFormulas = useCallback(
-    async (paradigmId: number) => {
-      // console.log(
-      //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas started nounParadigmFormulasLoading=",
-      //   nounParadigmFormulasLoading
-      // );
+    const checkLoadNounParadigmFormulas = useCallback(
+        async (paradigmId: number) => {
+            // console.log(
+            //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas started nounParadigmFormulasLoading=",
+            //   nounParadigmFormulasLoading
+            // );
 
-      if (nounParadigmFormulasLoading) return;
+            if (nounParadigmFormulasLoading) return;
 
-      // console.log(
-      //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas nounParadigmFormulasLoading checked modelDataState.nounParadigmFormulas=",
-      //   modelDataState.nounParadigmFormulas
-      // );
+            // console.log(
+            //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas nounParadigmFormulasLoading checked modelDataState.nounParadigmFormulas=",
+            //   modelDataState.nounParadigmFormulas
+            // );
 
-      if (
-        paradigmId in modelDataState.nounParadigmFormulas &&
-        modelDataState.nounParadigmFormulas[paradigmId].length
-      )
-        return;
+            if (
+                paradigmId in modelDataState.nounParadigmFormulas &&
+                modelDataState.nounParadigmFormulas[paradigmId].length
+            )
+                return;
 
-      // console.log(
-      //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas modelDataState.nounParadigmFormulas checked"
-      // );
+            // console.log(
+            //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas modelDataState.nounParadigmFormulas checked"
+            // );
 
-      await CheckLoadNounParadigmFormulas(paradigmId);
+            await CheckLoadNounParadigmFormulas(paradigmId);
 
-      // console.log(
-      //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas finished"
-      // );
-    },
-    [modelDataState, nounParadigmFormulasLoading]
-  );
+            // console.log(
+            //   "useCheckLoadNounParadigmFormulas checkLoadNounParadigmFormulas finished"
+            // );
+        },
+        [modelDataState, nounParadigmFormulasLoading]
+    );
 
-  return [checkLoadNounParadigmFormulas, nounParadigmFormulasLoading];
+    return [checkLoadNounParadigmFormulas, nounParadigmFormulasLoading];
 }

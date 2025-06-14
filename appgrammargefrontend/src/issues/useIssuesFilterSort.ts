@@ -5,72 +5,72 @@ import { useCreateIssuesFilterSortMutation } from "../redux/api/issuesApi";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
 import { issueDetailTableNames } from "./IssueDetailsEnums";
 import {
-  setIssueDetailsFilterSortId,
-  setIssuesTableFilterSortId,
+    setIssueDetailsFilterSortId,
+    setIssuesTableFilterSortId,
 } from "../redux/slices/issuesSlice";
-import {
-  IFilterField,
-  IFilterSortObject,
-  ISortField,
+import type {
+    IFilterField,
+    IFilterSortObject,
+    ISortField,
 } from "../appcarcass/grid/GridViewTypes";
 
 export type fncreateIssuesTableFilterSort = (
-  sortFields: ISortField[] | null
+    sortFields: ISortField[] | null
 ) => void;
 export type fncreateIssueDetailsFilterSort = (
-  issueId: number,
-  detName: string,
-  sortFields: ISortField[] | null
+    issueId: number,
+    detName: string,
+    sortFields: ISortField[] | null
 ) => void;
 
 export function useIssuesFilterSort(): [
-  fncreateIssuesTableFilterSort,
-  fncreateIssueDetailsFilterSort,
-  boolean
+    fncreateIssuesTableFilterSort,
+    fncreateIssueDetailsFilterSort,
+    boolean
 ] {
-  const { tabWindowId } = useAppSelector((state) => state.userState);
-  const dispatch = useAppDispatch();
+    const { tabWindowId } = useAppSelector((state) => state.userState);
+    const dispatch = useAppDispatch();
 
-  const issuesTableName = "issues";
+    const issuesTableName = "issues";
 
-  const [createIssuesFilterSort] = useCreateIssuesFilterSortMutation();
+    const [createIssuesFilterSort] = useCreateIssuesFilterSortMutation();
 
-  const createIssuesTableFilterSort = useCallback(
-    async (sortFields: ISortField[] | null) => {
-      const filterSortObject = {
-        tabWindowId,
-        tableName: issuesTableName,
-        filterByFields: [] as IFilterField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
-        sortByFields: sortFields ?? ([] as ISortField[]),
-      } as IFilterSortObject;
-      await createIssuesFilterSort(filterSortObject);
-      dispatch(setIssuesTableFilterSortId(filterSortObject));
-    },
-    [tabWindowId]
-  );
-  const createIssueDetailsFilterSort = useCallback(
-    async (
-      issueId: number,
-      detName: string,
-      sortFields: ISortField[] | null
-    ) => {
-      const filterSortObject = {
-        tabWindowId,
-        tableName: (issueDetailTableNames as any)[detName],
-        filterByFields: [] as IFilterField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
-        sortByFields: sortFields ?? ([] as ISortField[]),
-      };
-      await createIssuesFilterSort(filterSortObject);
-      dispatch(
-        setIssueDetailsFilterSortId({
-          filterSortObject,
-          issueId,
-          detailsName: detName,
-        })
-      );
-    },
-    [tabWindowId]
-  );
+    const createIssuesTableFilterSort = useCallback(
+        async (sortFields: ISortField[] | null) => {
+            const filterSortObject = {
+                tabWindowId,
+                tableName: issuesTableName,
+                filterByFields: [] as IFilterField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
+                sortByFields: sortFields ?? ([] as ISortField[]),
+            } as IFilterSortObject;
+            await createIssuesFilterSort(filterSortObject);
+            dispatch(setIssuesTableFilterSortId(filterSortObject));
+        },
+        [tabWindowId]
+    );
+    const createIssueDetailsFilterSort = useCallback(
+        async (
+            issueId: number,
+            detName: string,
+            sortFields: ISortField[] | null
+        ) => {
+            const filterSortObject = {
+                tabWindowId,
+                tableName: (issueDetailTableNames as any)[detName],
+                filterByFields: [] as IFilterField[], //ToDo ფილტრები ჯერ არ არის რეალიზებული
+                sortByFields: sortFields ?? ([] as ISortField[]),
+            };
+            await createIssuesFilterSort(filterSortObject);
+            dispatch(
+                setIssueDetailsFilterSortId({
+                    filterSortObject,
+                    issueId,
+                    detailsName: detName,
+                })
+            );
+        },
+        [tabWindowId]
+    );
 
-  return [createIssuesTableFilterSort, createIssueDetailsFilterSort, false];
+    return [createIssuesTableFilterSort, createIssueDetailsFilterSort, false];
 }

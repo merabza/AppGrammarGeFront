@@ -9,16 +9,16 @@
 //2. თუ ჩანაწერი სტატუსია ახალი (0) და მიმდინარე მომხმარებელი არის ამ ჩანაწერის მფლობელი
 //3. თუ ჩანაწერი სტატუსია დამოწმებული (2) და მიმდინარე მომხმარებელს აქვს დამოწმების უფლება
 export function isAllowEditAndDelete(
-  currentId: number | undefined,
-  userName: string | undefined,
-  creator: string,
-  recordStatusId: number,
-  userHasConfirmRight: boolean
+    currentId: number | undefined,
+    userName: string | undefined,
+    creator: string,
+    recordStatusId: number,
+    userHasConfirmRight: boolean
 ) {
-  return (
-    !!userName &&
-    (!currentId ||
-      (recordStatusId === 0 && creator === userName) ||
-      (recordStatusId === 2 && userHasConfirmRight))
-  );
+    return (
+        !!userName &&
+        (!currentId ||
+            (recordStatusId === 0 && creator === userName) ||
+            (recordStatusId === 2 && userHasConfirmRight))
+    );
 }

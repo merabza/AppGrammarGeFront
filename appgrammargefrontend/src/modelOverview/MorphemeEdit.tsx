@@ -1,9 +1,9 @@
 //MorphemeEdit.tsx
 
-import { useState, useEffect, useCallback, useMemo, FC } from "react";
+import { useState, useEffect, useCallback, useMemo, type FC } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
-import {
+import type {
     Morpheme,
     MorphemeRange,
     PhoneticsType,
@@ -15,7 +15,7 @@ import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/u
 import { useForman } from "../appcarcass/hooks/useForman";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
 import {
-    MorphemeEditFormData,
+    type MorphemeEditFormData,
     morphemeEditFormDataSchema,
 } from "./MorphemeEditFormData";
 import { useNavigate, useParams } from "react-router-dom";
@@ -32,7 +32,7 @@ import {
     clearAllAlerts,
 } from "../appcarcass/redux/slices/alertSlice";
 import EditorHeader from "../appcarcass/editorParts/EditorHeader";
-import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
+import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import OneStrongLabel from "../appcarcass/editorParts/OneStrongLabel";
 import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import OneNumberControl from "../appcarcass/editorParts/OneNumberControl";

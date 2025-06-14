@@ -2,8 +2,8 @@
 
 import { useCallback } from "react";
 import {
-  useLazyGetBasesByPagesQuery,
-  useLazyGetBasesCountQuery,
+    useLazyGetBasesByPagesQuery,
+    useLazyGetBasesCountQuery,
 } from "../../redux/api/rootsApi";
 
 // import { useCallback } from "react";
@@ -19,36 +19,36 @@ import {
 // import { BasesByPagesResponse } from "../../redux/types/rootsTypes";
 
 export type fnloadBasesByPages = (
-  baseName: string,
-  itemsPerPage: number,
-  pageNom: number,
-  pagekey: string
+    baseName: string,
+    itemsPerPage: number,
+    pageNom: number,
+    pagekey: string
 ) => void;
 
 export function useBasesByPages(): [fnloadBasesByPages, boolean] {
-  const [getBasesByPages, { isLoading: loadingBasesByPages }] =
-    useLazyGetBasesByPagesQuery();
-  const [getBasesCount, { isLoading: loadingBasesCount }] =
-    useLazyGetBasesCountQuery();
+    const [getBasesByPages, { isLoading: loadingBasesByPages }] =
+        useLazyGetBasesByPagesQuery();
+    const [getBasesCount, { isLoading: loadingBasesCount }] =
+        useLazyGetBasesCountQuery();
 
-  const loadBasesByPages = useCallback(
-    (
-      baseName: string,
-      itemsPerPage: number,
-      pageNom: number,
-      pagekey: string
-    ) => {
-      if (!loadingBasesCount) getBasesCount(baseName);
-      if (!loadingBasesByPages)
-        getBasesByPages({
-          searchValue: baseName,
-          itemsPerPage,
-          pageNom,
-          pagekey,
-        });
-    },
-    []
-  );
+    const loadBasesByPages = useCallback(
+        (
+            baseName: string,
+            itemsPerPage: number,
+            pageNom: number,
+            pagekey: string
+        ) => {
+            if (!loadingBasesCount) getBasesCount(baseName);
+            if (!loadingBasesByPages)
+                getBasesByPages({
+                    searchValue: baseName,
+                    itemsPerPage,
+                    pageNom,
+                    pagekey,
+                });
+        },
+        []
+    );
 
-  return [loadBasesByPages, loadingBasesByPages || loadingBasesCount];
+    return [loadBasesByPages, loadingBasesByPages || loadingBasesCount];
 }

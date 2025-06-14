@@ -8,39 +8,39 @@ import { useLazyCheckLoadDerivationFormulasQuery } from "../../redux/api/modelDa
 export type fnloadCheckLoadDerivationFormulas = () => void;
 
 export function useCheckLoadDerivationFormulas(): [
-  fnloadCheckLoadDerivationFormulas,
-  boolean
+    fnloadCheckLoadDerivationFormulas,
+    boolean
 ] {
-  const modelDataState = useAppSelector((state) => state.modelDataState);
+    const modelDataState = useAppSelector((state) => state.modelDataState);
 
-  const [CheckLoadDerivationFormulas, { isLoading: derivFormulasLoading }] =
-    useLazyCheckLoadDerivationFormulasQuery();
+    const [CheckLoadDerivationFormulas, { isLoading: derivFormulasLoading }] =
+        useLazyCheckLoadDerivationFormulasQuery();
 
-  const checkLoadDerivationFormulas = useCallback(async () => {
-    // console.log(
-    //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas started derivFormulasLoading=",
-    //   derivFormulasLoading
-    // );
+    const checkLoadDerivationFormulas = useCallback(async () => {
+        // console.log(
+        //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas started derivFormulasLoading=",
+        //   derivFormulasLoading
+        // );
 
-    if (derivFormulasLoading) return;
+        if (derivFormulasLoading) return;
 
-    // console.log(
-    //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas derivFormulasLoading checked modelDataState.derivationFormulas=",
-    //   modelDataState.derivationFormulas
-    // );
+        // console.log(
+        //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas derivFormulasLoading checked modelDataState.derivationFormulas=",
+        //   modelDataState.derivationFormulas
+        // );
 
-    if (modelDataState.derivationFormulas.length) return;
+        if (modelDataState.derivationFormulas.length) return;
 
-    // console.log(
-    //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas modelDataState.derivationFormulas checked"
-    // );
+        // console.log(
+        //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas modelDataState.derivationFormulas checked"
+        // );
 
-    await CheckLoadDerivationFormulas();
+        await CheckLoadDerivationFormulas();
 
-    // console.log(
-    //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas finished"
-    // );
-  }, [modelDataState, derivFormulasLoading]);
+        // console.log(
+        //   "useCheckLoadDerivationFormulas checkLoadDerivationFormulas finished"
+        // );
+    }, [modelDataState, derivFormulasLoading]);
 
-  return [checkLoadDerivationFormulas, derivFormulasLoading];
+    return [checkLoadDerivationFormulas, derivFormulasLoading];
 }

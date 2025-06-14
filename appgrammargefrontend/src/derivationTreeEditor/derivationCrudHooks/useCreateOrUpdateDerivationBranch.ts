@@ -4,89 +4,89 @@ import { useCallback } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../appcarcass/redux/hooks";
 import {
-  useCreateDerivationBranchMutation,
-  useUpdateDerivationBranchMutation,
+    useCreateDerivationBranchMutation,
+    useUpdateDerivationBranchMutation,
 } from "../../redux/api/derivationCrudApi";
 import { useLazyGetRootByDerivBranchIdQuery } from "../../redux/api/rootsApi";
 import { setduplicateDerivationBranchId } from "../../redux/slices/derivationCrudSlice";
-import { DerivationBranchData } from "../TypesAndSchemas/DerivationBranchDataTypeAndSchema";
+import type { DerivationBranchData } from "../TypesAndSchemas/DerivationBranchDataTypeAndSchema";
 import { funAfterSaveBranch } from "./derivationCommonFunctionsModule";
 import { useNavigate } from "react-router-dom";
 
 export type fnCreateOrUpdateDerivationBranch = (
-  curDbrIdVal: number | undefined,
-  rootId: number | undefined,
-  DerivationBranch: DerivationBranchData
+    curDbrIdVal: number | undefined,
+    rootId: number | undefined,
+    DerivationBranch: DerivationBranchData
 ) => void;
 
 export function useCreateOrUpdateDerivationBranch(): [
-  fnCreateOrUpdateDerivationBranch,
-  boolean
+    fnCreateOrUpdateDerivationBranch,
+    boolean
 ] {
-  const dispatch = useAppDispatch();
-  const { rootsRepo } = useAppSelector((state) => state.rootsState);
-  const navigate = useNavigate();
-  const [createDerivationBranch, { isLoading: creatingDerivationBranch }] =
-    useCreateDerivationBranchMutation();
-  const [updateDerivationBranch, { isLoading: updatingDerivationBranch }] =
-    useUpdateDerivationBranchMutation();
-  const { derivationBranchForEdit, duplicateDerivationBranchId } =
-    useAppSelector((state) => state.derivationCrudState);
+    const dispatch = useAppDispatch();
+    const { rootsRepo } = useAppSelector((state) => state.rootsState);
+    const navigate = useNavigate();
+    const [createDerivationBranch, { isLoading: creatingDerivationBranch }] =
+        useCreateDerivationBranchMutation();
+    const [updateDerivationBranch, { isLoading: updatingDerivationBranch }] =
+        useUpdateDerivationBranchMutation();
+    const { derivationBranchForEdit, duplicateDerivationBranchId } =
+        useAppSelector((state) => state.derivationCrudState);
 
-  const [getRootByDerivBranchId] = useLazyGetRootByDerivBranchIdQuery();
+    const [getRootByDerivBranchId] = useLazyGetRootByDerivBranchIdQuery();
 
-  const createOrUpdateDerivationBranch = useCallback(
-    async (
-      curDbrIdVal: number | undefined,
-      rootId: number | undefined,
-      DerivationBranch: DerivationBranchData
-    ) => {
-      let dbrId: number | undefined;
-      dispatch(setduplicateDerivationBranchId(null));
-      if (curDbrIdVal) {
-        updateDerivationBranch(DerivationBranch);
-        dbrId = DerivationBranch.derivationBranch.dbrId;
-      } else {
-        createDerivationBranch(DerivationBranch);
-        dbrId = derivationBranchForEdit?.derivationBranch.dbrId;
-      }
+    const createOrUpdateDerivationBranch = useCallback(
+        async (
+            curDbrIdVal: number | undefined,
+            rootId: number | undefined,
+            DerivationBranch: DerivationBranchData
+        ) => {
+            let dbrId: number | undefined;
+            dispatch(setduplicateDerivationBranchId(null));
+            if (curDbrIdVal) {
+                updateDerivationBranch(DerivationBranch);
+                dbrId = DerivationBranch.derivationBranch.dbrId;
+            } else {
+                createDerivationBranch(DerivationBranch);
+                dbrId = derivationBranchForEdit?.derivationBranch.dbrId;
+            }
 
-      //თავიდან ჩაიტვირთოს დერივაციის იდენტიფიკატორის მიხედვით ყველა საჭირო ძირი
-      if (dbrId) await getRootByDerivBranchId(dbrId).unwrap();
+            //თავიდან ჩაიტვირთოს დერივაციის იდენტიფიკატორის მიხედვით ყველა საჭირო ძირი
+            if (dbrId) await getRootByDerivBranchId(dbrId).unwrap();
 
-      funAfterSaveBranch(
-        dbrId,
-        rootId,
-        rootsRepo,
-        duplicateDerivationBranchId,
-        navigate
-      );
+            funAfterSaveBranch(
+                dbrId,
+                rootId,
+                rootsRepo,
+                duplicateDerivationBranchId,
+                navigate
+            );
 
-      // if (rootId in rootsRepo && rootsRepo[rootId]) return;
-      // dispatch(setRootLoading(true));
+            // if (rootId in rootsRepo && rootsRepo[rootId]) return;
+            // dispatch(setRootLoading(true));
 
-      // const result = await getRootById(rootId);
-      // const data = result.data as RootFullModel;
+            // const result = await getRootById(rootId);
+            // const data = result.data as RootFullModel;
 
-      // const payload = { rootId, data } as setRootByIdPayloadType;
+            // const payload = { rootId, data } as setRootByIdPayloadType;
 
-      // dispatch(setRootById(payload));
+            // dispatch(setRootById(payload));
 
-      // dispatch(setRootLoading(false));
-    },
-    [
-      // dispatch,
-      rootsRepo,
-      // createDerivationBranch,
-      derivationBranchForEdit?.derivationBranch.dbrId,
-      duplicateDerivationBranchId,
-      // getRootByDerivBranchId,
-      // updateDerivationBranch,
-    ]
-  );
+            // dispatch(setRootLoading(false));
+        },
+        [
+            // dispatch,
+            rootsRepo,
+            // createDerivationBranch,
+            derivationBranchForEdit?.derivationBranch.dbrId,
+            duplicateDerivationBranchId,
+            // getRootByDerivBranchId,
+            // updateDerivationBranch,
+        ]
+    );
 
-  return [
-    createOrUpdateDerivationBranch,
-    creatingDerivationBranch || updatingDerivationBranch,
-  ];
+    return [
+        createOrUpdateDerivationBranch,
+        creatingDerivationBranch || updatingDerivationBranch,
+    ];
 }

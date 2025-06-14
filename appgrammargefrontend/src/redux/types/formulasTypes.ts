@@ -5,35 +5,35 @@
 // }
 
 export interface NounParadigmModel {
-  npr: NounParadigmRow[];
+    npr: NounParadigmRow[];
 }
 
 export interface NounParadigmRow {
-  nprId: number;
-  nounParadigmId: number;
-  nprOrderInParadigm: number;
-  grammarCaseId: number;
-  nounNumberId: number;
-  nprSample: string;
-  //nounParadigmFormulaDetails: NounParadigmFormulaDetail[];
+    nprId: number;
+    nounParadigmId: number;
+    nprOrderInParadigm: number;
+    grammarCaseId: number;
+    nounNumberId: number;
+    nprSample: string;
+    //nounParadigmFormulaDetails: NounParadigmFormulaDetail[];
 }
 
 export interface VerbParadigmodel {
-  npr: VerbParadigmRow[];
+    npr: VerbParadigmRow[];
 }
 
 export interface VerbPersonMarkerParadigm {
-  vpmpnId: number;
-  vpmpnKey: string;
-  sortId: number;
+    vpmpnId: number;
+    vpmpnKey: string;
+    sortId: number;
 }
 
 export interface VerbParadigmRow {
-  vprId: number;
-  verbTypeId: number;
-  verbParadigmId: number;
-  verbRowId: number;
-  verbPersonMarkerParadigmId: number;
-  vprSample: string | null;
-  //verbParadigmFormulaDetails: VerbParadigmFormulaDetail[];
+    vprId: number;
+    verbTypeId: number;
+    verbParadigmId: number;
+    verbRowId: number;
+    verbPersonMarkerParadigmId: number;
+    vprSample: string | null;
+    //verbParadigmFormulaDetails: VerbParadigmFormulaDetail[];
 }

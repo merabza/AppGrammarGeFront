@@ -12,53 +12,53 @@ import RegistrationPage from "./appcarcass/common/RegistrationPage";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-  faCheckSquare,
-  faCoffee,
-  faSync,
-  faSave,
-  faSignOutAlt,
-  faHome,
-  faAlignLeft,
-  faBarcode,
-  faArrowsAltH,
-  faLongArrowAltDown,
-  faSquare,
-  faMicroscope,
-  faFolder,
-  faFolderOpen,
-  faEdit,
-  faTrash,
-  faPlus,
-  faPlusSquare,
-  faMinusSquare,
-  faWindowClose,
-  faSignInAlt,
-  faUserPlus,
-  faUser,
-  faUserMinus,
-  faKey,
-  faFileAlt,
-  faMinus,
-  faBezierCurve,
-  faShapes,
-  faArrowDown,
-  faArrowUp,
-  faChevronLeft,
-  faFileExport,
-  faTimes,
-  faCheck,
-  faUsersCog,
-  faStream,
-  faCheckCircle,
-  faRobot,
-  faPaperclip,
-  faAngleLeft,
-  faAngleDoubleLeft,
-  faAngleRight,
-  faAngleDoubleRight,
-  faSort,
-  faSortUp,
-  faSortDown,
+    faCheckSquare,
+    faCoffee,
+    faSync,
+    faSave,
+    faSignOutAlt,
+    faHome,
+    faAlignLeft,
+    faBarcode,
+    faArrowsAltH,
+    faLongArrowAltDown,
+    faSquare,
+    faMicroscope,
+    faFolder,
+    faFolderOpen,
+    faEdit,
+    faTrash,
+    faPlus,
+    faPlusSquare,
+    faMinusSquare,
+    faWindowClose,
+    faSignInAlt,
+    faUserPlus,
+    faUser,
+    faUserMinus,
+    faKey,
+    faFileAlt,
+    faMinus,
+    faBezierCurve,
+    faShapes,
+    faArrowDown,
+    faArrowUp,
+    faChevronLeft,
+    faFileExport,
+    faTimes,
+    faCheck,
+    faUsersCog,
+    faStream,
+    faCheckCircle,
+    faRobot,
+    faPaperclip,
+    faAngleLeft,
+    faAngleDoubleLeft,
+    faAngleRight,
+    faAngleDoubleRight,
+    faSort,
+    faSortUp,
+    faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 import Layout from "./appcarcass/common/Layout";
 import Profile from "./appcarcass/user/Profile";
@@ -95,373 +95,432 @@ import CreateVerbPersonMarkerCombinations from "./verbPersonMarkers/CreateVerbPe
 import CreateForRecountVerbPersonMarkers from "./verbPersonMarkers/CreateForRecountVerbPersonMarkers";
 import CreateVerbPersonMarkerCombinationFormulaDetails from "./verbPersonMarkers/CreateVerbPersonMarkerCombinationFormulaDetails";
 import Issues from "./issues/Issues";
-import { FC } from "react";
+import type { FC } from "react";
 import IssueWork from "./issues/IssueWork";
 import RecountsDashboard from "./pages/RecountsDashboard";
 import MdList from "./appcarcass/masterdata/MdList";
 
 library.add(
-  faCheckSquare,
-  faCoffee,
-  faSync,
-  faSave,
-  faSignOutAlt,
-  faHome,
-  faAlignLeft,
-  faBarcode,
-  faArrowsAltH,
-  faLongArrowAltDown,
-  faSquare,
-  faMicroscope,
-  faFolder,
-  faFolderOpen,
-  faEdit,
-  faTrash,
-  faPlus,
-  faPlusSquare,
-  faMinusSquare,
-  faWindowClose,
-  faSignInAlt,
-  faUserPlus,
-  faUser,
-  faUserMinus,
-  faKey,
-  faFileAlt,
-  faMinus,
-  faBezierCurve,
-  faShapes,
-  faArrowDown,
-  faArrowUp,
-  faChevronLeft,
-  faFileExport,
-  faTimes,
-  faCheck,
-  faUsersCog,
-  faStream,
-  faCheckCircle,
-  faRobot,
-  faPaperclip,
-  faAngleLeft,
-  faAngleDoubleLeft,
-  faAngleRight,
-  faAngleDoubleRight,
-  faSort,
-  faSortUp,
-  faSortDown
+    faCheckSquare,
+    faCoffee,
+    faSync,
+    faSave,
+    faSignOutAlt,
+    faHome,
+    faAlignLeft,
+    faBarcode,
+    faArrowsAltH,
+    faLongArrowAltDown,
+    faSquare,
+    faMicroscope,
+    faFolder,
+    faFolderOpen,
+    faEdit,
+    faTrash,
+    faPlus,
+    faPlusSquare,
+    faMinusSquare,
+    faWindowClose,
+    faSignInAlt,
+    faUserPlus,
+    faUser,
+    faUserMinus,
+    faKey,
+    faFileAlt,
+    faMinus,
+    faBezierCurve,
+    faShapes,
+    faArrowDown,
+    faArrowUp,
+    faChevronLeft,
+    faFileExport,
+    faTimes,
+    faCheck,
+    faUsersCog,
+    faStream,
+    faCheckCircle,
+    faRobot,
+    faPaperclip,
+    faAngleLeft,
+    faAngleDoubleLeft,
+    faAngleRight,
+    faAngleDoubleRight,
+    faSort,
+    faSortUp,
+    faSortDown
 );
 
 const App: FC = () => {
-  // console.log("App start");
+    // console.log("App start");
 
-  return (
-    <BrowserRouter>
-      <QueryParamProvider adapter={ReactRouter6Adapter}>
-        {/* <div className="content-wrapper"> */}
-        <Routes>
-          <Route path="/" element={<PrivateApp />}>
-            <Route path="/*" element={<Layout />}>
-              <Route index element={<Home />} />
+    return (
+        <BrowserRouter>
+            <QueryParamProvider adapter={ReactRouter6Adapter}>
+                {/* <div className="content-wrapper"> */}
+                <Routes>
+                    <Route path="/" element={<PrivateApp />}>
+                        <Route path="/*" element={<Layout />}>
+                            <Route index element={<Home />} />
 
-              <Route path="profile" element={<Profile />} />
+                            <Route path="profile" element={<Profile />} />
 
-              <Route path="Rights/:rView/:dtKey/:key" element={<FrmRights />} />
-              <Route path="Rights/:rView/:dtKey" element={<FrmRights />} />
-              <Route path="Rights/:rView" element={<FrmRights />} />
-              <Route path="Rights" element={<FrmRights />} />
+                            <Route
+                                path="Rights/:rView/:dtKey/:key"
+                                element={<FrmRights />}
+                            />
+                            <Route
+                                path="Rights/:rView/:dtKey"
+                                element={<FrmRights />}
+                            />
+                            <Route
+                                path="Rights/:rView"
+                                element={<FrmRights />}
+                            />
+                            <Route path="Rights" element={<FrmRights />} />
 
-              <Route path="mdList/:tableName/:recName" element={<MdList />} />
-              <Route path="mdList/:tableName" element={<MdList />} />
+                            <Route
+                                path="mdList/:tableName/:recName"
+                                element={<MdList />}
+                            />
+                            <Route
+                                path="mdList/:tableName"
+                                element={<MdList />}
+                            />
 
-              <Route
-                path="mdItemEdit/:tableName/:mdIdValue"
-                element={<MdItemEdit />}
-              />
-              <Route path="mdItemEdit/:tableName" element={<MdItemEdit />} />
+                            <Route
+                                path="mdItemEdit/:tableName/:mdIdValue"
+                                element={<MdItemEdit />}
+                            />
+                            <Route
+                                path="mdItemEdit/:tableName"
+                                element={<MdItemEdit />}
+                            />
 
-              {/* Project AppRoutes start */}
+                            {/* Project AppRoutes start */}
 
-              <Route
-                path="basesearch/:baseName/:page"
-                element={<BaseSearch />}
-              />
-              <Route path="basesearch/:baseName" element={<BaseSearch />} />
-              <Route path="basesearch" element={<BaseSearch />} />
+                            <Route
+                                path="basesearch/:baseName/:page"
+                                element={<BaseSearch />}
+                            />
+                            <Route
+                                path="basesearch/:baseName"
+                                element={<BaseSearch />}
+                            />
+                            <Route path="basesearch" element={<BaseSearch />} />
 
-              <Route
-                path="root/:rootId/:dbrId/:infId/:ivcId"
-                element={<RootDerivationTree />}
-              />
-              <Route
-                path="root/:rootId/:dbrId/:infId"
-                element={<RootDerivationTree />}
-              />
-              <Route
-                path="root/:rootId/:dbrId"
-                element={<RootDerivationTree />}
-              />
-              <Route path="root/:rootId" element={<RootDerivationTree />} />
+                            <Route
+                                path="root/:rootId/:dbrId/:infId/:ivcId"
+                                element={<RootDerivationTree />}
+                            />
+                            <Route
+                                path="root/:rootId/:dbrId/:infId"
+                                element={<RootDerivationTree />}
+                            />
+                            <Route
+                                path="root/:rootId/:dbrId"
+                                element={<RootDerivationTree />}
+                            />
+                            <Route
+                                path="root/:rootId"
+                                element={<RootDerivationTree />}
+                            />
 
-              <Route path="rootEdit/:rootId" element={<RootEdit />} />
-              <Route path="rootEdit" element={<RootEdit />} />
-              <Route
-                path="derivEdit/:dbrId/:rootId"
-                element={<DerivationEdit />}
-              />
+                            <Route
+                                path="rootEdit/:rootId"
+                                element={<RootEdit />}
+                            />
+                            <Route path="rootEdit" element={<RootEdit />} />
+                            <Route
+                                path="derivEdit/:dbrId/:rootId"
+                                element={<DerivationEdit />}
+                            />
 
-              <Route path="derivEdit/:dbrId" element={<DerivationEdit />} />
-              <Route path="derivEdit" element={<DerivationEdit />} />
+                            <Route
+                                path="derivEdit/:dbrId"
+                                element={<DerivationEdit />}
+                            />
+                            <Route
+                                path="derivEdit"
+                                element={<DerivationEdit />}
+                            />
 
-              <Route
-                path="inflEdit/:infId/:dbrId/:rootId"
-                element={<InflectionEdit />}
-              />
-              <Route
-                path="inflEdit/:infId/:dbrId"
-                element={<InflectionEdit />}
-              />
+                            <Route
+                                path="inflEdit/:infId/:dbrId/:rootId"
+                                element={<InflectionEdit />}
+                            />
+                            <Route
+                                path="inflEdit/:infId/:dbrId"
+                                element={<InflectionEdit />}
+                            />
 
-              <Route path="inflEdit/:infId" element={<InflectionEdit />} />
-              <Route path="inflEdit" element={<InflectionEdit />} />
+                            <Route
+                                path="inflEdit/:infId"
+                                element={<InflectionEdit />}
+                            />
+                            <Route
+                                path="inflEdit"
+                                element={<InflectionEdit />}
+                            />
 
-              <Route
-                path="inflVerbCompEdit/:ivcId/:infId/:dbrId/:rootId"
-                element={<InflectionVerbCompositionEdit />}
-              />
-              <Route
-                path="inflVerbCompEdit/:ivcId/:infId/:dbrId"
-                element={<InflectionVerbCompositionEdit />}
-              />
-              <Route
-                path="inflVerbCompEdit/:ivcId/:infId"
-                element={<InflectionVerbCompositionEdit />}
-              />
-              <Route
-                path="inflVerbCompEdit/:ivcId"
-                element={<InflectionVerbCompositionEdit />}
-              />
-              <Route
-                path="inflVerbCompEdit"
-                element={<InflectionVerbCompositionEdit />}
-              />
+                            <Route
+                                path="inflVerbCompEdit/:ivcId/:infId/:dbrId/:rootId"
+                                element={<InflectionVerbCompositionEdit />}
+                            />
+                            <Route
+                                path="inflVerbCompEdit/:ivcId/:infId/:dbrId"
+                                element={<InflectionVerbCompositionEdit />}
+                            />
+                            <Route
+                                path="inflVerbCompEdit/:ivcId/:infId"
+                                element={<InflectionVerbCompositionEdit />}
+                            />
+                            <Route
+                                path="inflVerbCompEdit/:ivcId"
+                                element={<InflectionVerbCompositionEdit />}
+                            />
+                            <Route
+                                path="inflVerbCompEdit"
+                                element={<InflectionVerbCompositionEdit />}
+                            />
 
-              <Route
-                path="forConfirmRootsList/:page"
-                element={<ForConfirmRootsList />}
-              />
+                            <Route
+                                path="forConfirmRootsList/:page"
+                                element={<ForConfirmRootsList />}
+                            />
 
-              <Route
-                path="forConfirmRootsList"
-                element={<ForConfirmRootsList />}
-              />
+                            <Route
+                                path="forConfirmRootsList"
+                                element={<ForConfirmRootsList />}
+                            />
 
-              <Route
-                path="derivationFormulasOverview/:tabKey/:recName"
-                element={<DerivationFormulasOverview />}
-              />
-              <Route
-                path="derivationFormulasOverview/:tabKey"
-                element={<DerivationFormulasOverview />}
-              />
-              <Route
-                path="derivationFormulasOverview"
-                element={<DerivationFormulasOverview />}
-              />
-              <Route
-                path="derivationFormulaEdit/:dfId"
-                element={<DerivationFormulaEdit />}
-              />
-              <Route
-                path="derivationFormulaEdit"
-                element={<DerivationFormulaEdit />}
-              />
+                            <Route
+                                path="derivationFormulasOverview/:tabKey/:recName"
+                                element={<DerivationFormulasOverview />}
+                            />
+                            <Route
+                                path="derivationFormulasOverview/:tabKey"
+                                element={<DerivationFormulasOverview />}
+                            />
+                            <Route
+                                path="derivationFormulasOverview"
+                                element={<DerivationFormulasOverview />}
+                            />
+                            <Route
+                                path="derivationFormulaEdit/:dfId"
+                                element={<DerivationFormulaEdit />}
+                            />
+                            <Route
+                                path="derivationFormulaEdit"
+                                element={<DerivationFormulaEdit />}
+                            />
 
-              <Route
-                path="morphemesOverview/:tabKey/:recName"
-                element={<MorphemesOverview />}
-              />
-              <Route
-                path="morphemesOverview/:tabKey"
-                element={<MorphemesOverview />}
-              />
-              <Route path="morphemesOverview" element={<MorphemesOverview />} />
+                            <Route
+                                path="morphemesOverview/:tabKey/:recName"
+                                element={<MorphemesOverview />}
+                            />
+                            <Route
+                                path="morphemesOverview/:tabKey"
+                                element={<MorphemesOverview />}
+                            />
+                            <Route
+                                path="morphemesOverview"
+                                element={<MorphemesOverview />}
+                            />
 
-              <Route path="morphemeEdit/:mrpId" element={<MorphemeEdit />} />
-              <Route path="morphemeEdit" element={<MorphemeEdit />} />
+                            <Route
+                                path="morphemeEdit/:mrpId"
+                                element={<MorphemeEdit />}
+                            />
+                            <Route
+                                path="morphemeEdit"
+                                element={<MorphemeEdit />}
+                            />
 
-              <Route
-                path="phoneticsTypesOverview/:tabKey/:recName"
-                element={<PhoneticsTypesOverview />}
-              />
+                            <Route
+                                path="phoneticsTypesOverview/:tabKey/:recName"
+                                element={<PhoneticsTypesOverview />}
+                            />
 
-              <Route
-                path="phoneticsTypesOverview/:tabKey"
-                element={<PhoneticsTypesOverview />}
-              />
+                            <Route
+                                path="phoneticsTypesOverview/:tabKey"
+                                element={<PhoneticsTypesOverview />}
+                            />
 
-              <Route
-                path="phoneticsTypesOverview"
-                element={<PhoneticsTypesOverview />}
-              />
-              <Route
-                path="phoneticsTypeEdit/:phtId"
-                element={<PhoneticsTypeEdit />}
-              />
-              <Route path="phoneticsTypeEdit" element={<PhoneticsTypeEdit />} />
-              <Route
-                path="phoneticsOptionEdit/:phoId"
-                element={<PhoneticsOptionEdit />}
-              />
-              <Route
-                path="phoneticsOptionEdit"
-                element={<PhoneticsOptionEdit />}
-              />
+                            <Route
+                                path="phoneticsTypesOverview"
+                                element={<PhoneticsTypesOverview />}
+                            />
+                            <Route
+                                path="phoneticsTypeEdit/:phtId"
+                                element={<PhoneticsTypeEdit />}
+                            />
+                            <Route
+                                path="phoneticsTypeEdit"
+                                element={<PhoneticsTypeEdit />}
+                            />
+                            <Route
+                                path="phoneticsOptionEdit/:phoId"
+                                element={<PhoneticsOptionEdit />}
+                            />
+                            <Route
+                                path="phoneticsOptionEdit"
+                                element={<PhoneticsOptionEdit />}
+                            />
 
-              <Route
-                path="nounParadigmsOverview/:tabKey/:recName"
-                element={<NounParadigmsOverview />}
-              />
-              <Route
-                path="nounParadigmsOverview/:tabKey"
-                element={<NounParadigmsOverview />}
-              />
-              <Route
-                path="nounParadigmsOverview"
-                element={<NounParadigmsOverview />}
-              />
-              <Route
-                path="nounParadigmFormulas/:paradigmId/:formulaId"
-                element={<NounParadigmFormulas />}
-              />
-              <Route
-                path="nounParadigmFormulas/:paradigmId"
-                element={<NounParadigmFormulas />}
-              />
-              <Route
-                path="nounParadigmFormulas"
-                element={<NounParadigmFormulas />}
-              />
-              <Route
-                path="nounParadigmFormulaEdit/:formulaId"
-                element={<NounParadigmFormulaEdit />}
-              />
-              <Route
-                path="nounParadigmFormulaEdit"
-                element={<NounParadigmFormulaEdit />}
-              />
+                            <Route
+                                path="nounParadigmsOverview/:tabKey/:recName"
+                                element={<NounParadigmsOverview />}
+                            />
+                            <Route
+                                path="nounParadigmsOverview/:tabKey"
+                                element={<NounParadigmsOverview />}
+                            />
+                            <Route
+                                path="nounParadigmsOverview"
+                                element={<NounParadigmsOverview />}
+                            />
+                            <Route
+                                path="nounParadigmFormulas/:paradigmId/:formulaId"
+                                element={<NounParadigmFormulas />}
+                            />
+                            <Route
+                                path="nounParadigmFormulas/:paradigmId"
+                                element={<NounParadigmFormulas />}
+                            />
+                            <Route
+                                path="nounParadigmFormulas"
+                                element={<NounParadigmFormulas />}
+                            />
+                            <Route
+                                path="nounParadigmFormulaEdit/:formulaId"
+                                element={<NounParadigmFormulaEdit />}
+                            />
+                            <Route
+                                path="nounParadigmFormulaEdit"
+                                element={<NounParadigmFormulaEdit />}
+                            />
 
-              <Route
-                path="verbRowParadigmsOverview/:tabKey/:recName"
-                element={<VerbRowParadigmsOverview />}
-              />
-              <Route
-                path="verbRowParadigmsOverview/:tabKey"
-                element={<VerbRowParadigmsOverview />}
-              />
-              <Route
-                path="verbRowParadigmsOverview"
-                element={<VerbRowParadigmsOverview />}
-              />
+                            <Route
+                                path="verbRowParadigmsOverview/:tabKey/:recName"
+                                element={<VerbRowParadigmsOverview />}
+                            />
+                            <Route
+                                path="verbRowParadigmsOverview/:tabKey"
+                                element={<VerbRowParadigmsOverview />}
+                            />
+                            <Route
+                                path="verbRowParadigmsOverview"
+                                element={<VerbRowParadigmsOverview />}
+                            />
 
-              <Route
-                path="verbRowParadigmFormulas/:paradigmId/:formulaId"
-                element={<VerbRowParadigmFormulas />}
-              />
-              <Route
-                path="verbRowParadigmFormulas/:paradigmId"
-                element={<VerbRowParadigmFormulas />}
-              />
-              <Route
-                path="verbRowParadigmFormulas"
-                element={<VerbRowParadigmFormulas />}
-              />
+                            <Route
+                                path="verbRowParadigmFormulas/:paradigmId/:formulaId"
+                                element={<VerbRowParadigmFormulas />}
+                            />
+                            <Route
+                                path="verbRowParadigmFormulas/:paradigmId"
+                                element={<VerbRowParadigmFormulas />}
+                            />
+                            <Route
+                                path="verbRowParadigmFormulas"
+                                element={<VerbRowParadigmFormulas />}
+                            />
 
-              <Route
-                path="verbRowParadigmFormulaEdit/:formulaId"
-                element={<VerbRowParadigmFormulaEdit />}
-              />
-              <Route
-                path="verbRowParadigmFormulaEdit"
-                element={<VerbRowParadigmFormulaEdit />}
-              />
+                            <Route
+                                path="verbRowParadigmFormulaEdit/:formulaId"
+                                element={<VerbRowParadigmFormulaEdit />}
+                            />
+                            <Route
+                                path="verbRowParadigmFormulaEdit"
+                                element={<VerbRowParadigmFormulaEdit />}
+                            />
 
-              <Route
-                path="verbPersonMarkersOverview/:tabKey/:recName"
-                element={<VerbPersonMarkersOverview />}
-              />
-              <Route
-                path="verbPersonMarkersOverview/:tabKey"
-                element={<VerbPersonMarkersOverview />}
-              />
-              <Route
-                path="verbPersonMarkersOverview"
-                element={<VerbPersonMarkersOverview />}
-              />
+                            <Route
+                                path="verbPersonMarkersOverview/:tabKey/:recName"
+                                element={<VerbPersonMarkersOverview />}
+                            />
+                            <Route
+                                path="verbPersonMarkersOverview/:tabKey"
+                                element={<VerbPersonMarkersOverview />}
+                            />
+                            <Route
+                                path="verbPersonMarkersOverview"
+                                element={<VerbPersonMarkersOverview />}
+                            />
 
-              <Route
-                path="verbPersonMarkerFormulas/:paradigmId/:formulaId"
-                element={<VerbPersonMarkerFormulas />}
-              />
-              <Route
-                path="verbPersonMarkerFormulas/:paradigmId"
-                element={<VerbPersonMarkerFormulas />}
-              />
-              <Route
-                path="verbPersonMarkerFormulas"
-                element={<VerbPersonMarkerFormulas />}
-              />
+                            <Route
+                                path="verbPersonMarkerFormulas/:paradigmId/:formulaId"
+                                element={<VerbPersonMarkerFormulas />}
+                            />
+                            <Route
+                                path="verbPersonMarkerFormulas/:paradigmId"
+                                element={<VerbPersonMarkerFormulas />}
+                            />
+                            <Route
+                                path="verbPersonMarkerFormulas"
+                                element={<VerbPersonMarkerFormulas />}
+                            />
 
-              <Route
-                path="verbPersonMarkerFormulaEdit/:formulaId"
-                element={<VerbPersonMarkerFormulaEdit />}
-              />
-              <Route
-                path="verbPersonMarkerFormulaEdit"
-                element={<VerbPersonMarkerFormulaEdit />}
-              />
+                            <Route
+                                path="verbPersonMarkerFormulaEdit/:formulaId"
+                                element={<VerbPersonMarkerFormulaEdit />}
+                            />
+                            <Route
+                                path="verbPersonMarkerFormulaEdit"
+                                element={<VerbPersonMarkerFormulaEdit />}
+                            />
 
-              <Route
-                path="ActantCombinationsReCounter"
-                element={<ActantCombinationsReCounter />}
-              />
+                            <Route
+                                path="ActantCombinationsReCounter"
+                                element={<ActantCombinationsReCounter />}
+                            />
 
-              <Route
-                path="CreateAfterDominantPersonMarkers"
-                element={<CreateAfterDominantPersonMarkers />}
-              />
+                            <Route
+                                path="CreateAfterDominantPersonMarkers"
+                                element={<CreateAfterDominantPersonMarkers />}
+                            />
 
-              <Route
-                path="CreateVerbPersonMarkerCombinations"
-                element={<CreateVerbPersonMarkerCombinations />}
-              />
+                            <Route
+                                path="CreateVerbPersonMarkerCombinations"
+                                element={<CreateVerbPersonMarkerCombinations />}
+                            />
 
-              <Route
-                path="CreateForRecountVerbPersonMarkers"
-                element={<CreateForRecountVerbPersonMarkers />}
-              />
-              <Route
-                path="CreateVerbPersonMarkerCombinationFormulaDetails"
-                element={<CreateVerbPersonMarkerCombinationFormulaDetails />}
-              />
+                            <Route
+                                path="CreateForRecountVerbPersonMarkers"
+                                element={<CreateForRecountVerbPersonMarkers />}
+                            />
+                            <Route
+                                path="CreateVerbPersonMarkerCombinationFormulaDetails"
+                                element={
+                                    <CreateVerbPersonMarkerCombinationFormulaDetails />
+                                }
+                            />
 
-              <Route path="issues" element={<Issues />} />
+                            <Route path="issues" element={<Issues />} />
 
-              <Route path="issuework/:issueId" element={<IssueWork />} />
+                            <Route
+                                path="issuework/:issueId"
+                                element={<IssueWork />}
+                            />
 
-              <Route path="recountsDashboard" element={<RecountsDashboard />} />
+                            <Route
+                                path="recountsDashboard"
+                                element={<RecountsDashboard />}
+                            />
 
-              {/* Project AppRoutes finish */}
+                            {/* Project AppRoutes finish */}
 
-              {/* 👇️ only match this when no other routes match */}
-              <Route path="*" element={<PageNotFound />} />
-            </Route>
-          </Route>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="registration" element={<RegistrationPage />} />
-        </Routes>
-        {/* </div> */}
-      </QueryParamProvider>
-    </BrowserRouter>
-  );
+                            {/* 👇️ only match this when no other routes match */}
+                            <Route path="*" element={<PageNotFound />} />
+                        </Route>
+                    </Route>
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="registration" element={<RegistrationPage />} />
+                </Routes>
+                {/* </div> */}
+            </QueryParamProvider>
+        </BrowserRouter>
+    );
 };
 
 export default App;

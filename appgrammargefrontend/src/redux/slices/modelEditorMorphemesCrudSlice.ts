@@ -1,31 +1,31 @@
 //modelEditorMorphemesCrudSlice.ts
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { MorphemeEditFormData } from "../../modelOverview/MorphemeEditFormData";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { MorphemeEditFormData } from "../../modelOverview/MorphemeEditFormData";
 
 export interface IMorphemesCrudState {
-  morphemesLoading: boolean;
-  morphemeForEdit: MorphemeEditFormData | null;
+    morphemesLoading: boolean;
+    morphemeForEdit: MorphemeEditFormData | null;
 }
 
 const initialState: IMorphemesCrudState = {
-  morphemesLoading: false,
-  morphemeForEdit: null,
+    morphemesLoading: false,
+    morphemeForEdit: null,
 };
 
 export const modelEditorMorphemesCrudSlice = createSlice({
-  initialState,
-  name: "modelEditorMorphemesCrudSlice",
-  reducers: {
-    //////////////////////////////////////
-    setMorphemeForEdit: (
-      state,
-      action: PayloadAction<MorphemeEditFormData>
-    ) => {
-      state.morphemeForEdit = action.payload;
+    initialState,
+    name: "modelEditorMorphemesCrudSlice",
+    reducers: {
+        //////////////////////////////////////
+        setMorphemeForEdit: (
+            state,
+            action: PayloadAction<MorphemeEditFormData>
+        ) => {
+            state.morphemeForEdit = action.payload;
+        },
+        //////////////////////////////////////
     },
-    //////////////////////////////////////
-  },
 });
 
 export default modelEditorMorphemesCrudSlice.reducer;

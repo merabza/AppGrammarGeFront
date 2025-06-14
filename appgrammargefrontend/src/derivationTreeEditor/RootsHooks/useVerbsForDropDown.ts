@@ -5,11 +5,11 @@ import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../appcarcass/redux/hooks";
 import { useLazyGetVerbsForDropDownQuery } from "../../redux/api/rootsApi";
 import {
-  SetVerbsForDropdown,
-  SetVerbsForDropdownloading,
-  setVerbsPayloadType,
+    SetVerbsForDropdown,
+    SetVerbsForDropdownloading,
+    type setVerbsPayloadType,
 } from "../../redux/slices/rootsSlice";
-import { VerbsByPagesResponse } from "../../redux/types/rootsTypes";
+import type { VerbsByPagesResponse } from "../../redux/types/rootsTypes";
 // import { useLazyGetBasesByPagesQuery } from "../../redux/api/rootsApi";
 // import {
 //   setBasesForDropdown,
@@ -21,34 +21,34 @@ import { VerbsByPagesResponse } from "../../redux/types/rootsTypes";
 export type fnloadVerbsForDropDown = (searchValue: string) => void;
 
 export function useVerbsForDropDown(): [fnloadVerbsForDropDown] {
-  const dispatch = useAppDispatch();
-  const rootsState = useAppSelector((state) => state.rootsState);
-  const dropdownLinesCount = 8;
+    const dispatch = useAppDispatch();
+    const rootsState = useAppSelector((state) => state.rootsState);
+    const dropdownLinesCount = 8;
 
-  const [getVerbsForDropDown] = useLazyGetVerbsForDropDownQuery();
+    const [getVerbsForDropDown] = useLazyGetVerbsForDropDownQuery();
 
-  const loadVerbsForDropDownList = useCallback(
-    async (searchValue: string) => {
-      if (rootsState.basesForDropdownloading) return;
+    const loadVerbsForDropDownList = useCallback(
+        async (searchValue: string) => {
+            if (rootsState.basesForDropdownloading) return;
 
-      dispatch(SetVerbsForDropdownloading(true));
+            dispatch(SetVerbsForDropdownloading(true));
 
-      const result = await getVerbsForDropDown({
-        searchValue,
-        dropdownLinesCount: dropdownLinesCount,
-      });
-      // console.log("result.data=", result.data);
-      const data = result.data as VerbsByPagesResponse;
-      const payload = {
-        searchValue: searchValue,
-        data: data.verbLinks,
-      } as setVerbsPayloadType;
-      dispatch(SetVerbsForDropdown(payload));
+            const result = await getVerbsForDropDown({
+                searchValue,
+                dropdownLinesCount: dropdownLinesCount,
+            });
+            // console.log("result.data=", result.data);
+            const data = result.data as VerbsByPagesResponse;
+            const payload = {
+                searchValue: searchValue,
+                data: data.verbLinks,
+            } as setVerbsPayloadType;
+            dispatch(SetVerbsForDropdown(payload));
 
-      dispatch(SetVerbsForDropdownloading(false));
-    },
-    [rootsState, dispatch, getVerbsForDropDown]
-  );
+            dispatch(SetVerbsForDropdownloading(false));
+        },
+        [rootsState, dispatch, getVerbsForDropDown]
+    );
 
-  return [loadVerbsForDropDownList];
+    return [loadVerbsForDropDownList];
 }

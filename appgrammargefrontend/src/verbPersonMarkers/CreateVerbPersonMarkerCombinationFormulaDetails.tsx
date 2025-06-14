@@ -1,14 +1,14 @@
 //CreateVerbPersonMarkerCombinationFormulaDetails.tsx
 
-import { useEffect, useMemo, useCallback, FC } from "react";
+import { useEffect, useMemo, useCallback, type FC } from "react";
 
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
-import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  InflectionBlock,
-  VerbPluralityType,
-  VerbSeries,
-  VerbType,
+import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
+import type {
+    InflectionBlock,
+    VerbPluralityType,
+    VerbSeries,
+    VerbType,
 } from "../masterData/mdTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useCheckLoadFilteredVerbPersonMarkerCombinationFormulas } from "./useCheckLoadFilteredVerbPersonMarkerCombinationFormulas";
@@ -21,255 +21,256 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
-import { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
+import type { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
 
 const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
-    useAppSelector((state) => state.masterDataState);
+    const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+        useAppSelector((state) => state.masterDataState);
 
-  const { verbPersonMarkerCombinationFormulas } = useAppSelector(
-    (state) => state.filteredState
-  );
-
-  const dataTypesState = useAppSelector((state) => state.dataTypesState);
-  const masterData = useAppSelector((state) => state.masterDataState);
-
-  const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-
-  // const morphemeRanges = mdLookupRepo.morphemeRanges;
-  // const morphemesQuery = mdLookupRepo.morphemesQuery;
-  const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
-  //  const inflectionTypes = mdLookupRepo.inflectionTypes;
-  // const morphemeRangesByInflectionBlocks =
-  //   mdLookupRepo.morphemeRangesByInflectionBlocks;
-  const verbPluralityTypes =
-    mdataRepo.verbPluralityTypes as VerbPluralityType[];
-  const verbPersonMarkerParadigms =
-    mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
-  const verbTypes = mdataRepo.verbTypes as VerbType[];
-  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
-
-  //console.log("CreateVerbPersonMarkerCombinationFormulaDetails props=", props);
-
-  const menLinkKey = useLocation().pathname.split("/")[1];
-
-  // const tableNamesForLookup = useMemo(
-  //   () => [
-  //     // "morphemeRanges",
-  //     // "morphemesQuery",
-  //     //"inflectionBlocks",
-  //     //"inflectionTypes",
-  //     //"morphemeRangesByInflectionBlocks",
-  //   ],
-  //   []
-  // );
-
-  const tableNamesForLoad = useMemo(
-    () => [
-      "inflectionBlocks",
-      "verbPluralityTypes",
-      "verbPersonMarkerParadigms",
-      "verbTypes",
-      "verbSeries",
-    ],
-    []
-  );
-
-  const { isMenuLoading, flatMenu } = useAppSelector(
-    (state) => state.navMenuState
-  );
-
-  const [checkLoadMdTables] = useCheckLoadMdTables();
-
-  const isValidPage = useCallback(() => {
-    if (!flatMenu) {
-      return false;
-    }
-    return flatMenu.find((f) => f.menLinkKey === menLinkKey);
-  }, [flatMenu, menLinkKey]);
-
-  useEffect(() => {
-    const menuItem = isValidPage();
-    if (!menuItem) return;
-
-    checkLoadMdTables(tableNamesForLoad);
-  }, [isMenuLoading, flatMenu, tableNamesForLoad]);
-
-  const [
-    checkLoadFilteredVerbPersonMarkerCombinationFormulas,
-    LoadingFilteredVerbPersonMarkerCombinationFormulas,
-  ] = useCheckLoadFilteredVerbPersonMarkerCombinationFormulas();
-
-  useEffect(() => {
-    checkLoadFilteredVerbPersonMarkerCombinationFormulas(1, 1, 1, 1);
-  }, []);
-
-  const { tabKey, recId, recName } = useParams<string>();
-
-  const recIdNumber = NzInt(recId);
-
-  const [curscrollTo, backLigth] = useScroller<{
-    tabKey: string | undefined;
-    recId: number;
-    recName: string | undefined;
-  }>({
-    tabKey,
-    recId: recIdNumber,
-    recName,
-  });
-
-  function funSaveReturnPageName() {
-    dispatch(saveReturnPageName(menLinkKey));
-  }
-
-  // const [frm, changeField, , , , ,] = useForman<
-  //   typeof createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema,
-  //   CreateVerbPersonMarkerCombinationFormulaDetailsFormData
-  // >(createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema);
-
-  if (
-    mdWorkingOnLoad ||
-    LoadingFilteredVerbPersonMarkerCombinationFormulas ||
-    isMenuLoading ||
-    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
-  ) {
-    return <Loading />;
-  }
-
-  // console.log(
-  //   "CreateVerbPersonMarkerCombinationFormulaDetails Loaded Data => ",
-  //   {
-  //     curscrollTo,
-  //     // morphemeRanges,
-  //     // morphemesQuery,
-  //     inflectionBlocks,
-  //     //inflectionTypes,
-  //     //morphemeRangesByInflectionBlocks,
-  //     verbPluralityTypes,
-  //     verbPersonMarkerParadigms,
-  //     verbTypes,
-  //     verbSeries,
-  //     verbPersonMarkerCombinationFormulas,
-  //     dataTypes,
-  //   }
-  // );
-
-  if (
-    !curscrollTo ||
-    // !morphemeRanges ||
-    // !morphemesQuery ||
-    !inflectionBlocks ||
-    //!inflectionTypes ||
-    //!morphemeRangesByInflectionBlocks ||
-    !verbPluralityTypes ||
-    !verbPersonMarkerParadigms ||
-    !verbTypes ||
-    !verbSeries ||
-    !verbPersonMarkerCombinationFormulas ||
-    !dataTypes
-  ) {
-    return (
-      <div>
-        <h5>ჩატვირთვის პრობლემა</h5>
-        <AlertMessages alertKind={EAlertKind.ApiLoad} />
-      </div>
+    const { verbPersonMarkerCombinationFormulas } = useAppSelector(
+        (state) => state.filteredState
     );
-  }
 
-  // const inflectionBlock = inflectionBlocks.find(
-  //   (f) => f.inbKey === "PersonMarkersBlock"
-  // );
-  // if (!inflectionBlock) {
-  //   return <h5>არასწორი ფლექსიის ბლოკი</h5>;
-  // }
+    const dataTypesState = useAppSelector((state) => state.dataTypesState);
+    const masterData = useAppSelector((state) => state.masterDataState);
 
-  // const inflectionType = inflectionTypes.find(
-  //   (f) => f.id === inflectionBlock.inflectionTypeId
-  // );
-  // if (!inflectionType) {
-  //   return <h5>არასწორი ფლექსიის ტიპი</h5>;
-  // }
+    const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  // const MorphemeRangeIdsByIT = morphemeRangesByInflectionBlocks
-  //   .filter((f) => f.inflectionBlockId === inflectionBlock.inbId)
-  //   .map((m) => m.morphemeRangeId);
+    // const morphemeRanges = mdLookupRepo.morphemeRanges;
+    // const morphemesQuery = mdLookupRepo.morphemesQuery;
+    const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+    //  const inflectionTypes = mdLookupRepo.inflectionTypes;
+    // const morphemeRangesByInflectionBlocks =
+    //   mdLookupRepo.morphemeRangesByInflectionBlocks;
+    const verbPluralityTypes =
+        mdataRepo.verbPluralityTypes as VerbPluralityType[];
+    const verbPersonMarkerParadigms =
+        mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+    const verbTypes = mdataRepo.verbTypes as VerbType[];
+    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
 
-  // const rangesInGroup = morphemeRanges
-  //   .filter(
-  //     (f) =>
-  //       f.morphemeGroupId === inflectionType.morphemeGroupId &&
-  //       MorphemeRangeIdsByIT.includes(f.mrId)
-  //   )
-  //   .sort((a, b) => a.mrPosition - b.mrPosition);
+    //console.log("CreateVerbPersonMarkerCombinationFormulaDetails props=", props);
 
-  // function onChangeFilterValue(fieldName: string, newValue: number) {
-  //   changeField(fieldName, newValue);
+    const menLinkKey = useLocation().pathname.split("/")[1];
 
-  //   const tfrm = JSON.parse(
-  //     JSON.stringify(frm)
-  //   ) as CreateVerbPersonMarkerCombinationFormulaDetailsFormData;
+    // const tableNamesForLookup = useMemo(
+    //   () => [
+    //     // "morphemeRanges",
+    //     // "morphemesQuery",
+    //     //"inflectionBlocks",
+    //     //"inflectionTypes",
+    //     //"morphemeRangesByInflectionBlocks",
+    //   ],
+    //   []
+    // );
 
-  //   tfrm[fieldName as keyof typeof tfrm] = newValue;
-  //   checkLoadFilteredVerbPersonMarkerCombinationFormulas(
-  //     frm.verbPluralityTypeId,
-  //     frm.verbPersonMarkerParadigmId,
-  //     frm.verbTypeId,
-  //     frm.verbSeriesId
-  //   );
-  // }
+    const tableNamesForLoad = useMemo(
+        () => [
+            "inflectionBlocks",
+            "verbPluralityTypes",
+            "verbPersonMarkerParadigms",
+            "verbTypes",
+            "verbSeries",
+        ],
+        []
+    );
 
-  const listEditorTableNames = [
-    "verbPluralityTypes",
-    "verbPersonMarkerParadigms",
-    "verbTypes",
-    "verbSeries",
-  ];
+    const { isMenuLoading, flatMenu } = useAppSelector(
+        (state) => state.navMenuState
+    );
 
-  return (
-    <div>
-      <h3>პირის ნიშნების ფორმულების დათვლის საბოლოო ფაზა</h3>
-      <h4>ტერმინები</h4>
-      <p>
-        <strong>ზმნის მრავლობითობის ტიპი</strong> - ზმნის მრავლობითობის ტიპის
-        განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>ზმნის ცალი პირის ნიშნების პარადიგმა</strong> - ზმნის ცალი პირის
-        ნიშნების პარადიგმის განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>ზმნის ტიპი</strong> - ზმნის ტიპის განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>სერია</strong> - სერიის განმარტება (გასაკეთებელია).
-      </p>
+    const [checkLoadMdTables] = useCheckLoadMdTables();
 
-      {listEditorTableNames.map((tn) => {
-        const dataType = dataTypes.find((f) => f.dtTable === tn);
-        if (dataType) {
-          return (
-            <NameListEditor
-              key={dataType.dtName}
-              dataType={dataType}
-              tableForEdit={masterData.mdataRepo[tn]}
-              curscrollTo={curscrollTo}
-              backLigth={backLigth}
-              saveReturnPageName={funSaveReturnPageName}
-            />
-          );
+    const isValidPage = useCallback(() => {
+        if (!flatMenu) {
+            return false;
         }
-        return <></>;
-      })}
+        return flatMenu.find((f) => f.menLinkKey === menLinkKey);
+    }, [flatMenu, menLinkKey]);
 
-      <MdGridView tableName="verbPersonMarkerCombinations" readOnly />
-      <div>
-        წინა ვერსიაში ამ ცხრილში დამატებით იყო კიდევ ფორმულის სვეტი, რომელიც
-        დასამატებელი იქნება
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        const menuItem = isValidPage();
+        if (!menuItem) return;
+
+        checkLoadMdTables(tableNamesForLoad);
+    }, [isMenuLoading, flatMenu, tableNamesForLoad]);
+
+    const [
+        checkLoadFilteredVerbPersonMarkerCombinationFormulas,
+        LoadingFilteredVerbPersonMarkerCombinationFormulas,
+    ] = useCheckLoadFilteredVerbPersonMarkerCombinationFormulas();
+
+    useEffect(() => {
+        checkLoadFilteredVerbPersonMarkerCombinationFormulas(1, 1, 1, 1);
+    }, []);
+
+    const { tabKey, recId, recName } = useParams<string>();
+
+    const recIdNumber = NzInt(recId);
+
+    const [curscrollTo, backLigth] = useScroller<{
+        tabKey: string | undefined;
+        recId: number;
+        recName: string | undefined;
+    }>({
+        tabKey,
+        recId: recIdNumber,
+        recName,
+    });
+
+    function funSaveReturnPageName() {
+        dispatch(saveReturnPageName(menLinkKey));
+    }
+
+    // const [frm, changeField, , , , ,] = useForman<
+    //   typeof createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema,
+    //   CreateVerbPersonMarkerCombinationFormulaDetailsFormData
+    // >(createVerbPersonMarkerCombinationFormulaDetailsFormDataSchema);
+
+    if (
+        mdWorkingOnLoad ||
+        LoadingFilteredVerbPersonMarkerCombinationFormulas ||
+        isMenuLoading ||
+        Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+    ) {
+        return <Loading />;
+    }
+
+    // console.log(
+    //   "CreateVerbPersonMarkerCombinationFormulaDetails Loaded Data => ",
+    //   {
+    //     curscrollTo,
+    //     // morphemeRanges,
+    //     // morphemesQuery,
+    //     inflectionBlocks,
+    //     //inflectionTypes,
+    //     //morphemeRangesByInflectionBlocks,
+    //     verbPluralityTypes,
+    //     verbPersonMarkerParadigms,
+    //     verbTypes,
+    //     verbSeries,
+    //     verbPersonMarkerCombinationFormulas,
+    //     dataTypes,
+    //   }
+    // );
+
+    if (
+        !curscrollTo ||
+        // !morphemeRanges ||
+        // !morphemesQuery ||
+        !inflectionBlocks ||
+        //!inflectionTypes ||
+        //!morphemeRangesByInflectionBlocks ||
+        !verbPluralityTypes ||
+        !verbPersonMarkerParadigms ||
+        !verbTypes ||
+        !verbSeries ||
+        !verbPersonMarkerCombinationFormulas ||
+        !dataTypes
+    ) {
+        return (
+            <div>
+                <h5>ჩატვირთვის პრობლემა</h5>
+                <AlertMessages alertKind={EAlertKind.ApiLoad} />
+            </div>
+        );
+    }
+
+    // const inflectionBlock = inflectionBlocks.find(
+    //   (f) => f.inbKey === "PersonMarkersBlock"
+    // );
+    // if (!inflectionBlock) {
+    //   return <h5>არასწორი ფლექსიის ბლოკი</h5>;
+    // }
+
+    // const inflectionType = inflectionTypes.find(
+    //   (f) => f.id === inflectionBlock.inflectionTypeId
+    // );
+    // if (!inflectionType) {
+    //   return <h5>არასწორი ფლექსიის ტიპი</h5>;
+    // }
+
+    // const MorphemeRangeIdsByIT = morphemeRangesByInflectionBlocks
+    //   .filter((f) => f.inflectionBlockId === inflectionBlock.inbId)
+    //   .map((m) => m.morphemeRangeId);
+
+    // const rangesInGroup = morphemeRanges
+    //   .filter(
+    //     (f) =>
+    //       f.morphemeGroupId === inflectionType.morphemeGroupId &&
+    //       MorphemeRangeIdsByIT.includes(f.mrId)
+    //   )
+    //   .sort((a, b) => a.mrPosition - b.mrPosition);
+
+    // function onChangeFilterValue(fieldName: string, newValue: number) {
+    //   changeField(fieldName, newValue);
+
+    //   const tfrm = JSON.parse(
+    //     JSON.stringify(frm)
+    //   ) as CreateVerbPersonMarkerCombinationFormulaDetailsFormData;
+
+    //   tfrm[fieldName as keyof typeof tfrm] = newValue;
+    //   checkLoadFilteredVerbPersonMarkerCombinationFormulas(
+    //     frm.verbPluralityTypeId,
+    //     frm.verbPersonMarkerParadigmId,
+    //     frm.verbTypeId,
+    //     frm.verbSeriesId
+    //   );
+    // }
+
+    const listEditorTableNames = [
+        "verbPluralityTypes",
+        "verbPersonMarkerParadigms",
+        "verbTypes",
+        "verbSeries",
+    ];
+
+    return (
+        <div>
+            <h3>პირის ნიშნების ფორმულების დათვლის საბოლოო ფაზა</h3>
+            <h4>ტერმინები</h4>
+            <p>
+                <strong>ზმნის მრავლობითობის ტიპი</strong> - ზმნის მრავლობითობის
+                ტიპის განმარტება (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>ზმნის ცალი პირის ნიშნების პარადიგმა</strong> - ზმნის
+                ცალი პირის ნიშნების პარადიგმის განმარტება (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>ზმნის ტიპი</strong> - ზმნის ტიპის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>სერია</strong> - სერიის განმარტება (გასაკეთებელია).
+            </p>
+
+            {listEditorTableNames.map((tn) => {
+                const dataType = dataTypes.find((f) => f.dtTable === tn);
+                if (dataType) {
+                    return (
+                        <NameListEditor
+                            key={dataType.dtName}
+                            dataType={dataType}
+                            tableForEdit={masterData.mdataRepo[tn]}
+                            curscrollTo={curscrollTo}
+                            backLigth={backLigth}
+                            saveReturnPageName={funSaveReturnPageName}
+                        />
+                    );
+                }
+                return <></>;
+            })}
+
+            <MdGridView tableName="verbPersonMarkerCombinations" readOnly />
+            <div>
+                წინა ვერსიაში ამ ცხრილში დამატებით იყო კიდევ ფორმულის სვეტი,
+                რომელიც დასამატებელი იქნება
+            </div>
+        </div>
+    );
 };
 
 export default CreateVerbPersonMarkerCombinationFormulaDetails;

@@ -56,93 +56,96 @@ import { rootCrudApi } from "./api/rootCrudApi";
 import { rootsApi } from "./api/rootsApi";
 
 export const store = configureStore({
-  reducer: {
-    //reducers - carcass
-    [authenticationApi.reducerPath]: authenticationApi.reducer,
-    [dataTypesApi.reducerPath]: dataTypesApi.reducer,
-    [masterdataApi.reducerPath]: masterdataApi.reducer,
-    [rightsApi.reducerPath]: rightsApi.reducer,
-    [userRightsApi.reducerPath]: userRightsApi.reducer,
-    //reducers - project
-    [derivationCrudApi.reducerPath]: derivationCrudApi.reducer,
-    [derivationFormulasCrudApi.reducerPath]: derivationFormulasCrudApi.reducer,
-    [nounParadigmFormulasCrudApi.reducerPath]:
-      nounParadigmFormulasCrudApi.reducer,
-    [verbParadigmFormulasCrudApi.reducerPath]:
-      verbParadigmFormulasCrudApi.reducer,
-    [verbPersonMarkerFormulasCrudApi.reducerPath]:
-      verbPersonMarkerFormulasCrudApi.reducer,
-    [modelEditorMorphemesCrudApi.reducerPath]:
-      modelEditorMorphemesCrudApi.reducer,
-    [modelEditorPhoneticsTypesCrudApi.reducerPath]:
-      modelEditorPhoneticsTypesCrudApi.reducer,
-    [modelEditorPhoneticsOptionsCrudApi.reducerPath]:
-      modelEditorPhoneticsOptionsCrudApi.reducer,
-    [inflectionCrudApi.reducerPath]: inflectionCrudApi.reducer,
-    [inflectionVerbCompositionCrudApi.reducerPath]:
-      inflectionVerbCompositionCrudApi.reducer,
-    [issuesApi.reducerPath]: issuesApi.reducer,
-    [recountApi.reducerPath]: recountApi.reducer,
-    [filteredApi.reducerPath]: filteredApi.reducer,
-    [modelDataApi.reducerPath]: modelDataApi.reducer,
-    [rootCrudApi.reducerPath]: rootCrudApi.reducer,
-    [rootsApi.reducerPath]: rootsApi.reducer,
+    reducer: {
+        //reducers - carcass
+        [authenticationApi.reducerPath]: authenticationApi.reducer,
+        [dataTypesApi.reducerPath]: dataTypesApi.reducer,
+        [masterdataApi.reducerPath]: masterdataApi.reducer,
+        [rightsApi.reducerPath]: rightsApi.reducer,
+        [userRightsApi.reducerPath]: userRightsApi.reducer,
+        //reducers - project
+        [derivationCrudApi.reducerPath]: derivationCrudApi.reducer,
+        [derivationFormulasCrudApi.reducerPath]:
+            derivationFormulasCrudApi.reducer,
+        [nounParadigmFormulasCrudApi.reducerPath]:
+            nounParadigmFormulasCrudApi.reducer,
+        [verbParadigmFormulasCrudApi.reducerPath]:
+            verbParadigmFormulasCrudApi.reducer,
+        [verbPersonMarkerFormulasCrudApi.reducerPath]:
+            verbPersonMarkerFormulasCrudApi.reducer,
+        [modelEditorMorphemesCrudApi.reducerPath]:
+            modelEditorMorphemesCrudApi.reducer,
+        [modelEditorPhoneticsTypesCrudApi.reducerPath]:
+            modelEditorPhoneticsTypesCrudApi.reducer,
+        [modelEditorPhoneticsOptionsCrudApi.reducerPath]:
+            modelEditorPhoneticsOptionsCrudApi.reducer,
+        [inflectionCrudApi.reducerPath]: inflectionCrudApi.reducer,
+        [inflectionVerbCompositionCrudApi.reducerPath]:
+            inflectionVerbCompositionCrudApi.reducer,
+        [issuesApi.reducerPath]: issuesApi.reducer,
+        [recountApi.reducerPath]: recountApi.reducer,
+        [filteredApi.reducerPath]: filteredApi.reducer,
+        [modelDataApi.reducerPath]: modelDataApi.reducer,
+        [rootCrudApi.reducerPath]: rootCrudApi.reducer,
+        [rootsApi.reducerPath]: rootsApi.reducer,
 
-    //states - carcass
-    alertState: alertReducer,
-    appParametersState: appParametersReducer,
-    dataTypesState: dataTypesReducer,
-    masterDataState: masterDataReducer,
-    navMenuState: navMenuReducer,
-    rightsState: rightsReducer,
-    userState: userReducer,
-    //states - project
-    derivationCrudState: derivationCrudReducer,
-    derivationFormulasCrudState: derivationFormulasCrudReducer,
-    nounParadigmFormulasCrudState: nounParadigmFormulasCrudReducer,
-    verbParadigmFormulasCrudState: verbParadigmFormulasCrudReducer,
-    verbPersonMarkerFormulasCrudState: verbPersonMarkerFormulasCrudReducer,
-    modelEditorMorphemesCrudState: modelEditorMorphemesCrudReducer,
-    modelEditorPhoneticsTypesCrudState: modelEditorPhoneticsTypesCrudReducer,
-    modelEditorPhoneticsOptionsCrudState:
-      modelEditorPhoneticsOptionsCrudReducer,
-    inflectionCrudState: inflectionCrudReducer,
-    inflectionVerbCompositionCrudState: inflectionVerbCompositionCrudReducer,
-    issuesState: issuesReducer,
-    // recountState: recountReducer,
-    filteredState: filteredReducer,
-    modelDataState: modelDataReducer,
-    rootCrudState: rootCrudReducer,
-    rootsState: rootsReducer,
-  },
-  devTools: process.env.NODE_ENV === "development",
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat([
-      rtkQueryErrorLogger,
-      //middlewares - carcass
-      authenticationApi.middleware,
-      dataTypesApi.middleware,
-      masterdataApi.middleware,
-      rightsApi.middleware,
-      userRightsApi.middleware,
-      //middlewares - project
-      derivationCrudApi.middleware,
-      derivationFormulasCrudApi.middleware,
-      nounParadigmFormulasCrudApi.middleware,
-      verbParadigmFormulasCrudApi.middleware,
-      verbPersonMarkerFormulasCrudApi.middleware,
-      modelEditorMorphemesCrudApi.middleware,
-      modelEditorPhoneticsTypesCrudApi.middleware,
-      modelEditorPhoneticsOptionsCrudApi.middleware,
-      inflectionCrudApi.middleware,
-      inflectionVerbCompositionCrudApi.middleware,
-      issuesApi.middleware,
-      recountApi.middleware,
-      filteredApi.middleware,
-      modelDataApi.middleware,
-      rootCrudApi.middleware,
-      rootsApi.middleware,
-    ]),
+        //states - carcass
+        alertState: alertReducer,
+        appParametersState: appParametersReducer,
+        dataTypesState: dataTypesReducer,
+        masterDataState: masterDataReducer,
+        navMenuState: navMenuReducer,
+        rightsState: rightsReducer,
+        userState: userReducer,
+        //states - project
+        derivationCrudState: derivationCrudReducer,
+        derivationFormulasCrudState: derivationFormulasCrudReducer,
+        nounParadigmFormulasCrudState: nounParadigmFormulasCrudReducer,
+        verbParadigmFormulasCrudState: verbParadigmFormulasCrudReducer,
+        verbPersonMarkerFormulasCrudState: verbPersonMarkerFormulasCrudReducer,
+        modelEditorMorphemesCrudState: modelEditorMorphemesCrudReducer,
+        modelEditorPhoneticsTypesCrudState:
+            modelEditorPhoneticsTypesCrudReducer,
+        modelEditorPhoneticsOptionsCrudState:
+            modelEditorPhoneticsOptionsCrudReducer,
+        inflectionCrudState: inflectionCrudReducer,
+        inflectionVerbCompositionCrudState:
+            inflectionVerbCompositionCrudReducer,
+        issuesState: issuesReducer,
+        // recountState: recountReducer,
+        filteredState: filteredReducer,
+        modelDataState: modelDataReducer,
+        rootCrudState: rootCrudReducer,
+        rootsState: rootsReducer,
+    },
+    devTools: import.meta.env.NODE_ENV === "development",
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({ serializableCheck: false }).concat([
+            rtkQueryErrorLogger,
+            //middlewares - carcass
+            authenticationApi.middleware,
+            dataTypesApi.middleware,
+            masterdataApi.middleware,
+            rightsApi.middleware,
+            userRightsApi.middleware,
+            //middlewares - project
+            derivationCrudApi.middleware,
+            derivationFormulasCrudApi.middleware,
+            nounParadigmFormulasCrudApi.middleware,
+            verbParadigmFormulasCrudApi.middleware,
+            verbPersonMarkerFormulasCrudApi.middleware,
+            modelEditorMorphemesCrudApi.middleware,
+            modelEditorPhoneticsTypesCrudApi.middleware,
+            modelEditorPhoneticsOptionsCrudApi.middleware,
+            inflectionCrudApi.middleware,
+            inflectionVerbCompositionCrudApi.middleware,
+            issuesApi.middleware,
+            recountApi.middleware,
+            filteredApi.middleware,
+            modelDataApi.middleware,
+            rootCrudApi.middleware,
+            rootsApi.middleware,
+        ]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

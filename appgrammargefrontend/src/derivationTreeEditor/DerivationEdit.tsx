@@ -1,6 +1,6 @@
 //DerivationEdit.tsx
 
-import { useEffect, useState, useCallback, useMemo, FC } from "react";
+import { useEffect, useState, useCallback, useMemo, type FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Row, Col } from "react-bootstrap";
 
@@ -8,8 +8,8 @@ import StatusConfirmRejectPart from "./StatusConfirmRejectPart";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useCheckLoadDerivationFormulas } from "../modelOverview/formulasHooks/useCheckLoadDerivationFormulas";
 import {
-    DerivationBranchData,
-    DerivationPredecessorModel,
+    type DerivationBranchData,
+    type DerivationPredecessorModel,
     derivationBranchDataSchema,
 } from "./TypesAndSchemas/DerivationBranchDataTypeAndSchema";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
@@ -19,16 +19,13 @@ import {
 } from "../redux/slices/rootsSlice";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
 import { useClearRootsByDerivation } from "./derivationCrudHooks/useClearRootsByDerivation";
-import {
-    DerivationFormulaQueryModel,
+import type {
     DerivationType,
     Morpheme,
     MorphemeGroup,
     MorphemeRange,
     MorphemeRangeByDerivationType,
     PhoneticsChangeQueryModel,
-    PhoneticsType,
-    classifierModel,
 } from "../masterData/mdTypes";
 import {
     clearAllAlerts,
@@ -51,12 +48,12 @@ import BasesAndFreeMorphemes from "./BasesAndFreeMorphemes";
 import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons";
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useAlert } from "../appcarcass/hooks/useAlert";
-import { Err } from "../appcarcass/redux/types/errorTypes";
+import type { Err } from "../appcarcass/redux/types/errorTypes";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
 import { isAllowEditAndDelete } from "./dteFunctions";
 import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
-import { ILookup } from "../appcarcass/redux/types/masterdataTypes";
+import type { ILookup } from "../appcarcass/redux/types/masterdataTypes";
 import MultiCombEditor from "../appcarcass/editorParts/MultiCombEditor";
 
 const DerivationEdit: FC = () => {

@@ -7,51 +7,58 @@ import { useConfirmRejectInflectionChangeMutation } from "../../redux/api/inflec
 import { funAfterSaveInflection } from "./inflectionCommonFunctionsModule";
 
 export type fnConfirmRejectInflection = (
-  infId: number | undefined,
-  dbrId: number | undefined,
-  rootId: number | undefined,
-  confirm: boolean,
-  withAllDescendants: boolean
+    infId: number | undefined,
+    dbrId: number | undefined,
+    rootId: number | undefined,
+    confirm: boolean,
+    withAllDescendants: boolean
 ) => void;
 
 export function useConfirmRejectInflection(): [
-  fnConfirmRejectInflection,
-  boolean,
-  boolean,
-  () => void
+    fnConfirmRejectInflection,
+    boolean,
+    boolean,
+    () => void
 ] {
-  const { rootsRepo } = useAppSelector((state) => state.rootsState);
-  const navigate = useNavigate();
-  const [
-    ConfirmRejectInflection,
-    {
-      isLoading: workingOnConfirmRejectInflection,
-      isError: confirmRejectFailure,
-      reset,
-    },
-  ] = useConfirmRejectInflectionChangeMutation();
+    const { rootsRepo } = useAppSelector((state) => state.rootsState);
+    const navigate = useNavigate();
+    const [
+        ConfirmRejectInflection,
+        {
+            isLoading: workingOnConfirmRejectInflection,
+            isError: confirmRejectFailure,
+            reset,
+        },
+    ] = useConfirmRejectInflectionChangeMutation();
 
-  const confirmRejectInflection = useCallback(
-    async (
-      infId: number | undefined,
-      dbrId: number | undefined,
-      rootId: number | undefined,
-      confirm: boolean,
-      withAllDescendants: boolean
-    ) => {
-      if (infId) {
-        ConfirmRejectInflection({ infId, confirm, withAllDescendants });
+    const confirmRejectInflection = useCallback(
+        async (
+            infId: number | undefined,
+            dbrId: number | undefined,
+            rootId: number | undefined,
+            confirm: boolean,
+            withAllDescendants: boolean
+        ) => {
+            if (infId) {
+                ConfirmRejectInflection({ infId, confirm, withAllDescendants });
 
-        funAfterSaveInflection(rootsRepo, rootId, dbrId, infId, null, navigate);
-      }
-    },
-    [rootsRepo]
-  );
+                funAfterSaveInflection(
+                    rootsRepo,
+                    rootId,
+                    dbrId,
+                    infId,
+                    null,
+                    navigate
+                );
+            }
+        },
+        [rootsRepo]
+    );
 
-  return [
-    confirmRejectInflection,
-    workingOnConfirmRejectInflection,
-    confirmRejectFailure,
-    reset,
-  ];
+    return [
+        confirmRejectInflection,
+        workingOnConfirmRejectInflection,
+        confirmRejectFailure,
+        reset,
+    ];
 }

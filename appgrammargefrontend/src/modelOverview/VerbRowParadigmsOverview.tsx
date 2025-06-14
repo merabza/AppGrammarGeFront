@@ -1,15 +1,15 @@
 //VerbRowParadigmsOverview.tsx
 
-import { useEffect, useMemo, useCallback, FC } from "react";
+import { useEffect, useMemo, useCallback, type FC } from "react";
 import ParadigmListEditor from "./ParadigmListEditor";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
-import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  ParadigmNameModel,
-  VerbRow,
-  VerbSeries,
-  VerbTransition,
-  VerbType,
+import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
+import type {
+    ParadigmNameModel,
+    VerbRow,
+    VerbSeries,
+    VerbTransition,
+    VerbType,
 } from "../masterData/mdTypes";
 import { useLocation, useParams } from "react-router-dom";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
@@ -22,180 +22,181 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "./NameListEditor";
 
 const VerbRowParadigmsOverview: FC = () => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
-    useAppSelector((state) => state.masterDataState);
-  const dataTypesState = useAppSelector((state) => state.dataTypesState);
-  const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
+    const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+        useAppSelector((state) => state.masterDataState);
+    const dataTypesState = useAppSelector((state) => state.dataTypesState);
+    const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
-  const verbTypes = mdataRepo.verbTypes as VerbType[];
-  const verbSeries = mdataRepo.verbSeries as VerbSeries[];
-  const verbRows = mdataRepo.verbRows as VerbRow[];
-  const verbParadigmNames =
-    mdataRepo.verbParadigmNamesQuery as ParadigmNameModel[];
+    const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
+    const verbTypes = mdataRepo.verbTypes as VerbType[];
+    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
+    const verbRows = mdataRepo.verbRows as VerbRow[];
+    const verbParadigmNames =
+        mdataRepo.verbParadigmNamesQuery as ParadigmNameModel[];
 
-  //console.log("VerbRowParadigmsOverview props=", props);
+    //console.log("VerbRowParadigmsOverview props=", props);
 
-  const menLinkKey = useLocation().pathname.split("/")[1];
+    const menLinkKey = useLocation().pathname.split("/")[1];
 
-  const tableNamesForLoad = useMemo(
-    () => [
-      "verbTransitions",
-      "verbTypes",
-      "verbSeries",
-      "verbRows",
-      "verbParadigmNamesQuery",
-    ],
-    []
-  );
-
-  const [checkLoadMdTables] = useCheckLoadMdTables();
-
-  const { isMenuLoading, flatMenu } = useAppSelector(
-    (state) => state.navMenuState
-  );
-
-  const isValidPage = useCallback(() => {
-    if (!flatMenu) {
-      return false;
-    }
-    return flatMenu.find((f) => f.menLinkKey === menLinkKey);
-  }, [flatMenu, menLinkKey]);
-
-  useEffect(() => {
-    const menuItem = isValidPage();
-    if (!menuItem) return;
-
-    checkLoadMdTables(tableNamesForLoad);
-  }, [isMenuLoading, flatMenu, tableNamesForLoad]);
-
-  const { tabKey, recId, recName } = useParams<string>();
-
-  const recIdNumber = NzInt(recId);
-
-  const [curscrollTo, backLigth] = useScroller<{
-    tabKey: string | undefined;
-    recId: number;
-    recName: string | undefined;
-  }>({
-    tabKey,
-    recId: recIdNumber,
-    recName,
-  });
-
-  function funSaveReturnPageName() {
-    dispatch(saveReturnPageName(menLinkKey));
-  }
-
-  const verbParadigmsDataType = dataTypes.find(
-    (f) => f.dtTable === "verbParadigms"
-  );
-
-  if (
-    mdWorkingOnLoad ||
-    // verbRowParadigmNamesLoading ||
-    isMenuLoading ||
-    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
-  ) {
-    return <Loading />;
-  }
-
-  // console.log("VerbRowParadigmsOverview onCheckLoad ", {
-  //   verbTransitions,
-  //   verbTypes,
-  //   verbSeries,
-  //   verbRows,
-  //   verbParadigmNames,
-  //   curscrollTo,
-  //   dataTypes,
-  //   verbParadigmsDataType,
-  // });
-
-  if (
-    !verbTransitions ||
-    !verbTypes ||
-    !verbSeries ||
-    !verbRows ||
-    !verbParadigmNames ||
-    !curscrollTo ||
-    !dataTypes ||
-    !verbParadigmsDataType
-  ) {
-    return (
-      <div>
-        <h5>ჩატვირთვის პრობლემა</h5>
-        <AlertMessages alertKind={EAlertKind.ApiLoad} />
-      </div>
+    const tableNamesForLoad = useMemo(
+        () => [
+            "verbTransitions",
+            "verbTypes",
+            "verbSeries",
+            "verbRows",
+            "verbParadigmNamesQuery",
+        ],
+        []
     );
-  }
 
-  const listEditorTableNames = [
-    "verbTransitions",
-    "verbTypes",
-    "verbSeries",
-    "verbRows",
-  ];
+    const [checkLoadMdTables] = useCheckLoadMdTables();
 
-  return (
-    <div>
-      <h3>ზმნის მწკრივების პარადიგმების მიმოხილვა</h3>
-      <h4>ტერმინები</h4>
-      <p>
-        <strong>გარდამავლობა</strong> - გარდამავლობის განმარტება
-        (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>ზმნის ტიპი</strong> - ზმნის ტიპის განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>სერია</strong> - სერიის განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>მწკრივი</strong> - მწკრივის განმარტება (გასაკეთებელია).
-      </p>
-      {/* <p><strong>აქტანტების ჯგუფი</strong> - აქტანტების ჯგუფის განმარტება (გასაკეთებელია).</p>
-      <p><strong>პირის ნიშნების პარადიგმა</strong> - პირის ნიშნების პარადიგმის განმარტება (გასაკეთებელია).</p> */}
-      <p>
-        <strong>მწკრივის პარადიგმა</strong> - მწკრივის პარადიგმის განმარტება
-        (გასაკეთებელია).
-      </p>
+    const { isMenuLoading, flatMenu } = useAppSelector(
+        (state) => state.navMenuState
+    );
 
-      {listEditorTableNames.map((tn) => {
-        const dataType = dataTypes.find((f) => f.dtTable === tn);
+    const isValidPage = useCallback(() => {
+        if (!flatMenu) {
+            return false;
+        }
+        return flatMenu.find((f) => f.menLinkKey === menLinkKey);
+    }, [flatMenu, menLinkKey]);
 
-        if (!dataType)
-          return (
-            <div>
-              <h5>{tn} ჩატვირთვის პრობლემა</h5>
-              <AlertMessages alertKind={EAlertKind.ApiLoad} />
-            </div>
-          );
+    useEffect(() => {
+        const menuItem = isValidPage();
+        if (!menuItem) return;
 
+        checkLoadMdTables(tableNamesForLoad);
+    }, [isMenuLoading, flatMenu, tableNamesForLoad]);
+
+    const { tabKey, recId, recName } = useParams<string>();
+
+    const recIdNumber = NzInt(recId);
+
+    const [curscrollTo, backLigth] = useScroller<{
+        tabKey: string | undefined;
+        recId: number;
+        recName: string | undefined;
+    }>({
+        tabKey,
+        recId: recIdNumber,
+        recName,
+    });
+
+    function funSaveReturnPageName() {
+        dispatch(saveReturnPageName(menLinkKey));
+    }
+
+    const verbParadigmsDataType = dataTypes.find(
+        (f) => f.dtTable === "verbParadigms"
+    );
+
+    if (
+        mdWorkingOnLoad ||
+        // verbRowParadigmNamesLoading ||
+        isMenuLoading ||
+        Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+    ) {
+        return <Loading />;
+    }
+
+    // console.log("VerbRowParadigmsOverview onCheckLoad ", {
+    //   verbTransitions,
+    //   verbTypes,
+    //   verbSeries,
+    //   verbRows,
+    //   verbParadigmNames,
+    //   curscrollTo,
+    //   dataTypes,
+    //   verbParadigmsDataType,
+    // });
+
+    if (
+        !verbTransitions ||
+        !verbTypes ||
+        !verbSeries ||
+        !verbRows ||
+        !verbParadigmNames ||
+        !curscrollTo ||
+        !dataTypes ||
+        !verbParadigmsDataType
+    ) {
         return (
-          <NameListEditor
-            key={dataType.dtName}
-            dataType={dataType}
-            tableForEdit={mdataRepo[tn]}
-            curscrollTo={curscrollTo}
-            backLigth={backLigth}
-            saveReturnPageName={funSaveReturnPageName}
-          />
+            <div>
+                <h5>ჩატვირთვის პრობლემა</h5>
+                <AlertMessages alertKind={EAlertKind.ApiLoad} />
+            </div>
         );
-      })}
+    }
 
-      <ParadigmListEditor
-        dataType={verbParadigmsDataType}
-        paradigmNamesTable={verbParadigmNames}
-        paradigmNamesTableName={"verbParadigmNamesQuery"}
-        formulasTableName="verbRowParadigmFormulas"
-        curscrollTo={curscrollTo}
-        backLigth={backLigth}
-        saveReturnPageName={funSaveReturnPageName}
-      />
-    </div>
-  );
+    const listEditorTableNames = [
+        "verbTransitions",
+        "verbTypes",
+        "verbSeries",
+        "verbRows",
+    ];
+
+    return (
+        <div>
+            <h3>ზმნის მწკრივების პარადიგმების მიმოხილვა</h3>
+            <h4>ტერმინები</h4>
+            <p>
+                <strong>გარდამავლობა</strong> - გარდამავლობის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>ზმნის ტიპი</strong> - ზმნის ტიპის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>სერია</strong> - სერიის განმარტება (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>მწკრივი</strong> - მწკრივის განმარტება (გასაკეთებელია).
+            </p>
+            {/* <p><strong>აქტანტების ჯგუფი</strong> - აქტანტების ჯგუფის განმარტება (გასაკეთებელია).</p>
+      <p><strong>პირის ნიშნების პარადიგმა</strong> - პირის ნიშნების პარადიგმის განმარტება (გასაკეთებელია).</p> */}
+            <p>
+                <strong>მწკრივის პარადიგმა</strong> - მწკრივის პარადიგმის
+                განმარტება (გასაკეთებელია).
+            </p>
+
+            {listEditorTableNames.map((tn) => {
+                const dataType = dataTypes.find((f) => f.dtTable === tn);
+
+                if (!dataType)
+                    return (
+                        <div>
+                            <h5>{tn} ჩატვირთვის პრობლემა</h5>
+                            <AlertMessages alertKind={EAlertKind.ApiLoad} />
+                        </div>
+                    );
+
+                return (
+                    <NameListEditor
+                        key={dataType.dtName}
+                        dataType={dataType}
+                        tableForEdit={mdataRepo[tn]}
+                        curscrollTo={curscrollTo}
+                        backLigth={backLigth}
+                        saveReturnPageName={funSaveReturnPageName}
+                    />
+                );
+            })}
+
+            <ParadigmListEditor
+                dataType={verbParadigmsDataType}
+                paradigmNamesTable={verbParadigmNames}
+                paradigmNamesTableName={"verbParadigmNamesQuery"}
+                formulasTableName="verbRowParadigmFormulas"
+                curscrollTo={curscrollTo}
+                backLigth={backLigth}
+                saveReturnPageName={funSaveReturnPageName}
+            />
+        </div>
+    );
 };
 
 export default VerbRowParadigmsOverview;

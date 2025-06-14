@@ -1,186 +1,185 @@
 //VerbPersonMarkersOverview.tsx
 
-import { useEffect, useMemo, useCallback, FC } from "react";
+import { useEffect, useMemo, useCallback, type FC } from "react";
 import NameListEditor from "./NameListEditor";
 import ParadigmListEditor from "./ParadigmListEditor";
 import { useAppDispatch, useAppSelector } from "../appcarcass/redux/hooks";
-import { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-import {
-  ActantGroups,
-  ParadigmNameModel,
-  VerbNumbers,
-  VerbPersons,
-  VerbPluralityType,
+import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
+import type {
+    ActantGroups,
+    ParadigmNameModel,
+    VerbNumbers,
+    VerbPersons,
+    VerbPluralityType,
 } from "../masterData/mdTypes";
 import { useLocation, useParams } from "react-router-dom";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { NzInt } from "../appcarcass/common/myFunctions";
 import { useScroller } from "../appcarcass/hooks/useScroller";
-import {
-  saveReturnPageName,
-  setTablesForClearAfterCrudOperations,
-} from "../appcarcass/redux/slices/masterdataSlice";
+import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 
 const VerbPersonMarkersOverview: FC = () => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
-    useAppSelector((state) => state.masterDataState);
-  const dataTypesState = useAppSelector((state) => state.dataTypesState);
-  const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
+    const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
+        useAppSelector((state) => state.masterDataState);
+    const dataTypesState = useAppSelector((state) => state.dataTypesState);
+    const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-  const verbPluralityTypes =
-    mdataRepo.verbPluralityTypes as VerbPluralityType[];
-  const actantGroups = mdataRepo.actantGroups as ActantGroups[];
-  const verbPersons = mdataRepo.verbPersons as VerbPersons[];
-  const verbNumbers = mdataRepo.verbNumbers as VerbNumbers[];
-  const verbPersonMarkerParadigmNames =
-    mdataRepo.verbPersonMarkerParadigmNamesQuery as ParadigmNameModel[];
+    const verbPluralityTypes =
+        mdataRepo.verbPluralityTypes as VerbPluralityType[];
+    const actantGroups = mdataRepo.actantGroups as ActantGroups[];
+    const verbPersons = mdataRepo.verbPersons as VerbPersons[];
+    const verbNumbers = mdataRepo.verbNumbers as VerbNumbers[];
+    const verbPersonMarkerParadigmNames =
+        mdataRepo.verbPersonMarkerParadigmNamesQuery as ParadigmNameModel[];
 
-  //console.log("VerbPersonMarkersOverview props=", props);
+    //console.log("VerbPersonMarkersOverview props=", props);
 
-  const menLinkKey = useLocation().pathname.split("/")[1];
+    const menLinkKey = useLocation().pathname.split("/")[1];
 
-  const tableNamesForLoad = useMemo(
-    () => [
-      "verbPluralityTypes",
-      "actantGroups",
-      "verbPersons",
-      "verbNumbers",
-      "verbPersonMarkerParadigmNamesQuery",
-    ],
-    []
-  );
-
-  const [checkLoadMdTables] = useCheckLoadMdTables();
-
-  const { isMenuLoading, flatMenu } = useAppSelector(
-    (state) => state.navMenuState
-  );
-
-  const isValidPage = useCallback(() => {
-    if (!flatMenu) {
-      return false;
-    }
-    return flatMenu.find((f) => f.menLinkKey === menLinkKey);
-  }, [flatMenu, menLinkKey]);
-
-  useEffect(() => {
-    const menuItem = isValidPage();
-    if (!menuItem) return;
-
-    checkLoadMdTables(tableNamesForLoad);
-  }, [isMenuLoading, flatMenu, tableNamesForLoad]);
-
-  const { tabKey, recId, recName } = useParams<string>();
-
-  const recIdNumber = NzInt(recId);
-
-  const [curscrollTo, backLigth] = useScroller<{
-    tabKey: string | undefined;
-    recId: number;
-    recName: string | undefined;
-  }>({
-    tabKey,
-    recId: recIdNumber,
-    recName,
-  });
-
-  function funSaveReturnPageName() {
-    dispatch(saveReturnPageName(menLinkKey));
-  }
-
-  const verbPersonMarkerParadigmsDataType = dataTypes.find(
-    (f) => f.dtTable === "verbPersonMarkerParadigms"
-  );
-
-  if (
-    mdWorkingOnLoad ||
-    // verbPersonMarkerParadigmNamesLoading ||
-    isMenuLoading ||
-    Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
-  ) {
-    return <Loading />;
-  }
-
-  if (
-    !verbPluralityTypes ||
-    !actantGroups ||
-    !verbPersons ||
-    !verbNumbers ||
-    !verbPersonMarkerParadigmNames ||
-    !curscrollTo ||
-    !dataTypes ||
-    !verbPersonMarkerParadigmsDataType
-  ) {
-    return (
-      <div>
-        <h5>ჩატვირთვის პრობლემა</h5>
-        <AlertMessages alertKind={EAlertKind.ApiLoad} />
-      </div>
+    const tableNamesForLoad = useMemo(
+        () => [
+            "verbPluralityTypes",
+            "actantGroups",
+            "verbPersons",
+            "verbNumbers",
+            "verbPersonMarkerParadigmNamesQuery",
+        ],
+        []
     );
-  }
 
-  const listEditorTableNames = [
-    "verbPluralityTypes",
-    "actantGroups",
-    "verbPersons",
-    "verbNumbers",
-  ];
-  return (
-    <div>
-      <h3>ზმნის ცალი პირის ნიშნების პარადიგმების მიმოხილვა</h3>
-      <h4>ტერმინები</h4>
-      <p>
-        <strong>მრალობითობა</strong> - მრალობითობის განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>აქტანტების ჯგუფი</strong> - აქტანტების ჯგუფის განმარტება
-        (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>ზმნის პირი</strong> - ზმნის პირის განმარტება (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>ზმნის რიცხვი</strong> - ზმნის რიცხვის განმარტება
-        (გასაკეთებელია).
-      </p>
-      <p>
-        <strong>ცალი პირის ნიშნის პარადიგმა</strong> - ცალი პირის ნიშნის
-        პარადიგმის განმარტება (გასაკეთებელია).
-      </p>
+    const [checkLoadMdTables] = useCheckLoadMdTables();
 
-      {listEditorTableNames.map((tn) => {
-        const dataType = dataTypes.find((f) => f.dtTable === tn);
-        if (!dataType) {
-          return <div></div>;
+    const { isMenuLoading, flatMenu } = useAppSelector(
+        (state) => state.navMenuState
+    );
+
+    const isValidPage = useCallback(() => {
+        if (!flatMenu) {
+            return false;
         }
-        return (
-          <NameListEditor
-            key={dataType.dtName}
-            dataType={dataType}
-            tableForEdit={mdataRepo[tn]}
-            curscrollTo={curscrollTo}
-            backLigth={backLigth}
-            saveReturnPageName={funSaveReturnPageName}
-          />
-        );
-      })}
+        return flatMenu.find((f) => f.menLinkKey === menLinkKey);
+    }, [flatMenu, menLinkKey]);
 
-      <ParadigmListEditor
-        dataType={verbPersonMarkerParadigmsDataType}
-        paradigmNamesTable={verbPersonMarkerParadigmNames}
-        paradigmNamesTableName={"verbPersonMarkerParadigmNamesQuery"}
-        formulasTableName="verbPersonMarkerFormulas"
-        curscrollTo={curscrollTo}
-        backLigth={backLigth}
-        saveReturnPageName={funSaveReturnPageName}
-      />
-    </div>
-  );
+    useEffect(() => {
+        const menuItem = isValidPage();
+        if (!menuItem) return;
+
+        checkLoadMdTables(tableNamesForLoad);
+    }, [isMenuLoading, flatMenu, tableNamesForLoad]);
+
+    const { tabKey, recId, recName } = useParams<string>();
+
+    const recIdNumber = NzInt(recId);
+
+    const [curscrollTo, backLigth] = useScroller<{
+        tabKey: string | undefined;
+        recId: number;
+        recName: string | undefined;
+    }>({
+        tabKey,
+        recId: recIdNumber,
+        recName,
+    });
+
+    function funSaveReturnPageName() {
+        dispatch(saveReturnPageName(menLinkKey));
+    }
+
+    const verbPersonMarkerParadigmsDataType = dataTypes.find(
+        (f) => f.dtTable === "verbPersonMarkerParadigms"
+    );
+
+    if (
+        mdWorkingOnLoad ||
+        // verbPersonMarkerParadigmNamesLoading ||
+        isMenuLoading ||
+        Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
+    ) {
+        return <Loading />;
+    }
+
+    if (
+        !verbPluralityTypes ||
+        !actantGroups ||
+        !verbPersons ||
+        !verbNumbers ||
+        !verbPersonMarkerParadigmNames ||
+        !curscrollTo ||
+        !dataTypes ||
+        !verbPersonMarkerParadigmsDataType
+    ) {
+        return (
+            <div>
+                <h5>ჩატვირთვის პრობლემა</h5>
+                <AlertMessages alertKind={EAlertKind.ApiLoad} />
+            </div>
+        );
+    }
+
+    const listEditorTableNames = [
+        "verbPluralityTypes",
+        "actantGroups",
+        "verbPersons",
+        "verbNumbers",
+    ];
+    return (
+        <div>
+            <h3>ზმნის ცალი პირის ნიშნების პარადიგმების მიმოხილვა</h3>
+            <h4>ტერმინები</h4>
+            <p>
+                <strong>მრალობითობა</strong> - მრალობითობის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>აქტანტების ჯგუფი</strong> - აქტანტების ჯგუფის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>ზმნის პირი</strong> - ზმნის პირის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>ზმნის რიცხვი</strong> - ზმნის რიცხვის განმარტება
+                (გასაკეთებელია).
+            </p>
+            <p>
+                <strong>ცალი პირის ნიშნის პარადიგმა</strong> - ცალი პირის ნიშნის
+                პარადიგმის განმარტება (გასაკეთებელია).
+            </p>
+
+            {listEditorTableNames.map((tn) => {
+                const dataType = dataTypes.find((f) => f.dtTable === tn);
+                if (!dataType) {
+                    return <div></div>;
+                }
+                return (
+                    <NameListEditor
+                        key={dataType.dtName}
+                        dataType={dataType}
+                        tableForEdit={mdataRepo[tn]}
+                        curscrollTo={curscrollTo}
+                        backLigth={backLigth}
+                        saveReturnPageName={funSaveReturnPageName}
+                    />
+                );
+            })}
+
+            <ParadigmListEditor
+                dataType={verbPersonMarkerParadigmsDataType}
+                paradigmNamesTable={verbPersonMarkerParadigmNames}
+                paradigmNamesTableName={"verbPersonMarkerParadigmNamesQuery"}
+                formulasTableName="verbPersonMarkerFormulas"
+                curscrollTo={curscrollTo}
+                backLigth={backLigth}
+                saveReturnPageName={funSaveReturnPageName}
+            />
+        </div>
+    );
 };
 
 export default VerbPersonMarkersOverview;

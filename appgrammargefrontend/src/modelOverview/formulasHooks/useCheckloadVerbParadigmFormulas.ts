@@ -8,48 +8,48 @@ import { useLazyCheckLoadVerbParadigmFormulasQuery } from "../../redux/api/model
 export type fnloadCheckLoadVerbParadigmFormulas = (paradigmId: number) => void;
 
 export function useCheckLoadVerbParadigmFormulas(): [
-  fnloadCheckLoadVerbParadigmFormulas,
-  boolean
+    fnloadCheckLoadVerbParadigmFormulas,
+    boolean
 ] {
-  const modelDataState = useAppSelector((state) => state.modelDataState);
+    const modelDataState = useAppSelector((state) => state.modelDataState);
 
-  const [
-    CheckLoadVerbParadigmFormulas,
-    { isLoading: verbParadigmFormulasLoading },
-  ] = useLazyCheckLoadVerbParadigmFormulasQuery();
+    const [
+        CheckLoadVerbParadigmFormulas,
+        { isLoading: verbParadigmFormulasLoading },
+    ] = useLazyCheckLoadVerbParadigmFormulasQuery();
 
-  const checkLoadVerbParadigmFormulas = useCallback(
-    async (paradigmId: number) => {
-      // console.log(
-      //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas started verbParadigmFormulasLoading=",
-      //   verbParadigmFormulasLoading
-      // );
+    const checkLoadVerbParadigmFormulas = useCallback(
+        async (paradigmId: number) => {
+            // console.log(
+            //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas started verbParadigmFormulasLoading=",
+            //   verbParadigmFormulasLoading
+            // );
 
-      if (verbParadigmFormulasLoading) return;
+            if (verbParadigmFormulasLoading) return;
 
-      // console.log(
-      //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas verbParadigmFormulasLoading checked modelDataState.verbParadigmFormulas=",
-      //   modelDataState.verbParadigmFormulas
-      // );
+            // console.log(
+            //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas verbParadigmFormulasLoading checked modelDataState.verbParadigmFormulas=",
+            //   modelDataState.verbParadigmFormulas
+            // );
 
-      if (
-        paradigmId in modelDataState.verbParadigmFormulas &&
-        modelDataState.verbParadigmFormulas[paradigmId].length
-      )
-        return;
+            if (
+                paradigmId in modelDataState.verbParadigmFormulas &&
+                modelDataState.verbParadigmFormulas[paradigmId].length
+            )
+                return;
 
-      // console.log(
-      //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas modelDataState.verbParadigmFormulas checked"
-      // );
+            // console.log(
+            //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas modelDataState.verbParadigmFormulas checked"
+            // );
 
-      await CheckLoadVerbParadigmFormulas(paradigmId);
+            await CheckLoadVerbParadigmFormulas(paradigmId);
 
-      // console.log(
-      //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas finished"
-      // );
-    },
-    [modelDataState, verbParadigmFormulasLoading]
-  );
+            // console.log(
+            //   "useCheckLoadVerbParadigmFormulas checkLoadVerbParadigmFormulas finished"
+            // );
+        },
+        [modelDataState, verbParadigmFormulasLoading]
+    );
 
-  return [checkLoadVerbParadigmFormulas, verbParadigmFormulasLoading];
+    return [checkLoadVerbParadigmFormulas, verbParadigmFormulasLoading];
 }
