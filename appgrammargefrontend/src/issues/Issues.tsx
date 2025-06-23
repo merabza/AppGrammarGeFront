@@ -3,9 +3,7 @@
 import { useEffect, useMemo, useCallback, type FC } from "react";
 import { useAppSelector } from "../appcarcass/redux/hooks";
 import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
-// import { IssueKind, IssuePriority, IssueStatus } from "./IssueTypes";
 import { useLocation } from "react-router-dom";
-// import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import Loading from "../appcarcass/common/Loading";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
@@ -18,15 +16,16 @@ import type { IFilterSortRequest } from "../appcarcass/grid/GridViewTypes";
 import GridView from "../appcarcass/grid/GridView";
 import { useIssuesGridColumns } from "./IssuesGridColumns";
 import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
+import { ETableName } from "../masterData/tableNames";
 
 const Issues: FC = () => {
     const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
-    const issueKinds = mdLookupRepo.issueKinds;
-    const issuePriorities = mdLookupRepo.issuePriorities;
-    const issueStatuses = mdLookupRepo.issueStatuses;
+    const issueKinds = mdLookupRepo[ETableName.IssueKinds];
+    const issuePriorities = mdLookupRepo[ETableName.IssuePriorities];
+    const issueStatuses = mdLookupRepo[ETableName.IssueStatuses];
 
     const [
         getIssuesRowsData,
@@ -36,7 +35,11 @@ const Issues: FC = () => {
     const menLinkKey = useLocation().pathname.split("/")[1];
 
     const tableNamesForLoad = useMemo(
-        () => ["issueKinds", "issuePriorities", "issueStatuses"],
+        () => [
+            ETableName.IssueKinds,
+            ETableName.IssuePriorities,
+            ETableName.IssueStatuses,
+        ],
         []
     );
 

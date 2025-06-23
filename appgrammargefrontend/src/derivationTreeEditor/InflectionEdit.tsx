@@ -64,6 +64,7 @@ import AlertMessages from "../appcarcass/common/AlertMessages";
 import { isAllowEditAndDelete } from "./dteFunctions";
 import type { ILookup } from "../appcarcass/redux/types/masterdataTypes";
 import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
+import { ETableName } from "../masterData/tableNames";
 
 const InflectionEdit: FC = () => {
     const navigate = useNavigate();
@@ -89,26 +90,38 @@ const InflectionEdit: FC = () => {
 
     const { rootLoading } = useAppSelector((state) => state.rootsState);
 
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    // const pronouns = mdataRepo.pronouns as Pronoun[];
-    const classifiers = mdataRepo.classifiers as classifierModel[];
-    const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
-    const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const classifiers = mdataRepo[ETableName.Classifiers] as classifierModel[];
+    const morphemeGroups = mdataRepo[
+        ETableName.MorphemeGroups
+    ] as MorphemeGroup[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const inflectionTypes = mdataRepo[
+        ETableName.InflectionTypes
+    ] as InflectionType[];
+    const inflectionBlocks = mdataRepo[
+        ETableName.InflectionBlocks
+    ] as InflectionBlock[];
 
-    const morphemeRangesByInflectionBlocks =
-        mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
-    const phoneticsTypes = mdLookupRepo.phoneticsTypes as ILookup[];
-    const nounParadigms = mdataRepo.nounParadigms as NounParadigm[];
-    const verbParadigms = mdataRepo.verbParadigms as VerbParadigm[];
+    const morphemeRangesByInflectionBlocks = mdataRepo[
+        ETableName.MorphemeRangesByInflectionBlocks
+    ] as MorphemeRangeByInflectionBlock[];
+    const phoneticsTypes = mdLookupRepo[ETableName.PhoneticsTypes] as ILookup[];
+    const nounParadigms = mdataRepo[ETableName.NounParadigms] as NounParadigm[];
+    const verbParadigms = mdataRepo[ETableName.VerbParadigms] as VerbParadigm[];
 
-    const verbTypes = mdataRepo.verbTypes as VerbType[];
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const verbRowFilters = mdataRepo.verbRowFilters as VerbRowFilter[];
-    const personVariabilityTypes =
-        mdataRepo.personVariabilityTypes as PersonVariabilityType[];
+    const verbTypes = mdataRepo[ETableName.VerbTypes] as VerbType[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const verbRowFilters = mdataRepo[
+        ETableName.VerbRowFilters
+    ] as VerbRowFilter[];
+    const personVariabilityTypes = mdataRepo[
+        ETableName.PersonVariabilityTypes
+    ] as PersonVariabilityType[];
 
     const [curMorphemes, setCurMorphemes] = useState<number[]>([] as number[]);
     const [curRanges, setCurRanges] = useState<MorphemeRange[]>(
@@ -138,24 +151,26 @@ const InflectionEdit: FC = () => {
     // const tableNamesForClear = [];
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
-    const tableNamesForLoadLookup = useMemo(() => ["phoneticsTypes"], []);
+    const tableNamesForLoadLookup = useMemo(
+        () => [ETableName.PhoneticsTypes],
+        []
+    );
 
     const tableNamesForLoad = useMemo(
         () => [
-            // "pronouns",
-            "classifiers",
-            "morphemeGroups",
-            "morphemeRanges",
-            "morphemesQuery",
-            "inflectionTypes",
-            "inflectionBlocks",
-            "morphemeRangesByInflectionBlocks",
-            "nounParadigms",
-            "verbParadigms",
-            "verbTypes",
-            "verbPluralityTypes",
-            "verbRowFilters",
-            "personVariabilityTypes",
+            ETableName.Classifiers,
+            ETableName.MorphemeGroups,
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
+            ETableName.InflectionTypes,
+            ETableName.InflectionBlocks,
+            ETableName.MorphemeRangesByInflectionBlocks,
+            ETableName.NounParadigms,
+            ETableName.VerbParadigms,
+            ETableName.VerbTypes,
+            ETableName.VerbPluralityTypes,
+            ETableName.VerbRowFilters,
+            ETableName.PersonVariabilityTypes,
         ],
         []
     );

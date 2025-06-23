@@ -41,6 +41,7 @@ import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import OneUpDownButtons from "../appcarcass/editorParts/OneUpDownButtons";
 import OneEditDeleteButtons from "../appcarcass/editorParts/OneEditDeleteButtons";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const PhoneticsTypeEdit: FC = () => {
     const dispatch = useAppDispatch();
@@ -58,9 +59,9 @@ const PhoneticsTypeEdit: FC = () => {
     //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
     const tableNamesForClear = useMemo(
         () => [
-            "phoneticsTypes",
-            "phoneticsTypeProhibitions",
-            "phoneticsChanges",
+            ETableName.PhoneticsTypes,
+            ETableName.PhoneticsTypeProhibitions,
+            ETableName.PhoneticsChanges,
         ],
         []
     );
@@ -70,14 +71,16 @@ const PhoneticsTypeEdit: FC = () => {
     );
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
-    const tableNamesForLoad = useMemo(() => ["phoneticsOptions"], []);
+    const tableNamesForLoad = useMemo(() => [ETableName.PhoneticsOptions], []);
 
     const [checkLoadMdTables] = useCheckLoadMdTables();
     const [clearTables] = useClearTablesFromRepo();
 
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
-    const phoneticsOptions = mdataRepo.phoneticsOptions as PhoneticsOption[];
+    const phoneticsOptions = mdataRepo[
+        ETableName.PhoneticsOptions
+    ] as PhoneticsOption[];
 
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;

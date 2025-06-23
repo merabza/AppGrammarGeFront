@@ -19,6 +19,7 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const MorphemesOverview: FC = () => {
     const dispatch = useAppDispatch();
@@ -26,10 +27,16 @@ const MorphemesOverview: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemes = mdataRepo.morphemes as Morpheme[];
-    const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
+    const morphemeGroups = mdataRepo[
+        ETableName.MorphemeGroups
+    ] as MorphemeGroup[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const morphemes = mdataRepo[ETableName.Morphemes] as Morpheme[];
+    const phoneticsTypes = mdataRepo[
+        ETableName.PhoneticsTypes
+    ] as PhoneticsType[];
 
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
@@ -41,10 +48,10 @@ const MorphemesOverview: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "morphemeGroups",
-            "morphemeRanges",
-            "morphemes",
-            "phoneticsTypes",
+            ETableName.MmorphemeGroups,
+            ETableName.MorphemeRanges,
+            ETableName.Morphemes,
+            ETableName.PhoneticsTypes,
         ],
         []
     );

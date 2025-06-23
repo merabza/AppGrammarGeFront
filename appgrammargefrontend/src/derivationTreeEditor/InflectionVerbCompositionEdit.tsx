@@ -42,6 +42,7 @@ import { useAlert } from "../appcarcass/hooks/useAlert";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { useForman } from "../appcarcass/hooks/useForman";
 import { isAllowEditAndDelete } from "./dteFunctions";
+import { ETableName } from "../masterData/tableNames";
 
 const InflectionVerbCompositionEdit: FC = () => {
     const navigate = useNavigate();
@@ -85,8 +86,10 @@ const InflectionVerbCompositionEdit: FC = () => {
     const { rootLoading } = useAppSelector((state) => state.rootsState);
 
     //const pronouns = mdRepo.pronouns as Pronoun[];
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const classifiers = mdataRepo.classifiers as classifierModel[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const classifiers = mdataRepo[ETableName.Classifiers] as classifierModel[];
 
     //console.log("InflectionVerbCompositionEdit props=", props);
 
@@ -96,7 +99,11 @@ const InflectionVerbCompositionEdit: FC = () => {
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
-        () => ["pronouns", "morphemeRanges", "classifiers"],
+        () => [
+            ETableName.Pronouns,
+            ETableName.MorphemeRanges,
+            ETableName.Classifiers,
+        ],
         []
     );
 

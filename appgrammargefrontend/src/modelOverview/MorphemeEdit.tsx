@@ -41,6 +41,7 @@ import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import MultiCombEditor from "../appcarcass/editorParts/MultiCombEditor";
+import { ETableName } from "../masterData/tableNames";
 
 const MorphemeEdit: FC = () => {
     const navigate = useNavigate();
@@ -55,14 +56,22 @@ const MorphemeEdit: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const phoneticsChanges =
-        mdataRepo.phoneticsChanges as PhoneticsChangeModel[];
-    const phoneticsChangesQuery =
-        mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
-    const phoneticsOptions = mdataRepo.phoneticsOptions as PhoneticsOption[];
+    const phoneticsTypes = mdataRepo[
+        ETableName.PhoneticsTypes
+    ] as PhoneticsType[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const phoneticsChanges = mdataRepo[
+        ETableName.PhoneticsChanges
+    ] as PhoneticsChangeModel[];
+    const phoneticsChangesQuery = mdataRepo[
+        ETableName.PhoneticsChangesQuery
+    ] as PhoneticsChangeQueryModel[];
+    const phoneticsOptions = mdataRepo[
+        ETableName.PhoneticsOptions
+    ] as PhoneticsOption[];
 
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
@@ -89,10 +98,10 @@ const MorphemeEdit: FC = () => {
     //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
     const tableNamesForClear = useMemo(
         () => [
-            "morphemes",
-            "morphPhoneticsOption",
-            "morphPhoneticsOccasion",
-            "morphemesQuery",
+            ETableName.Morphemes,
+            ETableName.MorphPhoneticsOption,
+            ETableName.MorphPhoneticsOccasion,
+            ETableName.MorphemesQuery,
         ],
         []
     );
@@ -100,12 +109,12 @@ const MorphemeEdit: FC = () => {
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
         () => [
-            "phoneticsTypes",
-            "morphemeRanges",
-            "morphemesQuery",
-            "phoneticsChanges",
-            "phoneticsChangesQuery",
-            "phoneticsOptions",
+            ETableName.PhoneticsTypes,
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
+            ETableName.PhoneticsChanges,
+            ETableName.PhoneticsChangesQuery,
+            ETableName.PhoneticsOptions,
         ],
         []
     );

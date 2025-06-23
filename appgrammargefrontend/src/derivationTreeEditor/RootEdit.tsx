@@ -47,6 +47,7 @@ import type {
 } from "../masterData/mdTypes";
 import { isAllowEditAndDelete } from "./dteFunctions";
 import MultiCombEditor from "../appcarcass/editorParts/MultiCombEditor";
+import { ETableName } from "../masterData/tableNames";
 
 const RootEdit: FC = () => {
     const navigate = useNavigate();
@@ -121,7 +122,7 @@ const RootEdit: FC = () => {
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
-        () => [/*"derivationTypes",*/ "classifiers", "phoneticsChangesQuery"],
+        () => [ETableName.Classifiers, ETableName.PhoneticsChangesQuery],
         []
     );
 
@@ -131,9 +132,10 @@ const RootEdit: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
     //const derivationTypes = mdRepo.derivationTypes as DerivationType[];
-    const classifiers = mdataRepo.classifiers as classifierModel[];
-    const phoneticsChangesQuery =
-        mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
+    const classifiers = mdataRepo[ETableName.Classifiers] as classifierModel[];
+    const phoneticsChangesQuery = mdataRepo[
+        ETableName.PhoneticsChangesQuery
+    ] as PhoneticsChangeQueryModel[];
 
     const { user } = useAppSelector((state) => state.userState);
 

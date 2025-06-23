@@ -20,6 +20,7 @@ import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
+import { ETableName } from "../masterData/tableNames";
 
 const VerbPersonMarkersOverview: FC = () => {
     const dispatch = useAppDispatch();
@@ -29,13 +30,15 @@ const VerbPersonMarkersOverview: FC = () => {
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const actantGroups = mdataRepo.actantGroups as ActantGroups[];
-    const verbPersons = mdataRepo.verbPersons as VerbPersons[];
-    const verbNumbers = mdataRepo.verbNumbers as VerbNumbers[];
-    const verbPersonMarkerParadigmNames =
-        mdataRepo.verbPersonMarkerParadigmNamesQuery as ParadigmNameModel[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const actantGroups = mdataRepo[ETableName.ActantGroups] as ActantGroups[];
+    const verbPersons = mdataRepo[ETableName.VerbPersons] as VerbPersons[];
+    const verbNumbers = mdataRepo[ETableName.VerbNumbers] as VerbNumbers[];
+    const verbPersonMarkerParadigmNames = mdataRepo[
+        ETableName.VerbPersonMarkerParadigmNamesQuery
+    ] as ParadigmNameModel[];
 
     //console.log("VerbPersonMarkersOverview props=", props);
 
@@ -43,11 +46,11 @@ const VerbPersonMarkersOverview: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "verbPluralityTypes",
-            "actantGroups",
-            "verbPersons",
-            "verbNumbers",
-            "verbPersonMarkerParadigmNamesQuery",
+            ETableName.VerbPluralityTypes,
+            ETableName.ActantGroups,
+            ETableName.VerbPersons,
+            ETableName.VerbNumbers,
+            ETableName.VerbPersonMarkerParadigmNamesQuery,
         ],
         []
     );

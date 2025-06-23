@@ -20,6 +20,7 @@ import Loading from "../appcarcass/common/Loading";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "./NameListEditor";
+import { ETableName } from "../masterData/tableNames";
 
 const VerbRowParadigmsOverview: FC = () => {
     const dispatch = useAppDispatch();
@@ -29,12 +30,15 @@ const VerbRowParadigmsOverview: FC = () => {
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-    const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
-    const verbTypes = mdataRepo.verbTypes as VerbType[];
-    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
-    const verbRows = mdataRepo.verbRows as VerbRow[];
-    const verbParadigmNames =
-        mdataRepo.verbParadigmNamesQuery as ParadigmNameModel[];
+    const verbTransitions = mdataRepo[
+        ETableName.VerbTransitions
+    ] as VerbTransition[];
+    const verbTypes = mdataRepo[ETableName.VerbTypes] as VerbType[];
+    const verbSeries = mdataRepo[ETableName.VerbSeries] as VerbSeries[];
+    const verbRows = mdataRepo[ETableName.VerbRows] as VerbRow[];
+    const verbParadigmNames = mdataRepo[
+        ETableName.VerbParadigmNamesQuery
+    ] as ParadigmNameModel[];
 
     //console.log("VerbRowParadigmsOverview props=", props);
 
@@ -42,11 +46,11 @@ const VerbRowParadigmsOverview: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "verbTransitions",
-            "verbTypes",
-            "verbSeries",
-            "verbRows",
-            "verbParadigmNamesQuery",
+            ETableName.VerbTransitions,
+            ETableName.VerbTypes,
+            ETableName.VerbSeries,
+            ETableName.VerbRows,
+            ETableName.VerbParadigmNamesQuery,
         ],
         []
     );

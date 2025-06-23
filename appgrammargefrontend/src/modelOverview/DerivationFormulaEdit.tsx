@@ -43,6 +43,7 @@ import {
 } from "../redux/api/derivationFormulasCrudApi";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import { clearDerivFormulas } from "../redux/slices/modelDataSlice";
+import { ETableName } from "../masterData/tableNames";
 
 const DerivationFormulaEdit: FC = () => {
     const navigate = useNavigate();
@@ -55,12 +56,19 @@ const DerivationFormulaEdit: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
-    const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
-    const morphemeRangesByDerivationTypes =
-        mdataRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const derivationTypes = mdataRepo[
+        ETableName.DerivationTypes
+    ] as DerivationType[];
+    const phoneticsTypes = mdataRepo[
+        ETableName.PhoneticsTypes
+    ] as PhoneticsType[];
+    const morphemeRangesByDerivationTypes = mdataRepo[
+        ETableName.MorphemeRangesByDerivationTypes
+    ] as MorphemeRangeByDerivationType[];
     const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
 
     // console.log("DerivationFormulaEdit morphemes=", morphemes);
@@ -99,16 +107,19 @@ const DerivationFormulaEdit: FC = () => {
     // );
 
     //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
-    const tableNamesForClear = useMemo(() => ["derivationFormulasQuery"], []);
+    const tableNamesForClear = useMemo(
+        () => [ETableName.DerivationFormulasQuery],
+        []
+    );
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
         () => [
-            "morphemeRanges",
-            "morphemesQuery",
-            "derivationTypes",
-            "phoneticsTypes",
-            "morphemeRangesByDerivationTypes",
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
+            ETableName.DerivationTypes,
+            ETableName.PhoneticsTypes,
+            ETableName.MorphemeRangesByDerivationTypes,
         ],
         []
     );

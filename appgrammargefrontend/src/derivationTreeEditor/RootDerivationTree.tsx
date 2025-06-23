@@ -35,6 +35,7 @@ import type {
     DerivationType,
     InflectionType,
 } from "../masterData/mdTypes";
+import { ETableName } from "../masterData/tableNames";
 
 const RootDerivationTree: FC = () => {
     const [currentRootId, setCurrentRootId] = useState<number | null>(null);
@@ -82,9 +83,13 @@ const RootDerivationTree: FC = () => {
         useAppSelector((state) => state.masterDataState);
 
     //const pronouns = mdRepo.pronouns as Pronoun[];
-    const classifiers = mdataRepo.classifiers as Classifier[];
-    const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
-    const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
+    const classifiers = mdataRepo[ETableName.Classifiers] as Classifier[];
+    const derivationTypes = mdataRepo[
+        ETableName.DerivationTypes
+    ] as DerivationType[];
+    const inflectionTypes = mdataRepo[
+        ETableName.InflectionTypes
+    ] as InflectionType[];
 
     const menLinkKey = "basesearch";
 
@@ -132,9 +137,9 @@ const RootDerivationTree: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            /*"pronouns",*/ "classifiers",
-            "derivationTypes",
-            "inflectionTypes",
+            ETableName.Classifiers,
+            ETableName.DerivationTypes,
+            ETableName.InflectionTypes,
         ],
         []
     );
@@ -465,6 +470,9 @@ const RootDerivationTree: FC = () => {
             </ul>
         );
     }
+
+
+    console.log("RootDerivationTree oneRootData=", oneRootData);
 
     if (!oneRootData.branches || oneRootData.branches.length === 0)
         return (

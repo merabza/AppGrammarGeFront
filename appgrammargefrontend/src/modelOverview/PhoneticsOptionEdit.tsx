@@ -39,6 +39,7 @@ import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const PhoneticsOptionEdit: FC = () => {
     const dispatch = useAppDispatch();
@@ -55,7 +56,7 @@ const PhoneticsOptionEdit: FC = () => {
 
     //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
     const tableNamesForClear = useMemo(
-        () => ["phoneticsOptions", "phoneticsOptionDetails"],
+        () => [ETableName.PhoneticsOptions, ETableName.PhoneticsOptionDetails],
         []
     );
 

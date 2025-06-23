@@ -22,18 +22,27 @@ import {
     GetOnephoneticsOptionDetailDescription,
 } from "./PhoneticsTypeModule";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const PhoneticsTypesOverview: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const phoneticsOptions = mdataRepo.phoneticsOptions as PhoneticsOption[];
-    const phoneticsTypes = mdataRepo.phoneticsTypes as PhoneticsType[];
-    const phoneticsOptionDetails =
-        mdataRepo.phoneticsOptionDetails as PhoneticsOptionDetail[];
-    const phoneticsTypeProhibitions =
-        mdataRepo.phoneticsTypeProhibitions as PhoneticsTypeProhibition[];
-    const phoneticsChanges = mdataRepo.phoneticsChanges as PhoneticsChange[];
+    const phoneticsOptions = mdataRepo[
+        ETableName.PhoneticsOptions
+    ] as PhoneticsOption[];
+    const phoneticsTypes = mdataRepo[
+        ETableName.PhoneticsTypes
+    ] as PhoneticsType[];
+    const phoneticsOptionDetails = mdataRepo[
+        ETableName.PhoneticsOptionDetails
+    ] as PhoneticsOptionDetail[];
+    const phoneticsTypeProhibitions = mdataRepo[
+        ETableName.PhoneticsTypeProhibitions
+    ] as PhoneticsTypeProhibition[];
+    const phoneticsChanges = mdataRepo[
+        ETableName.PhoneticsChanges
+    ] as PhoneticsChange[];
 
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
@@ -42,11 +51,11 @@ const PhoneticsTypesOverview: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "phoneticsOptions",
-            "phoneticsTypes",
-            "phoneticsOptionDetails",
-            "phoneticsTypeProhibitions",
-            "phoneticsChanges",
+            ETableName.PhoneticsOptions,
+            ETableName.PhoneticsTypes,
+            ETableName.PhoneticsOptionDetails,
+            ETableName.PhoneticsTypeProhibitions,
+            ETableName.PhoneticsChanges,
         ],
         []
     );

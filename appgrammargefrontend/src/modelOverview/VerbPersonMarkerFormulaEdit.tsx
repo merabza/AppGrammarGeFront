@@ -46,6 +46,7 @@ import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons";
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
+import { ETableName } from "../masterData/tableNames";
 
 const VerbPersonMarkerFormulaEdit: FC = () => {
     const dispatch = useAppDispatch();
@@ -54,18 +55,27 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
-    const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const verbPersons = mdataRepo.verbPersons as VerbPerson[];
-    const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
-    const verbPersonMarkerParadigms =
-        mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
-    const morphemeRangesByInflectionBlocks =
-        mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const inflectionBlocks = mdataRepo[
+        ETableName.InflectionBlocks
+    ] as InflectionBlock[];
+    const inflectionTypes = mdataRepo[
+        ETableName.InflectionTypes
+    ] as InflectionType[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const verbPersons = mdataRepo[ETableName.VerbPersons] as VerbPerson[];
+    const verbNumbers = mdataRepo[ETableName.VerbNumbers] as VerbNumber[];
+    const verbPersonMarkerParadigms = mdataRepo[
+        ETableName.VerbPersonMarkerParadigms
+    ] as VerbPersonMarkerParadigm[];
+    const morphemeRangesByInflectionBlocks = mdataRepo[
+        ETableName.MorphemeRangesByInflectionBlocks
+    ] as MorphemeRangeByInflectionBlock[];
 
     const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
     const [ranges, setRanges] = useState<MorphemeRange[]>(
@@ -113,22 +123,22 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
 
     //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
     const tableNamesForClear = useMemo(
-        () => ["verbPersonMarkerParadigmRows"],
+        () => [ETableName.VerbPersonMarkerParadigmRows],
         []
     );
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
         () => [
-            "morphemeRanges",
-            "morphemesQuery",
-            "inflectionBlocks",
-            "inflectionTypes",
-            "morphemeRangesByInflectionBlocks",
-            "verbPersonMarkerParadigms",
-            "verbPluralityTypes",
-            "verbPersons",
-            "verbNumbers",
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
+            ETableName.InflectionBlocks,
+            ETableName.InflectionTypes,
+            ETableName.MorphemeRangesByInflectionBlocks,
+            ETableName.VerbPersonMarkerParadigms,
+            ETableName.VerbPluralityTypes,
+            ETableName.VerbPersons,
+            ETableName.VerbNumbers,
         ],
         []
     );

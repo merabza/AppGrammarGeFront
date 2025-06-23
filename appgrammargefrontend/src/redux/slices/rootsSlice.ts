@@ -29,7 +29,7 @@ export interface IRootsState {
     memoForConfirmRootsPages: {
         [key: string]: RootLinkQueryModel[];
     };
-    forConfirmRootsListPageLoading: boolean;
+    // forConfirmRootsListPageLoading: boolean;
     memoForConfirmRootsCounts: { [key: string]: number };
 }
 
@@ -51,7 +51,7 @@ const initialState: IRootsState = {
     memoForConfirmRootsPages: {} as {
         [key: string]: RootLinkQueryModel[];
     },
-    forConfirmRootsListPageLoading: false,
+    // forConfirmRootsListPageLoading: false,
     memoForConfirmRootsCounts: {} as { [key: string]: number },
 };
 
@@ -214,12 +214,12 @@ export const rootsSlice = createSlice({
             });
         },
         //////////////////////////////////////
-        SetForConfirmRootsListPageLoading: (
-            state,
-            action: PayloadAction<boolean>
-        ) => {
-            state.forConfirmRootsListPageLoading = action.payload;
-        },
+        // SetForConfirmRootsListPageLoading: (
+        //     state,
+        //     action: PayloadAction<boolean>
+        // ) => {
+        //     state.forConfirmRootsListPageLoading = action.payload;
+        // },
         //////////////////////////////////////
         SetMemoForConfirmRootsCounts: (
             state,
@@ -266,7 +266,7 @@ export const {
     clearMemo,
     clearForConfirmRootsPagesMemo,
     removeRootsFromRepo,
-    SetForConfirmRootsListPageLoading,
+    // SetForConfirmRootsListPageLoading,
     SetMemoForConfirmRootsCounts,
     SetForConfirmRootsByPages,
 } = rootsSlice.actions;

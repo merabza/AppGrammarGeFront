@@ -72,7 +72,7 @@ import RootEdit from "./derivationTreeEditor/RootEdit";
 import DerivationEdit from "./derivationTreeEditor/DerivationEdit";
 import InflectionEdit from "./derivationTreeEditor/InflectionEdit";
 import InflectionVerbCompositionEdit from "./derivationTreeEditor/InflectionVerbCompositionEdit";
-import ForConfirmRootsList from "./forConfirmRoots/ForConfirmRootsList";
+//import ForConfirmRootsList from "./forConfirmRoots/ForConfirmRootsList";
 import DerivationFormulaEdit from "./modelOverview/DerivationFormulaEdit";
 import DerivationFormulasOverview from "./modelOverview/DerivationFormulasOverview";
 import MorphemesOverview from "./modelOverview/MorphemesOverview";
@@ -283,7 +283,7 @@ const App: FC = () => {
                                 element={<InflectionVerbCompositionEdit />}
                             />
 
-                            <Route
+                            {/* <Route
                                 path="forConfirmRootsList/:page"
                                 element={<ForConfirmRootsList />}
                             />
@@ -291,7 +291,7 @@ const App: FC = () => {
                             <Route
                                 path="forConfirmRootsList"
                                 element={<ForConfirmRootsList />}
-                            />
+                            /> */}
 
                             <Route
                                 path="derivationFormulasOverview/:tabKey/:recName"

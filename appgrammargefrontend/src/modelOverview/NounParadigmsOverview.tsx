@@ -19,6 +19,7 @@ import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import NameListEditor from "./NameListEditor";
 import ParadigmListEditor from "./ParadigmListEditor";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const NounParadigmsOverview: FC = () => {
     const dispatch = useAppDispatch();
@@ -31,10 +32,11 @@ const NounParadigmsOverview: FC = () => {
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
     // const { mdWorkingOnLoad, datatypesLoading, datatypes } = masterData;
-    const grammarCases = mdataRepo.grammarCases as GrammarCase[];
-    const nounNumbers = mdataRepo.nounNumbers as NounNumber[];
-    const nounParadigmNames =
-        mdataRepo.nounParadigmNamesQuery as ParadigmNameModel[];
+    const grammarCases = mdataRepo[ETableName.GrammarCases] as GrammarCase[];
+    const nounNumbers = mdataRepo[ETableName.NounNumbers] as NounNumber[];
+    const nounParadigmNames = mdataRepo[
+        ETableName.NounParadigmNamesQuery
+    ] as ParadigmNameModel[];
 
     //console.log("NounParadigmsOverview props=", props);
 
@@ -42,7 +44,11 @@ const NounParadigmsOverview: FC = () => {
     //console.log("NounParadigmsOverview menLinkKey=", menLinkKey);
 
     const tableNamesForLoad = useMemo(
-        () => ["grammarCases", "nounNumbers", "nounParadigmNamesQuery"],
+        () => [
+            ETableName.GrammarCases,
+            ETableName.NounNumbers,
+            ETableName.NounParadigmNamesQuery,
+        ],
         []
     );
 

@@ -47,6 +47,7 @@ import OneTextControl from "../appcarcass/editorParts/OneTextControl";
 import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons";
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const NounParadigmFormulaEdit: FC = () => {
     const dispatch = useAppDispatch();
@@ -66,15 +67,15 @@ const NounParadigmFormulaEdit: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
-    const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
-    const nounParadigms = mdataRepo.nounParadigms as NounParadigm[];
-    const grammarCases = mdataRepo.grammarCases as GrammarCase[];
-    const nounNumbers = mdataRepo.nounNumbers as NounNumber[];
+    const morphemeRanges = mdataRepo[ETableName.MorphemeRanges] as MorphemeRange[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const inflectionBlocks = mdataRepo[ETableName.InflectionBlocks] as InflectionBlock[];
+    const inflectionTypes = mdataRepo[ETableName.InflectionTypes] as InflectionType[];
+    const nounParadigms = mdataRepo[ETableName.NounParadigms] as NounParadigm[];
+    const grammarCases = mdataRepo[ETableName.GrammarCases] as GrammarCase[];
+    const nounNumbers = mdataRepo[ETableName.NounNumbers] as NounNumber[];
     const morphemeRangesByInflectionBlocks =
-        mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
+        mdataRepo[ETableName.MorphemeRangesByInflectionBlocks] as MorphemeRangeByInflectionBlock[];
 
     const [morphemes, setMorphemes] = useState<number[]>([] as number[]);
     const [ranges, setRanges] = useState<MorphemeRange[]>(
@@ -107,19 +108,19 @@ const NounParadigmFormulaEdit: FC = () => {
     ] = useDeleteNounParadigmFormulaMutation();
 
     //3. ეს არის ის ცხრილები, რომელზეც მოქმედებს ეს კონკრეტული რედაქტორი
-    const tableNamesForClear = useMemo(() => ["NounParadigmRows"], []);
+    const tableNamesForClear = useMemo(() => [ETableName.NounParadigmRows], []);
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
         () => [
-            "morphemeRanges",
-            "morphemesQuery",
-            "inflectionBlocks",
-            "inflectionTypes",
-            "morphemeRangesByInflectionBlocks",
-            "nounParadigms",
-            "grammarCases",
-            "nounNumbers",
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
+            ETableName.InflectionBlocks,
+            ETableName.InflectionTypes,
+            ETableName.MorphemeRangesByInflectionBlocks,
+            ETableName.NounParadigms,
+            ETableName.GrammarCases,
+            ETableName.NounNumbers,
         ],
         []
     );

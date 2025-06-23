@@ -20,6 +20,7 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import AlertMessages from "../appcarcass/common/AlertMessages";
 import type { Pronoun } from "../masterData/mdTypes";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+import { ETableName } from "../masterData/tableNames";
 
 type ParadigmProps = {
     InflectionIdentifier: number;
@@ -76,7 +77,7 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     } = useAppSelector((state) => state.rootsState);
     const { mdataRepo } = useAppSelector((state) => state.masterDataState);
 
-    const pronouns = mdataRepo.pronouns as Pronoun[];
+    const pronouns = mdataRepo[ETableName.Pronouns] as Pronoun[];
 
     // const { infId, ivcId } = useParams();
     // const infIdNumber = NzInt(infId);
@@ -93,7 +94,7 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     ] = useSaveVerbCompositionParadigmSamplePositionsMutation();
     //console.log("Paradigm props=", props);
 
-    const tableNamesForLoad = useMemo(() => ["pronouns"], []);
+    const tableNamesForLoad = useMemo(() => [ETableName.Pronouns], []);
 
     useEffect(() => {
         //დავადგინოთ მიმდინარე იდენტიფიკატორი

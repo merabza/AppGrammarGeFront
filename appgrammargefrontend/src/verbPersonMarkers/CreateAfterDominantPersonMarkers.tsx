@@ -25,6 +25,7 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+import { ETableName } from "../masterData/tableNames";
 
 const CreateAfterDominantPersonMarkers: FC = () => {
     const dispatch = useAppDispatch();
@@ -37,16 +38,21 @@ const CreateAfterDominantPersonMarkers: FC = () => {
 
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-    const actantGrammarCases =
-        mdataRepo.actantGrammarCases as ActantGrammarCase[];
-    const actantGroups = mdataRepo.actantGroups as ActantGroup[];
-    const actantPositions = mdataRepo.actantPositions as ActantPosition[];
-    const actantTypes = mdataRepo.actantTypes as ActantType[];
-    const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
-    const verbPersons = mdataRepo.verbPersons as VerbPerson[];
-    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
-    const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
-    const verbTypes = mdataRepo.verbTypes as VerbType[];
+    const actantGrammarCases = mdataRepo[
+        ETableName.ActantGrammarCases
+    ] as ActantGrammarCase[];
+    const actantGroups = mdataRepo[ETableName.ActantGroups] as ActantGroup[];
+    const actantPositions = mdataRepo[
+        ETableName.ActantPositions
+    ] as ActantPosition[];
+    const actantTypes = mdataRepo[ETableName.ActantTypes] as ActantType[];
+    const verbNumbers = mdataRepo[ETableName.VerbNumbers] as VerbNumber[];
+    const verbPersons = mdataRepo[ETableName.VerbPersons] as VerbPerson[];
+    const verbSeries = mdataRepo[ETableName.VerbSeries] as VerbSeries[];
+    const verbTransitions = mdataRepo[
+        ETableName.VerbTransitions
+    ] as VerbTransition[];
+    const verbTypes = mdataRepo[ETableName.VerbTypes] as VerbType[];
 
     //console.log("CreateAfterDominantPersonMarkers props=", props);
 
@@ -54,15 +60,15 @@ const CreateAfterDominantPersonMarkers: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "actantGrammarCases",
-            "actantGroups",
-            "actantPositions",
-            "actantTypes",
-            "verbNumbers",
-            "verbPersons",
-            "verbSeries",
-            "verbTransitions",
-            "verbTypes",
+            ETableName.ActantGrammarCases,
+            ETableName.ActantGroups,
+            ETableName.ActantPositions,
+            ETableName.ActantTypes,
+            ETableName.VerbNumbers,
+            ETableName.VerbPersons,
+            ETableName.VerbSeries,
+            ETableName.VerbTransitions,
+            ETableName.VerbTypes,
         ],
         []
     );

@@ -20,6 +20,7 @@ import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import { getFormulaVisual } from "./FormulasModule";
 import { saveReturnPageName } from "../appcarcass/redux/slices/masterdataSlice";
 import { useAlert } from "../appcarcass/hooks/useAlert";
+import { ETableName } from "../masterData/tableNames";
 
 const DerivationFormulasOverview: FC = () => {
     const dispatch = useAppDispatch();
@@ -27,10 +28,16 @@ const DerivationFormulasOverview: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
-    const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+    const derivationTypes = mdataRepo[
+        ETableName.DerivationTypes
+    ] as DerivationType[];
+    const morphemeGroups = mdataRepo[
+        ETableName.MorphemeGroups
+    ] as MorphemeGroup[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
 
     const { tabKeyParam, recNameParam } = useParams<string>();
 
@@ -38,10 +45,10 @@ const DerivationFormulasOverview: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "derivationTypes",
-            "morphemeGroups",
-            "morphemeRanges",
-            "morphemesQuery",
+            ETableName.DerivationTypes,
+            ETableName.MorphemeGroups,
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
         ],
         []
     );

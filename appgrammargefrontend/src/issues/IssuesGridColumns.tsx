@@ -6,15 +6,16 @@ import { useCallback } from "react";
 import type { IGridColumn } from "../appcarcass/grid/GridViewTypes";
 import DateTimeColumn from "../appcarcass/grid/columns/DateTimeColumn";
 import LinkColumn from "./LinkColumn";
+import { ETableName } from "../masterData/tableNames";
 
 export type fnIssuesGridColumns = () => IGridColumn[];
 
 export function useIssuesGridColumns(): [fnIssuesGridColumns] {
     const { mdLookupRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
-    const issueKinds = mdLookupRepo.issueKinds;
-    const issuePriorities = mdLookupRepo.issuePriorities;
-    const issueStatuses = mdLookupRepo.issueStatuses;
+    const issueKinds = mdLookupRepo[ETableName.IssueKinds];
+    const issuePriorities = mdLookupRepo[ETableName.IssuePriorities];
+    const issueStatuses = mdLookupRepo[ETableName.IssueStatuses];
 
     const IssuesGridColumns = useCallback(() => {
         if (

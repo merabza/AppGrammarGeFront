@@ -27,6 +27,7 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+import { ETableName } from "../masterData/tableNames";
 
 const CreateForRecountVerbPersonMarkers: FC = () => {
     // const {
@@ -54,23 +55,30 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-    const actantTypes = mdataRepo.actantTypes as ActantType[];
-    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
-    const actantGrammarCases =
-        mdataRepo.actantGrammarCases as ActantGrammarCase[];
-    const actantGroups = mdataRepo.actantGroups as ActantGroup[];
-    const verbTypes = mdataRepo.verbTypes as VerbType[];
-    const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
-    const actantPositions = mdataRepo.actantPositions as ActantPosition[];
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const verbPersonMarkerParadigms =
-        mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
-    const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
-    const verbPersons = mdataRepo.verbPersons as VerbPerson[];
+    const actantTypes = mdataRepo[ETableName.ActantTypes] as ActantType[];
+    const verbSeries = mdataRepo[ETableName.VerbSeries] as VerbSeries[];
+    const actantGrammarCases = mdataRepo[
+        ETableName.ActantGrammarCases
+    ] as ActantGrammarCase[];
+    const actantGroups = mdataRepo[ETableName.ActantGroups] as ActantGroup[];
+    const verbTypes = mdataRepo[ETableName.VerbTypes] as VerbType[];
+    const verbTransitions = mdataRepo[
+        ETableName.VerbTransitions
+    ] as VerbTransition[];
+    const actantPositions = mdataRepo[
+        ETableName.ActantPositions
+    ] as ActantPosition[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const verbPersonMarkerParadigms = mdataRepo[
+        ETableName.VerbPersonMarkerParadigms
+    ] as VerbPersonMarkerParadigm[];
+    const verbNumbers = mdataRepo[ETableName.VerbNumbers] as VerbNumber[];
+    const verbPersons = mdataRepo[ETableName.VerbPersons] as VerbPerson[];
     // const dominantActantsQuery =
-    //   mdataRepo.dominantActantsQuery as DominantActant[];
-    // const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
+    //   mdataRepo[ETableName.dominantActantsQuery as DominantActant[];
+    // const morphemesQuery = mdataRepo[ETableName.morphemesQuery as Morpheme[];
 
     //console.log("CreateForRecountVerbPersonMarkers props=", props);
 
@@ -78,19 +86,17 @@ const CreateForRecountVerbPersonMarkers: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "actantTypes",
-            "verbSeries",
-            "actantGrammarCases",
-            "actantGroups",
-            "verbTypes",
-            "verbTransitions",
-            "actantPositions",
-            "verbPluralityTypes",
-            "verbPersonMarkerParadigms",
-            "verbNumbers",
-            "verbPersons",
-            // "dominantActantsQuery",
-            // "morphemesQuery",
+            ETableName.ActantTypes,
+            ETableName.VerbSeries,
+            ETableName.ActantGrammarCases,
+            ETableName.ActantGroups,
+            ETableName.VerbTypes,
+            ETableName.VerbTransitions,
+            ETableName.ActantPositions,
+            ETableName.VerbPluralityTypes,
+            ETableName.VerbPersonMarkerParadigms,
+            ETableName.VerbNumbers,
+            ETableName.VerbPersons,
         ],
         []
     );

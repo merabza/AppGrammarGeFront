@@ -30,23 +30,33 @@ import type { DataTypeFfModel } from "../appcarcass/redux/types/dataTypesTypes";
 import OneComboBoxControl from "../appcarcass/editorParts/OneComboBoxControl";
 import { getFormulaVisual2 } from "./FormulasModule";
 import { GetDisplayValueForLookup } from "../appcarcass/modules/GetDisplayValue";
+import { ETableName } from "../masterData/tableNames";
 
 const VerbPersonMarkerFormulas: FC = () => {
     const { mdataRepo, mdWorkingOnLoad, mdWorkingOnLoadingTables } =
         useAppSelector((state) => state.masterDataState);
 
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
-    const inflectionTypes = mdataRepo.inflectionTypes as InflectionType[];
-    const morphemeRangesByInflectionBlocks =
-        mdataRepo.morphemeRangesByInflectionBlocks as MorphemeRangeByInflectionBlock[];
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const verbPersons = mdataRepo.verbPersons as VerbPerson[];
-    const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
-    const verbPersonMarkerParadigms =
-        mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const inflectionBlocks = mdataRepo[
+        ETableName.InflectionBlocks
+    ] as InflectionBlock[];
+    const inflectionTypes = mdataRepo[
+        ETableName.InflectionTypes
+    ] as InflectionType[];
+    const morphemeRangesByInflectionBlocks = mdataRepo[
+        ETableName.MorphemeRangesByInflectionBlocks
+    ] as MorphemeRangeByInflectionBlock[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const verbPersons = mdataRepo[ETableName.VerbPersons] as VerbPerson[];
+    const verbNumbers = mdataRepo[ETableName.VerbNumbers] as VerbNumber[];
+    const verbPersonMarkerParadigms = mdataRepo[
+        ETableName.VerbPersonMarkerParadigms
+    ] as VerbPersonMarkerParadigm[];
 
     const [curParadigmId, setCurParadigmId] = useState<number | null>(null);
 
@@ -59,15 +69,15 @@ const VerbPersonMarkerFormulas: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "morphemeRanges",
-            "morphemesQuery",
-            "inflectionBlocks",
-            "inflectionTypes",
-            "morphemeRangesByInflectionBlocks",
-            "verbPluralityTypes",
-            "verbPersons",
-            "verbNumbers",
-            "verbPersonMarkerParadigms",
+            ETableName.MorphemeRanges,
+            ETableName.MorphemesQuery,
+            ETableName.InflectionBlocks,
+            ETableName.InflectionTypes,
+            ETableName.MorphemeRangesByInflectionBlocks,
+            ETableName.VerbPluralityTypes,
+            ETableName.VerbPersons,
+            ETableName.VerbNumbers,
+            ETableName.VerbPersonMarkerParadigms,
         ],
         []
     );

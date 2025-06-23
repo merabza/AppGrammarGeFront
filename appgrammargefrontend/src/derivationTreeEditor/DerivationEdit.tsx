@@ -55,6 +55,7 @@ import { isAllowEditAndDelete } from "./dteFunctions";
 import { useCheckLoadLookupTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadLookupTables";
 import type { ILookup } from "../appcarcass/redux/types/masterdataTypes";
 import MultiCombEditor from "../appcarcass/editorParts/MultiCombEditor";
+import { ETableName } from "../masterData/tableNames";
 
 const DerivationEdit: FC = () => {
     const navigate = useNavigate();
@@ -76,19 +77,28 @@ const DerivationEdit: FC = () => {
         (state) => state.modelDataState
     );
 
-    const morphemesQuery = mdataRepo.morphemesQuery as Morpheme[];
-    const morphemeRanges = mdataRepo.morphemeRanges as MorphemeRange[];
-    const derivationTypes = mdataRepo.derivationTypes as DerivationType[];
-    const morphemeRangesByDerivationTypes =
-        mdataRepo.morphemeRangesByDerivationTypes as MorphemeRangeByDerivationType[];
+    const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
+    const morphemeRanges = mdataRepo[
+        ETableName.MorphemeRanges
+    ] as MorphemeRange[];
+    const derivationTypes = mdataRepo[
+        ETableName.DerivationTypes
+    ] as DerivationType[];
+    const morphemeRangesByDerivationTypes = mdataRepo[
+        ETableName.MorphemeRangesByDerivationTypes
+    ] as MorphemeRangeByDerivationType[];
 
-    const derivationFormulasQuery =
-        mdLookupRepo.derivationFormulasQuery as ILookup[];
-    const morphemeGroups = mdataRepo.morphemeGroups as MorphemeGroup[];
-    const classifiers = mdLookupRepo.classifiers as ILookup[];
-    const phoneticsChangesQuery =
-        mdataRepo.phoneticsChangesQuery as PhoneticsChangeQueryModel[];
-    const phoneticsTypes = mdLookupRepo.phoneticsTypes as ILookup[];
+    const derivationFormulasQuery = mdLookupRepo[
+        ETableName.DerivationFormulasQuery
+    ] as ILookup[];
+    const morphemeGroups = mdataRepo[
+        ETableName.MorphemeGroups
+    ] as MorphemeGroup[];
+    const classifiers = mdLookupRepo[ETableName.Classifiers] as ILookup[];
+    const phoneticsChangesQuery = mdataRepo[
+        ETableName.PhoneticsChangesQuery
+    ] as PhoneticsChangeQueryModel[];
+    const phoneticsTypes = mdLookupRepo[ETableName.PhoneticsTypes] as ILookup[];
 
     const [currentRootId, setCurrentRootId] = useState<number | undefined>(
         undefined
@@ -119,19 +129,23 @@ const DerivationEdit: FC = () => {
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoadLookup = useMemo(
-        () => ["derivationFormulasQuery", "classifiers", "phoneticsTypes"],
+        () => [
+            ETableName.DerivationFormulasQuery,
+            ETableName.Classifiers,
+            ETableName.PhoneticsTypes,
+        ],
         []
     );
 
     //4. ეს არის ის ცხრილები, რომლებიდანაც ინფორმაცია სჭირდება ამ რედაქტრს
     const tableNamesForLoad = useMemo(
         () => [
-            "derivationTypes",
-            "morphemeGroups",
-            "morphemeRanges",
-            "morphemeRangesByDerivationTypes",
-            "morphemesQuery",
-            "phoneticsChangesQuery",
+            ETableName.DerivationTypes,
+            ETableName.MorphemeGroups,
+            ETableName.MorphemeRanges,
+            ETableName.MorphemeRangesByDerivationTypes,
+            ETableName.MorphemesQuery,
+            ETableName.PhoneticsChangesQuery,
         ],
         []
     );

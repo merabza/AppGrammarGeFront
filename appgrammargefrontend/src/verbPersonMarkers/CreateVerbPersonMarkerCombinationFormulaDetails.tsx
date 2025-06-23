@@ -22,6 +22,7 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 import type { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
+import { ETableName } from "../masterData/tableNames";
 
 const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
     const dispatch = useAppDispatch();
@@ -40,16 +41,20 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
 
     // const morphemeRanges = mdLookupRepo.morphemeRanges;
     // const morphemesQuery = mdLookupRepo.morphemesQuery;
-    const inflectionBlocks = mdataRepo.inflectionBlocks as InflectionBlock[];
+    const inflectionBlocks = mdataRepo[
+        ETableName.InflectionBlocks
+    ] as InflectionBlock[];
     //  const inflectionTypes = mdLookupRepo.inflectionTypes;
     // const morphemeRangesByInflectionBlocks =
     //   mdLookupRepo.morphemeRangesByInflectionBlocks;
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const verbPersonMarkerParadigms =
-        mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
-    const verbTypes = mdataRepo.verbTypes as VerbType[];
-    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const verbPersonMarkerParadigms = mdataRepo[
+        ETableName.VerbPersonMarkerParadigms
+    ] as VerbPersonMarkerParadigm[];
+    const verbTypes = mdataRepo[ETableName.VerbTypes] as VerbType[];
+    const verbSeries = mdataRepo[ETableName.VerbSeries] as VerbSeries[];
 
     //console.log("CreateVerbPersonMarkerCombinationFormulaDetails props=", props);
 
@@ -68,11 +73,11 @@ const CreateVerbPersonMarkerCombinationFormulaDetails: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "inflectionBlocks",
-            "verbPluralityTypes",
-            "verbPersonMarkerParadigms",
-            "verbTypes",
-            "verbSeries",
+            ETableName.InflectionBlocks,
+            ETableName.VerbPluralityTypes,
+            ETableName.VerbPersonMarkerParadigms,
+            ETableName.VerbTypes,
+            ETableName.VerbSeries,
         ],
         []
     );

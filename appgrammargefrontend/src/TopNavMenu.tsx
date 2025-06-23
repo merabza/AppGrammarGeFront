@@ -10,7 +10,7 @@ import RightsTopNavMenu from "./appcarcass/rights/RightsTopNavMenu";
 import ProfileTopNavMenu from "./appcarcass/user/ProfileTopNavMenu";
 import BaseSearchForm from "./derivationTreeEditor/BaseSearchForm";
 import ParadigmTopNavMenu from "./derivationTreeEditor/ParadigmTopNavMenu";
-import ForConfirmRootsListTopForm from "./forConfirmRoots/ForConfirmRootsListTopForm";
+// import ForConfirmRootsListTopForm from "./forConfirmRoots/ForConfirmRootsListTopForm";
 import type { FC } from "react";
 import ForIssuesTopForm from "./issues/ForIssuesTopForm";
 
@@ -114,10 +114,10 @@ const TopNavMenu: FC = () => {
                         path="/inflVerbCompEdit/:ivcId"
                         element={<ParadigmTopNavMenu />}
                     />
-                    <Route
+                    {/* <Route
                         path="/forConfirmRootsList"
                         element={<ForConfirmRootsListTopForm />}
-                    />
+                    /> */}
                     <Route path="/issues" element={<ForIssuesTopForm />} />
                 </Routes>
             </Navbar.Collapse>

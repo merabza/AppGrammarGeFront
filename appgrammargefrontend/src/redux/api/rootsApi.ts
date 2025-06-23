@@ -307,7 +307,7 @@ export const rootsApi = createApi({
                     url: `/roots/getforconfirmrootscount${queryString}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_args, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -316,20 +316,20 @@ export const rootsApi = createApi({
             },
         }),
         //////////////////////////////////////////////////////
-        getForConfirmRootsByPages: builder.query<RootLinkQueryModel[], string>({
-            query(queryString) {
-                return {
-                    url: `/roots/getforconfirmrootsbypages${queryString}`,
-                };
-            },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
-                try {
-                    await queryFulfilled;
-                } catch (error) {
-                    dispatch(setAlertApiLoadError(buildErrorMessage(error)));
-                }
-            },
-        }),
+        // getForConfirmRootsByPages: builder.query<RootLinkQueryModel[], string>({
+        //     query(queryString) {
+        //         return {
+        //             url: `/roots/getforconfirmrootsbypages${queryString}`,
+        //         };
+        //     },
+        //     async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        //         try {
+        //             await queryFulfilled;
+        //         } catch (error) {
+        //             dispatch(setAlertApiLoadError(buildErrorMessage(error)));
+        //         }
+        //     },
+        // }),
         //////////////////////////////////////////////////////
         getUsersListForConfirm: builder.query<string[], void>({
             query() {
@@ -366,6 +366,6 @@ export const {
     useLazyGetRootByInflectionIdQuery,
     useLazyGetRootByInflectionVerbCompositionIdQuery,
     useLazyGetForConfirmRootsCountQuery,
-    useLazyGetForConfirmRootsByPagesQuery,
+    // useLazyGetForConfirmRootsByPagesQuery,
     useGetUsersListForConfirmQuery,
 } = rootsApi;

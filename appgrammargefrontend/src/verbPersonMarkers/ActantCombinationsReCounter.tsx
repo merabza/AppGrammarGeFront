@@ -18,6 +18,7 @@ import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 import NameListEditor from "../modelOverview/NameListEditor";
 import MdGridView from "../appcarcass/masterdata/MdGridView";
 import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+import { ETableName } from "../masterData/tableNames";
 
 const ActantCombinationsReCounter: FC = () => {
     // const { alert, isMenuLoading, flatMenu, loadMultipleListData, masterData } =
@@ -33,10 +34,12 @@ const ActantCombinationsReCounter: FC = () => {
 
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
 
-    const actantPositions = mdataRepo.actantPositions as ActantPosition[];
-    const verbNumbers = mdataRepo.verbNumbers as VerbNumber[];
+    const actantPositions = mdataRepo[
+        ETableName.ActantPositions
+    ] as ActantPosition[];
+    const verbNumbers = mdataRepo[ETableName.VerbNumbers] as VerbNumber[];
 
-    const verbPersons = mdataRepo.verbPersons as VerbPerson[];
+    const verbPersons = mdataRepo[ETableName.VerbPersons] as VerbPerson[];
     // const actantCombinationDetails =
     //   mdRepo.actantCombinationDetails as ActantCombinationDetail[];
 
@@ -44,10 +47,9 @@ const ActantCombinationsReCounter: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "actantPositions",
-            "verbNumbers",
-            "verbPersons",
-            // "actantCombinationDetails",
+            ETableName.ActantPositions,
+            ETableName.VerbNumbers,
+            ETableName.VerbPersons,
         ],
         []
     );

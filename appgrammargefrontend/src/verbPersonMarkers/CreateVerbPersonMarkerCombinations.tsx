@@ -25,6 +25,7 @@ import type {
     VerbType,
 } from "../masterData/mdTypes";
 import type { VerbPersonMarkerParadigm } from "../redux/types/formulasTypes";
+import { ETableName } from "../masterData/tableNames";
 
 const CreateVerbPersonMarkerCombinations: FC = () => {
     // const { alert, isMenuLoading, flatMenu, masterData, loadMultipleListData } =
@@ -41,7 +42,7 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
     const dataTypesState = useAppSelector((state) => state.dataTypesState);
     const masterData = useAppSelector((state) => state.masterDataState);
 
-    const [getLookupTables, { isLoading: loadingLookupTables }] =
+    const [, { isLoading: loadingLookupTables }] =
         useLazyGetLookupTablesQuery();
 
     const dataTypes = dataTypesState.dataTypes as Array<DataTypeFfModel>;
@@ -54,18 +55,25 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
     //   mdRepo.pluralityChangesByVerbTypes as PluralityChangesByVerbType[];
     // const verbPersonMarkerCombinations =
     //   mdRepo.verbPersonMarkerCombinations as VerbPersonMarkerCombination[];
-    const actantGrammarCases =
-        mdataRepo.actantGrammarCases as ActantGrammarCase[];
-    const actantGroups = mdataRepo.actantGroups as ActantGroup[];
-    const actantPositions = mdataRepo.actantPositions as ActantPosition[];
-    const actantTypes = mdataRepo.actantTypes as ActantType[];
-    const verbTransitions = mdataRepo.verbTransitions as VerbTransition[];
-    const verbPluralityTypes =
-        mdataRepo.verbPluralityTypes as VerbPluralityType[];
-    const verbTypes = mdataRepo.verbTypes as VerbType[];
-    const verbSeries = mdataRepo.verbSeries as VerbSeries[];
-    const verbPersonMarkerParadigms =
-        mdataRepo.verbPersonMarkerParadigms as VerbPersonMarkerParadigm[];
+    const actantGrammarCases = mdataRepo[
+        ETableName.ActantGrammarCases
+    ] as ActantGrammarCase[];
+    const actantGroups = mdataRepo[ETableName.ActantGroups] as ActantGroup[];
+    const actantPositions = mdataRepo[
+        ETableName.ActantPositions
+    ] as ActantPosition[];
+    const actantTypes = mdataRepo[ETableName.ActantTypes] as ActantType[];
+    const verbTransitions = mdataRepo[
+        ETableName.VerbTransitions
+    ] as VerbTransition[];
+    const verbPluralityTypes = mdataRepo[
+        ETableName.VerbPluralityTypes
+    ] as VerbPluralityType[];
+    const verbTypes = mdataRepo[ETableName.VerbTypes] as VerbType[];
+    const verbSeries = mdataRepo[ETableName.VerbSeries] as VerbSeries[];
+    const verbPersonMarkerParadigms = mdataRepo[
+        ETableName.VerbPersonMarkerParadigms
+    ] as VerbPersonMarkerParadigm[];
 
     //console.log("CreateVerbPersonMarkerCombinations props=", props);
 
@@ -73,19 +81,15 @@ const CreateVerbPersonMarkerCombinations: FC = () => {
 
     const tableNamesForLoad = useMemo(
         () => [
-            "actantGrammarCases",
-            "actantPositions",
-            "actantTypes",
-            "actantGroups",
-            "verbTransitions",
-            "verbPluralityTypes",
-            "verbTypes",
-            "verbSeries",
-            "verbPersonMarkerParadigms",
-            // "actantGrammarCasesByActantTypes",
-            // "actantTypesByVerbTypes",
-            // "pluralityChangesByVerbTypes",
-            // "verbPersonMarkerCombinations",
+            ETableName.ActantGrammarCases,
+            ETableName.ActantPositions,
+            ETableName.ActantTypes,
+            ETableName.ActantGroups,
+            ETableName.VerbTransitions,
+            ETableName.VerbPluralityTypes,
+            ETableName.VerbTypes,
+            ETableName.VerbSeries,
+            ETableName.VerbPersonMarkerParadigms,
         ],
         []
     );
