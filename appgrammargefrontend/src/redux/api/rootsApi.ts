@@ -23,7 +23,6 @@ import type {
     SamplePositionModel,
     VerbsByPagesResponse,
 } from "../types/rootsTypes";
-import type { RootLinkQueryModel } from "../../derivationTreeEditor/TypesAndSchemas/InflectionDataTypeAndSchema";
 
 // import {
 //   setDataTypes,

@@ -45,10 +45,10 @@ const ParadigmTopNavMenu: FC = () => {
     if (!infId || !paradigm || !user) return null;
 
     let title = "ძირითადი";
-    const ispMorpheme = paradigm.ispMorphemes.find(
-        (item) => item.ispMorphemeNom === prdIspMorphemeNom
-    );
-    if (ispMorpheme) title = ispMorpheme.ispMorpheme;
+    // const ispMorpheme = paradigm.ispMorphemes.find(
+    //     (item) => item.ispMorphemeNom === prdIspMorphemeNom
+    // );
+    // if (ispMorpheme) title = ispMorpheme.ispMorpheme;
 
     return (
         <Nav>
@@ -64,7 +64,7 @@ const ParadigmTopNavMenu: FC = () => {
                 <FontAwesomeIcon icon="minus" /> დეფისებით
             </ToggleButton>
 
-            <DropdownButton
+            {/* <DropdownButton
                 id="select-indirect-speech-particle"
                 title={title}
                 className="btn-space"
@@ -84,7 +84,7 @@ const ParadigmTopNavMenu: FC = () => {
                         </Dropdown.Item>
                     );
                 })}
-            </DropdownButton>
+            </DropdownButton> */}
 
             <ToggleButton id="formulas" type="checkbox" value="1">
                 <Form.Check

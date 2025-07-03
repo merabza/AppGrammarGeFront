@@ -240,11 +240,11 @@ const Paradigm: FC<ParadigmProps> = (props) => {
     console.log("Paradigm paradigm=", paradigm);
 
     let isp = "";
-    const ispMorpheme = paradigm.ispMorphemes.find(
-        (item) => item.ispMorphemeNom === prdIspMorphemeNom
-    );
-    if (ispMorpheme && ispMorpheme.ispMorphemeNom > 0)
-        isp = ispMorpheme.ispMorpheme;
+    // const ispMorpheme = paradigm.ispMorphemes.find(
+    //     (item) => item.ispMorphemeNom === prdIspMorphemeNom
+    // );
+    // if (ispMorpheme && ispMorpheme.ispMorphemeNom > 0)
+    //     isp = ispMorpheme.ispMorpheme;
 
     return (
         <Col md="4" id="inflection-paradigm">
