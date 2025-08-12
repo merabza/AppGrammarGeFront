@@ -1,6 +1,5 @@
 //AppParameters.ts
 
-//AppParameters.ts
 import type { IAppParametersState } from "./appcarcass/redux/slices/appParametersSlice";
 
 export const appParameters: IAppParametersState = {
