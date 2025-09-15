@@ -30,7 +30,7 @@ export const nounParadigmFormulasCrudApi = createApi({
                     url: `/modeleditor/nounParadigmformula/${nprId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;

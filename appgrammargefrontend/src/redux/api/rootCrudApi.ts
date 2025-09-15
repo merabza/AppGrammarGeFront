@@ -38,7 +38,7 @@ export const rootCrudApi = createApi({
                     url: `/rootcrud/${rootId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -135,7 +135,7 @@ export const rootCrudApi = createApi({
                 };
             },
             async onQueryStarted(
-                { rootId, navigate },
+                { navigate },
                 { dispatch, queryFulfilled }
             ) {
                 try {
@@ -179,9 +179,8 @@ export const rootCrudApi = createApi({
                         setAlertApiMutationError(
                             buildErrorMessage(error, {
                                 errorCode: "confirRejectRootFailed",
-                                errorMessage: `ძირის ${
-                                    confirm ? "დადასტურება" : "უარყოფა"
-                                } ვერ მოხერხდა`,
+                                errorMessage: `ძირის ${confirm ? "დადასტურება" : "უარყოფა"
+                                    } ვერ მოხერხდა`,
                             } as Err)
                         )
                     );

@@ -34,7 +34,7 @@ const IssueWork: FC = () => {
         offsetsRepo,
     } = useAppSelector((state) => state.issuesState);
 
-    const [curscrollTo, backLigth] = useScroller(savedIssueDetailLine);
+    const [, backLigth] = useScroller(savedIssueDetailLine);
 
     const [getIssueDetailsRowsData, { isLoading: loadingIssueDetails }] =
         useLazyGetIssueDetailsRowsDataQuery();

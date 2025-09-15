@@ -37,7 +37,7 @@ export const modelDataApi = createApi({
                     url: "/modeldata/getverbparadigmsbyverbtypes",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -52,7 +52,7 @@ export const modelDataApi = createApi({
                     url: "/modeldata/getallderivationformulas",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;

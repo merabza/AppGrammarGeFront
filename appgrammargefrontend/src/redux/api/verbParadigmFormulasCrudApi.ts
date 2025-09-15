@@ -30,7 +30,7 @@ export const verbParadigmFormulasCrudApi = createApi({
                     url: `/modeleditor/verbParadigmformula/${vprId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -114,7 +114,7 @@ export const verbParadigmFormulasCrudApi = createApi({
                 };
             },
             async onQueryStarted(
-                { vprId, navigate },
+                { navigate },
                 { dispatch, queryFulfilled }
             ) {
                 try {

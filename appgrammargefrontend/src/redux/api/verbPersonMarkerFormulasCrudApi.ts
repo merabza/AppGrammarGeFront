@@ -30,7 +30,7 @@ export const verbPersonMarkerFormulasCrudApi = createApi({
                     url: `/modeleditor/verbpersonmarkerformula/${vpmprId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;

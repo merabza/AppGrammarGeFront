@@ -8,37 +8,37 @@ import { useCallback } from "react";
 export type fnIssueDetailNotesGridColumns = (issId: number) => IGridColumn[];
 
 export function useIssueDetailNotesGridColumns(): [
-    fnIssueDetailNotesGridColumns
+  fnIssueDetailNotesGridColumns
 ] {
-    const IssueDetailNotesGridColumns = useCallback((issId: number) => {
-        return [
-            {
-                caption: "#",
-                visible: true,
-                sortable: true,
-                fieldName: "isdId",
-                isKey: true,
-                control: (
-                    <CustomColumn
-                        onGetCell={(value, record) => {
-                            return (
-                                <span>
-                                    #{issId}-N-{value}
-                                </span>
-                            );
-                        }}
-                    >
-                        {" "}
-                    </CustomColumn>
-                ),
-            } as IGridColumn,
-            {
-                caption: "შენიშვნა",
-                visible: true,
-                fieldName: "note",
-            } as IGridColumn,
-        ];
-    }, []);
+  const IssueDetailNotesGridColumns = useCallback((issId: number) => {
+    return [
+      {
+        caption: "#",
+        visible: true,
+        sortable: true,
+        fieldName: "isdId",
+        isKey: true,
+        control: (
+          <CustomColumn
+            onGetCell={(value) => {
+              return (
+                <span>
+                  #{issId}-N-{value}
+                </span>
+              );
+            }}
+          >
+            {" "}
+          </CustomColumn>
+        ),
+      } as IGridColumn,
+      {
+        caption: "შენიშვნა",
+        visible: true,
+        fieldName: "note",
+      } as IGridColumn,
+    ];
+  }, []);
 
-    return [IssueDetailNotesGridColumns];
+  return [IssueDetailNotesGridColumns];
 }

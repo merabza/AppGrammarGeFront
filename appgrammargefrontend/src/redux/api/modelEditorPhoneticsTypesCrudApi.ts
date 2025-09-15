@@ -30,7 +30,7 @@ export const modelEditorPhoneticsTypesCrudApi = createApi({
                     url: `/modeleditor/phoneticstype/${phtId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;

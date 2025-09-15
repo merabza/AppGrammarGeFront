@@ -227,7 +227,7 @@ const RecountsDashboard: FC = () => {
 
     const menLinkKey = useLocation().pathname.split("/")[1];
 
-    const { isMenuLoading, flatMenu } = useAppSelector(
+    const { flatMenu } = useAppSelector(
         (state) => state.navMenuState
     );
 

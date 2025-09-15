@@ -49,7 +49,7 @@ export const issuesApi = createApi({
                     url: "/issues/getissuescount",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -67,7 +67,7 @@ export const issuesApi = createApi({
                     url: `/issues/getissues/${tabWindowId}/${offset}/${rowsCount}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     dispatch(setIssues(data));
@@ -94,7 +94,7 @@ export const issuesApi = createApi({
                     )}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     // console.log(
@@ -151,7 +151,7 @@ export const issuesApi = createApi({
                 };
             },
             async onQueryStarted(
-                filterSortObject,
+                _,
                 { dispatch, queryFulfilled }
             ) {
                 try {
@@ -170,7 +170,7 @@ export const issuesApi = createApi({
                     url: `/issues/getoneissue/${issueId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     // const result =
                     await queryFulfilled;

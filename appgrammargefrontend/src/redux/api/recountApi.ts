@@ -17,7 +17,7 @@ export const recountApi = createApi({
                     method: "POST",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -96,13 +96,13 @@ export const recountApi = createApi({
         // }),
         //////////////////////////////////////////////////////
         CancelCurrentProcess: builder.mutation<void, void>({
-            query(args) {
+            query(_) {
                 return {
                     url: `/databaserecounter/cancelcurrentprocess`,
                     method: "POST",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {

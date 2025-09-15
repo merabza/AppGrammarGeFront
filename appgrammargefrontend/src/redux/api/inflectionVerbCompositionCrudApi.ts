@@ -34,7 +34,7 @@ export const inflectionVerbCompositionCrudApi = createApi({
                     url: `/inflectionverbcompositioncrud/${ivcId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -56,7 +56,7 @@ export const inflectionVerbCompositionCrudApi = createApi({
                     body: inflectionVerbCompositionData,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -80,7 +80,7 @@ export const inflectionVerbCompositionCrudApi = createApi({
                     body: inflectionVerbCompositionData,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -100,7 +100,7 @@ export const inflectionVerbCompositionCrudApi = createApi({
                     method: "DELETE",
                 };
             },
-            async onQueryStarted(ivcId, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -122,7 +122,7 @@ export const inflectionVerbCompositionCrudApi = createApi({
                     method: "PATCH",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {

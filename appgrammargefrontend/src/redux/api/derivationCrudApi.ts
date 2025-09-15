@@ -32,7 +32,7 @@ export const derivationCrudApi = createApi({
                         url: `/derivationcrud/${dbrId}`,
                     };
                 },
-                async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                async onQueryStarted(_, { dispatch, queryFulfilled }) {
                     try {
                         const queryResult = await queryFulfilled;
                         const { data } = queryResult;
@@ -57,7 +57,7 @@ export const derivationCrudApi = createApi({
                     body: derivationBranchData,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -81,7 +81,7 @@ export const derivationCrudApi = createApi({
                     body: derivationBranchData,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -101,7 +101,7 @@ export const derivationCrudApi = createApi({
                     method: "DELETE",
                 };
             },
-            async onQueryStarted(dbrId, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -123,7 +123,7 @@ export const derivationCrudApi = createApi({
                     method: "PATCH",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {

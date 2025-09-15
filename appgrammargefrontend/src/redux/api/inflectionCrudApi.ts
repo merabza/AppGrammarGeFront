@@ -31,7 +31,7 @@ export const inflectionCrudApi = createApi({
                     url: `/inflectioncrud/${infId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -50,7 +50,7 @@ export const inflectionCrudApi = createApi({
                     body: inflectionData,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -71,7 +71,7 @@ export const inflectionCrudApi = createApi({
                     body: inflectionData,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -91,7 +91,7 @@ export const inflectionCrudApi = createApi({
                     method: "DELETE",
                 };
             },
-            async onQueryStarted(infId, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -113,7 +113,7 @@ export const inflectionCrudApi = createApi({
                     method: "PATCH",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {

@@ -20,16 +20,13 @@ export const derivationFormulasCrudApi = createApi({
     baseQuery: jwtBaseQuery,
     endpoints: (builder) => ({
         //////////////////////////////////////////////////////
-        getOneDerivationFormulaById: builder.query<
-            DerivationFormulaFormData,
-            number
-        >({
+        getOneDerivationFormulaById: builder.query<DerivationFormulaFormData, number>({
             query(dfId) {
                 return {
                     url: `/modeleditor/derivationformula/${dfId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
@@ -44,10 +41,7 @@ export const derivationFormulasCrudApi = createApi({
             },
         }),
         ////////////////////////////////////////////////////
-        createDerivationFormula: builder.mutation<
-            DerivationFormulaFormData,
-            CreateUpdateDerivationFormulaData
-        >({
+        createDerivationFormula: builder.mutation<DerivationFormulaFormData, CreateUpdateDerivationFormulaData>({
             query({ derivationFormulaFormData }) {
                 return {
                     url: `/modeleditor/derivationformula`,
@@ -74,10 +68,7 @@ export const derivationFormulasCrudApi = createApi({
             },
         }),
         //////////////////////////////////////////////////////
-        updateDerivationFormula: builder.mutation<
-            void,
-            CreateUpdateDerivationFormulaData
-        >({
+        updateDerivationFormula: builder.mutation<void, CreateUpdateDerivationFormulaData>({
             query({ derivationFormulaFormData }) {
                 return {
                     url: `/modeleditor/derivationformula/${derivationFormulaFormData.derivationFormula.dfId}`,
@@ -102,10 +93,7 @@ export const derivationFormulasCrudApi = createApi({
             },
         }),
         //////////////////////////////////////////////////////
-        deleteDerivationFormula: builder.mutation<
-            void,
-            { dfId: number; navigate: NavigateFunction }
-        >({
+        deleteDerivationFormula: builder.mutation<void, { dfId: number; navigate: NavigateFunction }>({
             query({ dfId }) {
                 return {
                     url: `/modeleditor/derivationformula/${dfId}`,

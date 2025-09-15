@@ -39,7 +39,7 @@ export function getFormulaVisual2(
     morphemes = morphemes.filter((f) => f !== undefined);
 
     const result = morphemes
-        .map((morpheme, ind) => {
+        .map((morpheme) => {
             return `${morpheme?.mrpName ? morpheme.mrpName.trim() : "(null)"}`;
         })
         .join("-");

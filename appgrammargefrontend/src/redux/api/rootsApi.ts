@@ -97,7 +97,7 @@ export const rootsApi = createApi({
                     url: `/roots/getverbsbypages/${searchValue}/${dropdownLinesCount}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     // const queryResult =
                     await queryFulfilled;
@@ -180,7 +180,7 @@ export const rootsApi = createApi({
                     method: "PUT",
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -243,7 +243,7 @@ export const rootsApi = createApi({
                     url: `/roots/getrootbyid/${rootId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -258,7 +258,7 @@ export const rootsApi = createApi({
                     url: `/roots/getrootsbyderivationbranchid/${derivBranchId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -273,7 +273,7 @@ export const rootsApi = createApi({
                     url: `/roots/getrootsbyinflectionid/${inflectionId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -291,7 +291,7 @@ export const rootsApi = createApi({
                     url: `/roots/getrootsbyinflectionverbcompositionid/${inflectionVerbCompositionId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {
@@ -336,7 +336,7 @@ export const rootsApi = createApi({
                     url: `/roots/getuserslistforconfirm`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
                 } catch (error) {

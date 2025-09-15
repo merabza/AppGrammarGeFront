@@ -27,7 +27,7 @@ export const modelEditorMorphemesCrudApi = createApi({
                     url: `/modeleditor/morpheme/${mrpId}`,
                 };
             },
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
