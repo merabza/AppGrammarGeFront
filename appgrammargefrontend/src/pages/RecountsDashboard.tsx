@@ -182,8 +182,8 @@ const RecountsDashboard: FC = () => {
                                     StrData.ChangedBase === ""
                                 )
                                     setChangedBase(StrData.ChangedBase);
-                                if (StrData.Error || StrData.Error === "")
-                                    setErrorMessage(StrData.Error);
+                                if (StrData.ErrorOmd || StrData.ErrorOmd === "")
+                                    setErrorMessage(StrData.ErrorOmd);
                             }
                             //setLastMessage(receivedMessage);
                         }
@@ -207,7 +207,7 @@ const RecountsDashboard: FC = () => {
                     );
 
                     console.log(
-                        "Error while establishing connection: " + { err }
+                        "ErrorOmd while establishing connection: " + { err }
                     );
                 }
                 setHubConnection(hubConnect);
