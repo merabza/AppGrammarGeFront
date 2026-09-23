@@ -455,7 +455,9 @@ const MorphemeEdit: FC = () => {
             valueMember="phcId"
             displayMember="phcName"
             getError={getError}
-            onChangeValue={changeField}
+            onChangeComboValue={(fieldPath, _index, value) =>
+              changeField(fieldPath, value)
+            }
             onTrashButtonClick={(index) => {
               const newFrm = JSON.parse(
                 JSON.stringify(frm)

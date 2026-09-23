@@ -65,7 +65,7 @@ export function useIssuesGridColumns(): [fnIssuesGridColumns] {
                 nullable: false,
                 fieldName: "issueKindId",
                 lookupColumnPart: issueKinds,
-            } as IGridColumn,
+            } as unknown as IGridColumn,
             {
                 caption: "პრიორიტეტი",
                 visible: true,
