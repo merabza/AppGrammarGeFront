@@ -37,7 +37,7 @@ import OnePlusButton from "../appcarcass/editorParts/OnePlusButton";
 import OneSaveCancelButtons from "../appcarcass/editorParts/OneSaveCancelButtons";
 import OneErrorRow from "../appcarcass/editorParts/OneErrorRow";
 import { useClearTablesFromRepo } from "../appcarcass/masterdata/masterDataHooks/useClearTablesFromRepo";
-import { useCheckLoadMdTables } from "../appcarcass/masterdata/masterDataHooks/useCheckLoadMdTables";
+import { useLazyGetDataTypesQuery } from "../appcarcass/redux/api/dataTypesApi";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import { ETableName } from "../masterData/tableNames";
 
@@ -81,7 +81,8 @@ const PhoneticsOptionEdit: FC = () => {
     ] = useDeletePhoneticsOptionMutation();
 
     const [clearTables] = useClearTablesFromRepo();
-    const [checkLoadMdTables] = useCheckLoadMdTables();
+    const [getDataTypes, { isLoading: loadingDataTypes }] =
+        useLazyGetDataTypesQuery();
 
     //4. ამ რედაქტორს არ სჭირდება ინფორმაცია ცხრილებიდან
     // const tableNamesFroLoad = [];
@@ -103,9 +104,10 @@ const PhoneticsOptionEdit: FC = () => {
         clearTables(tableNamesForClear, null);
     }
 
+    //ცხრილები არ სჭირდება, მაგრამ უფლებების შესამოწმებლად მონაცემთა ტიპები უნდა იყოს ჩატვირთული
     useEffect(() => {
-        checkLoadMdTables(null);
-    }, [dataTypes]);
+        if (dataTypes.length === 0) getDataTypes();
+    }, [dataTypes, getDataTypes]);
 
     const [getOnePhoneticsOptionById, { isLoading: loadingPhoneticsOption }] =
         useLazyGetOnePhoneticsOptionByIdQuery();
@@ -190,6 +192,7 @@ const PhoneticsOptionEdit: FC = () => {
 
     if (
         loadingPhoneticsOption ||
+        loadingDataTypes ||
         mdWorkingOnLoad ||
         Object.values(mdWorkingOnLoadingTables).some((s: boolean) => s)
     )
@@ -236,7 +239,7 @@ const PhoneticsOptionEdit: FC = () => {
                         workingOnDelete={workingOnDeletePhoneticsOption}
                         DeleteFailure={DeleteFailure}
                         onDelete={() => {
-                            if (!!curPhoIdVal)
+                            if (curPhoIdVal)
                                 deletePhoneticsOption({
                                     phoId: curPhoIdVal,
                                     navigate,
@@ -474,7 +477,7 @@ const PhoneticsOptionEdit: FC = () => {
                                 const newFrm = JSON.parse(
                                     JSON.stringify(frm)
                                 ) as PhoneticsOptionEditFormData;
-                                let newPod = yup
+                                const newPod = yup
                                     .reach(
                                         phoneticsOptionEditFormDataSchema,
                                         "phoneticsOptionDetails[0]"
