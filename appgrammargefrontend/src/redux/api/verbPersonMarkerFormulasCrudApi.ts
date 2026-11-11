@@ -56,16 +56,13 @@ export const verbPersonMarkerFormulasCrudApi = createApi({
                     body: verbPersonMarkerFormulaFormData,
                 };
             },
-            async onQueryStarted(
-                { verbPersonMarkerFormulaFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setVerbPersonMarkerFormulaForEdit(data));
                     navigate(
-                        `/verbPersonMarkerFormulasOverview/df/${verbPersonMarkerFormulaFormData.verbPersonMarkerFormula.vpmprId}`
+                        `/verbPersonMarkerFormulas/${data.verbPersonMarkerFormula.verbPersonMarkerParadigmId}/${data.verbPersonMarkerFormula.vpmprId}`
                     );
                 } catch (error) {
                     dispatch(
@@ -95,7 +92,9 @@ export const verbPersonMarkerFormulasCrudApi = createApi({
                     const vpmprId =
                         verbPersonMarkerFormulaFormData.verbPersonMarkerFormula
                             .vpmprId;
-                    navigate(`/verbPersonMarkerFormulasOverview/df/${vpmprId}`);
+                    navigate(
+                        `/verbPersonMarkerFormulas/${verbPersonMarkerFormulaFormData.verbPersonMarkerFormula.verbPersonMarkerParadigmId}/${vpmprId}`
+                    );
                 } catch (error) {
                     dispatch(
                         setAlertApiMutationError(buildErrorMessage(error))
@@ -117,7 +116,7 @@ export const verbPersonMarkerFormulasCrudApi = createApi({
             async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    navigate("/verbPersonMarkerFormulasOverview");
+                    navigate("/VerbPersonMarkersOverview");
                 } catch (error) {
                     // dispatch(setDeleteFailureVerbPersonMarker(true));
                     dispatch(

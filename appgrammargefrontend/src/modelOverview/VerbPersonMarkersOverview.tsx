@@ -75,9 +75,10 @@ const VerbPersonMarkersOverview: FC = () => {
         checkLoadMdTables(tableNamesForLoad);
     }, [isMenuLoading, flatMenu, tableNamesForLoad]);
 
-    const { tabKey, recId, recName } = useParams<string>();
+    const { tabKey, recName } = useParams<string>();
 
-    const recIdNumber = NzInt(recId);
+    //მისამართის ბოლო სეგმენტი (:recName) ჩანაწერის იდენტიფიკატორია
+    const recIdNumber = NzInt(recName);
 
     const [curscrollTo, backLigth] = useScroller<{
         tabKey: string | undefined;
@@ -94,7 +95,7 @@ const VerbPersonMarkersOverview: FC = () => {
     }
 
     const verbPersonMarkerParadigmsDataType = dataTypes.find(
-        (f) => f.dtTable === "verbPersonMarkerParadigms"
+        (f) => f.dtTable === ETableName.VerbPersonMarkerParadigms
     );
 
     if (
@@ -125,10 +126,10 @@ const VerbPersonMarkersOverview: FC = () => {
     }
 
     const listEditorTableNames = [
-        "verbPluralityTypes",
-        "actantGroups",
-        "verbPersons",
-        "verbNumbers",
+        ETableName.VerbPluralityTypes,
+        ETableName.ActantGroups,
+        ETableName.VerbPersons,
+        ETableName.VerbNumbers,
     ];
     return (
         <div>
@@ -175,7 +176,9 @@ const VerbPersonMarkersOverview: FC = () => {
             <ParadigmListEditor
                 dataType={verbPersonMarkerParadigmsDataType}
                 paradigmNamesTable={verbPersonMarkerParadigmNames}
-                paradigmNamesTableName={"verbPersonMarkerParadigmNamesQuery"}
+                paradigmNamesTableName={
+                    ETableName.VerbPersonMarkerParadigmNamesQuery
+                }
                 formulasTableName="verbPersonMarkerFormulas"
                 curscrollTo={curscrollTo}
                 backLigth={backLigth}

@@ -56,16 +56,13 @@ export const modelEditorPhoneticsOptionsCrudApi = createApi({
                     body: derivationBranchData,
                 };
             },
-            async onQueryStarted(
-                { phoneticsOptionEditFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setPhoneticsOptionForEdit(data));
                     navigate(
-                        `/phoneticsTypesOverview/phoneticsoption/${phoneticsOptionEditFormData.phoneticsOption.phoId}`
+                        `/phoneticsTypesOverview/phoneticsOption/${data.phoneticsOption.phoId}`
                     );
                 } catch (error) {
                     dispatch(
@@ -95,7 +92,7 @@ export const modelEditorPhoneticsOptionsCrudApi = createApi({
                     const phoId =
                         phoneticsOptionEditFormData.phoneticsOption.phoId;
                     navigate(
-                        `/phoneticsTypesOverview/phoneticsoption/${phoId}`
+                        `/phoneticsTypesOverview/phoneticsOption/${phoId}`
                     );
                 } catch (error) {
                     dispatch(

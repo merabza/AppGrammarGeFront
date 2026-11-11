@@ -175,7 +175,7 @@ const PhoneticsOptionEdit: FC = () => {
     }
 
     const PhoneticsOptionsDataType = dataTypes.find(
-        (f) => f.dtTable === "phoneticsOptions"
+        (f) => f.dtTable === ETableName.PhoneticsOptions
     );
 
     const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);

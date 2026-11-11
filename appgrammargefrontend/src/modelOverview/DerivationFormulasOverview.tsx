@@ -39,7 +39,7 @@ const DerivationFormulasOverview: FC = () => {
   ] as MorphemeRange[];
   const morphemesQuery = mdataRepo[ETableName.MorphemesQuery] as Morpheme[];
 
-  const { tabKeyParam, recNameParam } = useParams<string>();
+  const { tabKey: tabKeyParam, recName: recNameParam } = useParams<string>();
 
   const menLinkKey = useLocation().pathname.split("/")[1];
 
@@ -100,10 +100,10 @@ const DerivationFormulasOverview: FC = () => {
   });
 
   const derivationTypesDataType = dataTypes.find(
-    (f) => f.dtTable === "derivationTypes"
+    (f) => f.dtTable === ETableName.DerivationTypes
   );
   const derivationFormulasDataType = dataTypes.find(
-    (f) => f.dtTable === "derivationFormulas"
+    (f) => f.dtTable === ETableName.DerivationFormulas
   );
 
   // const [curscrollTo, backLigth] = useScroller({
@@ -170,7 +170,7 @@ const DerivationFormulasOverview: FC = () => {
       <h4>
         დერივაციის ტიპები ({derivationTypes.length}){" "}
         {derivationTypesDataType.create && (
-          <Link to={`/mdItemEdit/derivationTypes`}> + </Link>
+          <Link to={`/mdItemEdit/${ETableName.DerivationTypes}`}> + </Link>
         )}
       </h4>
       <p>დერივაციის ტიპის სახელი =&gt; მორფემების ჯგუფი</p>
@@ -180,14 +180,14 @@ const DerivationFormulasOverview: FC = () => {
             (mog) => mog.mogId === drt.morphemeGroupId
           );
           const bl =
-            curscrollTo.tabKey === "derivationTypes" &&
+            curscrollTo.tabKey === ETableName.DerivationTypes &&
             curscrollTo.recName === drt.drtId;
           return (
             <li key={drt.drtId.toString()} ref={bl ? backLigth : null}>
               {!derivationTypesDataType.update && <span>{drt.drtName}</span>}
               {derivationTypesDataType.update && (
                 <Link
-                  to={`/mdItemEdit/derivationTypes/${drt.drtId}`}
+                  to={`/mdItemEdit/${ETableName.DerivationTypes}/${drt.drtId}`}
                   className={!!bl ? "backLigth" : undefined}
                   onClick={() => {
                     // e.preventDefault(); ეს საჭირო არ არის, რადგან კლინკზე აღარ გადადის

@@ -49,16 +49,13 @@ export const derivationFormulasCrudApi = createApi({
                     body: derivationFormulaFormData,
                 };
             },
-            async onQueryStarted(
-                { derivationFormulaFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setDerivationFormulaForEdit(data));
                     navigate(
-                        `/derivationFormulasOverview/df/${derivationFormulaFormData.derivationFormula.dfId}`
+                        `/derivationFormulasOverview/df/${data.derivationFormula.dfId}`
                     );
                 } catch (error) {
                     dispatch(

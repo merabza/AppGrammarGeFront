@@ -56,16 +56,13 @@ export const verbParadigmFormulasCrudApi = createApi({
                     body: verbParadigmFormulaFormData,
                 };
             },
-            async onQueryStarted(
-                { verbParadigmFormulaFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setVerbParadigmFormulaForEdit(data));
                     navigate(
-                        `/verbParadigmFormulasOverview/df/${verbParadigmFormulaFormData.verbParadigmFormula.vprId}`
+                        `/verbRowParadigmFormulas/${data.verbParadigmFormula.verbParadigmId}/${data.verbParadigmFormula.vprId}`
                     );
                 } catch (error) {
                     dispatch(
@@ -94,7 +91,9 @@ export const verbParadigmFormulasCrudApi = createApi({
                     await queryFulfilled;
                     const vprId =
                         verbParadigmFormulaFormData.verbParadigmFormula.vprId;
-                    navigate(`/verbParadigmFormulasOverview/df/${vprId}`);
+                    navigate(
+                        `/verbRowParadigmFormulas/${verbParadigmFormulaFormData.verbParadigmFormula.verbParadigmId}/${vprId}`
+                    );
                 } catch (error) {
                     dispatch(
                         setAlertApiMutationError(buildErrorMessage(error))
@@ -107,7 +106,7 @@ export const verbParadigmFormulasCrudApi = createApi({
             void,
             { vprId: number; navigate: NavigateFunction }
         >({
-            query(vprId) {
+            query({ vprId }) {
                 return {
                     url: `/modeleditor/verbParadigmformula/${vprId}`,
                     method: "DELETE",
@@ -119,7 +118,7 @@ export const verbParadigmFormulasCrudApi = createApi({
             ) {
                 try {
                     await queryFulfilled;
-                    navigate("/verbParadigmFormulasOverview");
+                    navigate("/VerbRowParadigmsOverview");
                 } catch (error) {
                     // dispatch(setDeleteFailureVerbParadigm(true));
                     dispatch(

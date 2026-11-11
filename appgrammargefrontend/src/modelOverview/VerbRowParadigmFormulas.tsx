@@ -101,7 +101,7 @@ const VerbRowParadigmFormulas: FC = () => {
         }
     }, [paradigmIdNumber, curParadigmId]); //, loading, loadingFailure, drParentsLoading, drChildsLoading, drWorkingOnSave
 
-    const { recNameParam } = useParams<string>();
+    const { formulaId: recNameParam } = useParams<string>();
 
     const recNameNumber = NzInt(recNameParam);
 
@@ -133,7 +133,9 @@ const VerbRowParadigmFormulas: FC = () => {
     //მაშინ პარადიგმებზეც უნდა ჰქონდეს.
     //ასე იმიტომ გაკეთდა, რომ არ გამხდარიყო საჭირო პარადიგმების მწკრივის ცხრილის დარეგისტრირება DataType-ებში
     //თუ მომავალში ამ ორი უფლების გამიჯვნა გახდა საჭირო, მოგვიწევს DataType-ებში დავარეგისტრიროთ პარადიგმების მწკრივის ცხრილი
-    const dataType = dataTypes.find((f) => f.dtTable === "verbParadigms");
+    const dataType = dataTypes.find(
+        (f) => f.dtTable === ETableName.VerbParadigms
+    );
 
     //console.log("VerbRowParadigmFormulas curscrollTo=", curscrollTo);
     if (
@@ -219,7 +221,7 @@ const VerbRowParadigmFormulas: FC = () => {
             <Row>
                 <Col sm="10">
                     <Link
-                        to={`/verbRowParadigmsOverview/verbParadigms/${paradigmId}`}
+                        to={`/VerbRowParadigmsOverview/${ETableName.VerbParadigms}/${paradigmId}`}
                         className="btn btn-primary"
                     >
                         <FontAwesomeIcon icon="chevron-left" /> უკან

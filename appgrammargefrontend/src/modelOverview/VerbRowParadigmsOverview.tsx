@@ -75,9 +75,10 @@ const VerbRowParadigmsOverview: FC = () => {
         checkLoadMdTables(tableNamesForLoad);
     }, [isMenuLoading, flatMenu, tableNamesForLoad]);
 
-    const { tabKey, recId, recName } = useParams<string>();
+    const { tabKey, recName } = useParams<string>();
 
-    const recIdNumber = NzInt(recId);
+    //მისამართის ბოლო სეგმენტი (:recName) ჩანაწერის იდენტიფიკატორია
+    const recIdNumber = NzInt(recName);
 
     const [curscrollTo, backLigth] = useScroller<{
         tabKey: string | undefined;
@@ -94,7 +95,7 @@ const VerbRowParadigmsOverview: FC = () => {
     }
 
     const verbParadigmsDataType = dataTypes.find(
-        (f) => f.dtTable === "verbParadigms"
+        (f) => f.dtTable === ETableName.VerbParadigms
     );
 
     if (
@@ -136,10 +137,10 @@ const VerbRowParadigmsOverview: FC = () => {
     }
 
     const listEditorTableNames = [
-        "verbTransitions",
-        "verbTypes",
-        "verbSeries",
-        "verbRows",
+        ETableName.VerbTransitions,
+        ETableName.VerbTypes,
+        ETableName.VerbSeries,
+        ETableName.VerbRows,
     ];
 
     return (
@@ -193,7 +194,7 @@ const VerbRowParadigmsOverview: FC = () => {
             <ParadigmListEditor
                 dataType={verbParadigmsDataType}
                 paradigmNamesTable={verbParadigmNames}
-                paradigmNamesTableName={"verbParadigmNamesQuery"}
+                paradigmNamesTableName={ETableName.VerbParadigmNamesQuery}
                 formulasTableName="verbRowParadigmFormulas"
                 curscrollTo={curscrollTo}
                 backLigth={backLigth}

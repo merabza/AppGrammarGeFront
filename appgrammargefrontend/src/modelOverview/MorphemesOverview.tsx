@@ -48,7 +48,7 @@ const MorphemesOverview: FC = () => {
 
   const tableNamesForLoad = useMemo(
     () => [
-      ETableName.MmorphemeGroups,
+      ETableName.MorphemeGroups,
       ETableName.MorphemeRanges,
       ETableName.Morphemes,
       ETableName.PhoneticsTypes,
@@ -83,7 +83,7 @@ const MorphemesOverview: FC = () => {
   ]);
 
   //const [curTabKey, curRecName, backLigth] = useTabRecscroller(props.match.params.tabKey, props.match.params.recName);
-  const { tabKeyParam, recNameParam } = useParams<string>();
+  const { tabKey: tabKeyParam, recName: recNameParam } = useParams<string>();
   const recNameNumber = NzInt(recNameParam);
   const [curscrollTo, backLigth] = useScroller<{
     tabKey: string | undefined;
@@ -118,12 +118,14 @@ const MorphemesOverview: FC = () => {
   }
 
   const morphemeGroupsDataType = dataTypes.find(
-    (f) => f.dtTable === "morphemeGroups"
+    (f) => f.dtTable === ETableName.MorphemeGroups
   );
   const morphemeRangesDataType = dataTypes.find(
-    (f) => f.dtTable === "morphemeRanges"
+    (f) => f.dtTable === ETableName.MorphemeRanges
   );
-  const morphemesDataType = dataTypes.find((f) => f.dtTable === "morphemes");
+  const morphemesDataType = dataTypes.find(
+    (f) => f.dtTable === ETableName.Morphemes
+  );
 
   if (
     !morphemeGroupsSorted ||
@@ -162,13 +164,13 @@ const MorphemesOverview: FC = () => {
       <h4>
         მორფემის ჯგუფები ({morphemeGroupsSorted.length}){" "}
         {morphemeGroupsDataType.create && (
-          <Link to={`/mdItemEdit/morphemeGroups`}> + </Link>
+          <Link to={`/mdItemEdit/${ETableName.MorphemeGroups}`}> + </Link>
         )}
       </h4>
       <ol>
         {morphemeGroupsSorted.map((mog) => {
           const bl =
-            curscrollTo.tabKey === "morphemeGroups" &&
+            curscrollTo.tabKey === ETableName.MorphemeGroups &&
             curscrollTo.recName === mog.mogId;
           return (
             <li key={mog.mogId.toString()} ref={bl ? backLigth : null}>
@@ -178,7 +180,7 @@ const MorphemesOverview: FC = () => {
               {(morphemeGroupsDataType.update ||
                 morphemeGroupsDataType.delete) && (
                 <Link
-                  to={`/mdItemEdit/morphemeGroups/${mog.mogId}`}
+                  to={`/mdItemEdit/${ETableName.MorphemeGroups}/${mog.mogId}`}
                   className={!!bl ? "backLigth" : undefined}
                   onClick={() => {
                     // e.preventDefault(); ეს საჭირო არ არის, რადგან კინკზე აღარ გადადის
@@ -197,7 +199,7 @@ const MorphemesOverview: FC = () => {
       <h4>
         მორფემის რანგები ჯგუფების მიხედვით ({morphemeRanges.length}){" "}
         {morphemeRangesDataType.create && (
-          <Link to={`/mdItemEdit/morphemeRanges`}> + </Link>
+          <Link to={`/mdItemEdit/${ETableName.MorphemeRanges}`}> + </Link>
         )}
       </h4>
 
@@ -218,7 +220,7 @@ const MorphemesOverview: FC = () => {
                 .sort((a, b) => a.mrPosition - b.mrPosition)
                 .map((mr) => {
                   const bl =
-                    curscrollTo.tabKey === "morphemeRanges" &&
+                    curscrollTo.tabKey === ETableName.MorphemeRanges &&
                     curscrollTo.recName === mr.mrId;
                   return (
                     <li key={mr.mrId.toString()} ref={bl ? backLigth : null}>
@@ -228,7 +230,7 @@ const MorphemesOverview: FC = () => {
                       {(morphemeRangesDataType.update ||
                         morphemeRangesDataType.delete) && (
                         <Link
-                          to={`/mdItemEdit/morphemeRanges/${mr.mrId}`}
+                          to={`/mdItemEdit/${ETableName.MorphemeRanges}/${mr.mrId}`}
                           className={!!bl ? "backLigth" : undefined}
                           onClick={() => {
                             // e.preventDefault(); ეს საჭირო არ არის, რადგან კინკზე აღარ გადადის

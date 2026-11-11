@@ -86,7 +86,7 @@ const PhoneticsTypesOverview: FC = () => {
     tableNamesForLoad,
   ]);
 
-  const { tabKeyParam, recNameParam } = useParams<string>();
+  const { tabKey: tabKeyParam, recName: recNameParam } = useParams<string>();
   const recNameNumber = NzInt(recNameParam);
   const [curscrollTo, backLigth] = useScroller<{
     tabKey: string | undefined;
@@ -112,10 +112,10 @@ const PhoneticsTypesOverview: FC = () => {
   //   .sort((a, b) => a.phtName.localeCompare(b.phtName))
 
   const phoneticsTypesDataType = dataTypes.find(
-    (f) => f.dtTable === "phoneticsTypes"
+    (f) => f.dtTable === ETableName.PhoneticsTypes
   );
   const phoneticsOptionsDataType = dataTypes.find(
-    (f) => f.dtTable === "phoneticsOptions"
+    (f) => f.dtTable === ETableName.PhoneticsOptions
   );
 
   const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);

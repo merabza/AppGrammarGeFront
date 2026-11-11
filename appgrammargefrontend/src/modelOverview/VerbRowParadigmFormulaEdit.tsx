@@ -363,7 +363,9 @@ const VerbRowParadigmFormulaEdit: FC = () => {
   //მაშინ პარადიგმებზეც უნდა ჰქონდეს.
   //ასე იმიტომ გაკეთდა, რომ არ გამხდარიყო საჭირო პარადიგმების მწკრივის ცხრილის დარეგისტრირება DataType-ებში
   //თუ მომავალში ამ ორი უფლების გამიჯვნა გახდა საჭირო, მოგვიწევს DataType-ებში დავარეგისტრიროთ პარადიგმების მწკრივის ცხრილი
-  const dataType = dataTypes.find((f) => f.dtTable === "verbParadigms");
+  const dataType = dataTypes.find(
+    (f) => f.dtTable === ETableName.VerbParadigms
+  );
 
   //თუ იდენტიფიკატორი წესიერია და ჩატვირთული ობიექტი ჯერ არ არის, ან საჭირო ცხრილები ჩატვირთული არ არის
   if (
@@ -556,7 +558,7 @@ const VerbRowParadigmFormulaEdit: FC = () => {
             onCloseClick={() => {
               dispatch(clearAllAlerts());
               navigate(
-                `/verbParadigmFormulas/${frm.verbParadigmFormula.verbParadigmId}/${curFormulaIdVal}`
+                `/verbRowParadigmFormulas/${frm.verbParadigmFormula.verbParadigmId}/${curFormulaIdVal}`
               );
             }}
             allowEdit={dataType.update}

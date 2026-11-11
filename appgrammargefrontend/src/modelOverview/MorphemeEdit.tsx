@@ -226,7 +226,9 @@ const MorphemeEdit: FC = () => {
       </div>
     );
 
-  const morphemesDataType = dataTypes.find((f) => f.dtTable === "morphemes");
+  const morphemesDataType = dataTypes.find(
+    (f) => f.dtTable === ETableName.Morphemes
+  );
 
   //8. ჩატვირთვის შემოწმება
   if (

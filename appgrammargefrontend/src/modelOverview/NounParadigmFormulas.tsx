@@ -95,7 +95,7 @@ const NounParadigmFormulas: FC = () => {
         }
     }, [paradigmIdNumber, curParadigmId]);
 
-    const { recNameParam } = useParams<string>();
+    const { formulaId: recNameParam } = useParams<string>();
 
     const recNameNumber = NzInt(recNameParam);
 
@@ -126,7 +126,9 @@ const NounParadigmFormulas: FC = () => {
     //მაშინ პარადიგმებზეც უნდა ჰქონდეს.
     //ასე იმიტომ გაკეთდა, რომ არ გამხდარიყო საჭირო პარადიგმების მწკრივის ცხრილის დარეგისტრირება DataType-ებში
     //თუ მომავალში ამ ორი უფლების გამიჯვნა გახდა საჭირო, მოგვიწევს DataType-ებში დავარეგისტრიროთ პარადიგმების მწკრივის ცხრილი
-    const dataType = dataTypes.find((f) => f.dtTable === "nounParadigms");
+    const dataType = dataTypes.find(
+        (f) => f.dtTable === ETableName.NounParadigms
+    );
     const nounParadigmFormulasByParadigmId = curParadigmId
         ? nounParadigmFormulas[curParadigmId]
         : null;
@@ -239,7 +241,7 @@ const NounParadigmFormulas: FC = () => {
             <Row>
                 <Col sm="10">
                     <Link
-                        to={`/nounParadigmsOverview/nounParadigms/${paradigmIdNumber}`}
+                        to={`/NounParadigmsOverview/${ETableName.NounParadigms}/${paradigmIdNumber}`}
                         className="btn btn-primary"
                     >
                         <FontAwesomeIcon icon="chevron-left" /> უკან

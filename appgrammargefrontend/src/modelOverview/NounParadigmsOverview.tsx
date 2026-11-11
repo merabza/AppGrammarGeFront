@@ -83,8 +83,9 @@ const NounParadigmsOverview: FC = () => {
         tableNamesForLoad,
     ]);
 
-    const { tabKeyParam, recIdParam, recNameParam } = useParams<string>();
-    const recIdNumber = NzInt(recIdParam);
+    const { tabKey: tabKeyParam, recName: recNameParam } = useParams<string>();
+    //მისამართის ბოლო სეგმენტი (:recName) ჩანაწერის იდენტიფიკატორია
+    const recIdNumber = NzInt(recNameParam);
     const [curscrollTo, backLigth] = useScroller<{
         tabKey: string | undefined;
         recId: number;
@@ -100,7 +101,7 @@ const NounParadigmsOverview: FC = () => {
     }
 
     const nounParadigmsDataType = dataTypes.find(
-        (f) => f.dtTable === "nounParadigms"
+        (f) => f.dtTable === ETableName.NounParadigms
     );
 
     const [ApiLoadHaveErrors] = useAlert(EAlertKind.ApiLoad);
@@ -139,7 +140,10 @@ const NounParadigmsOverview: FC = () => {
         );
     }
 
-    const listEditorTableNames = ["grammarCases", "nounNumbers"];
+    const listEditorTableNames = [
+        ETableName.GrammarCases,
+        ETableName.NounNumbers,
+    ];
 
     return (
         <div>
@@ -176,7 +180,7 @@ const NounParadigmsOverview: FC = () => {
             <ParadigmListEditor
                 dataType={nounParadigmsDataType}
                 paradigmNamesTable={nounParadigmNames}
-                paradigmNamesTableName={"nounParadigmNamesQuery"}
+                paradigmNamesTableName={ETableName.NounParadigmNamesQuery}
                 formulasTableName="nounParadigmFormulas"
                 curscrollTo={curscrollTo}
                 backLigth={backLigth}

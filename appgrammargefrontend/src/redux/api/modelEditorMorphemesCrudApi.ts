@@ -53,17 +53,12 @@ export const modelEditorMorphemesCrudApi = createApi({
                     body: morphemeEditFormData,
                 };
             },
-            async onQueryStarted(
-                { morphemeEditFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setMorphemeForEdit(data));
-                    navigate(
-                        `/morphemesOverview/mrp/${morphemeEditFormData.morpheme.mrpId}`
-                    );
+                    navigate(`/morphemesOverview/mrp/${data.morpheme.mrpId}`);
                 } catch (error) {
                     dispatch(
                         setAlertApiMutationError(buildErrorMessage(error))
@@ -103,7 +98,7 @@ export const modelEditorMorphemesCrudApi = createApi({
             void,
             { mrpId: number; navigate: NavigateFunction }
         >({
-            query(mrpId) {
+            query({ mrpId }) {
                 return {
                     url: `/modeleditor/morpheme/${mrpId}`,
                     method: "DELETE",
@@ -112,7 +107,7 @@ export const modelEditorMorphemesCrudApi = createApi({
             async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    navigate("/MorphemesOverview");
+                    navigate("/morphemesOverview");
                 } catch (error) {
                     // dispatch(setDeleteFailureDerivation(true));
                     dispatch(

@@ -336,7 +336,9 @@ const DerivationFormulaEdit: FC = () => {
     //თუ ინფორმაციის ჩატვირთვა ჯერ კიდევ მიმდინარეობა
     return <WaitPage />;
 
-  const dataType = dataTypes.find((f) => f.dtTable === "derivationFormulas");
+  const dataType = dataTypes.find(
+    (f) => f.dtTable === ETableName.DerivationFormulas
+  );
 
   //თუ იდენტიფიკატორი წესიერია და ჩატვირთული ობიექტი ჯერ არ არის, ან საჭირო ცხრილები ჩატვირთული არ არის
   if (

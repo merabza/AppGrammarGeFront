@@ -56,16 +56,13 @@ export const modelEditorPhoneticsTypesCrudApi = createApi({
                     body: phoneticsTypeEditFormData,
                 };
             },
-            async onQueryStarted(
-                { phoneticsTypeEditFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setPhoneticsTypeForEdit(data));
                     navigate(
-                        `/phoneticsTypesOverview/mrp/${phoneticsTypeEditFormData.phoneticsType.phtId}`
+                        `/phoneticsTypesOverview/phoneticstype/${data.phoneticsType.phtId}`
                     );
                 } catch (error) {
                     dispatch(
@@ -93,7 +90,7 @@ export const modelEditorPhoneticsTypesCrudApi = createApi({
                 try {
                     await queryFulfilled;
                     const phtId = phoneticsTypeEditFormData.phoneticsType.phtId;
-                    navigate(`/phoneticsTypesOverview/mrp/${phtId}`);
+                    navigate(`/phoneticsTypesOverview/phoneticstype/${phtId}`);
                 } catch (error) {
                     dispatch(
                         setAlertApiMutationError(buildErrorMessage(error))
@@ -115,7 +112,7 @@ export const modelEditorPhoneticsTypesCrudApi = createApi({
             async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    navigate("/PhoneticsTypesOverview");
+                    navigate("/phoneticsTypesOverview");
                 } catch (error) {
                     // dispatch(setDeleteFailureDerivation(true));
                     dispatch(

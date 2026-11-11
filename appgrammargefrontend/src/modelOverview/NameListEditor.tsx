@@ -71,7 +71,7 @@ const NameListEditor: FC<NameListEditorProps> = (props) => {
         {tableForEditSorted.map((m) => {
           const bl =
             curscrollTo?.tabKey === tableName &&
-            curscrollTo?.recName === m[idFieldName];
+            curscrollTo?.recId === m[idFieldName];
           //console.log("NameListEditor map m=", m);
           //console.log("NameListEditor map idFieldName=", idFieldName);
           return (

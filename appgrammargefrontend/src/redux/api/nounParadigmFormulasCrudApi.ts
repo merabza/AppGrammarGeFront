@@ -56,16 +56,13 @@ export const nounParadigmFormulasCrudApi = createApi({
                     body: nounParadigmFormulaFormData,
                 };
             },
-            async onQueryStarted(
-                { nounParadigmFormulaFormData, navigate },
-                { dispatch, queryFulfilled }
-            ) {
+            async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     const queryResult = await queryFulfilled;
                     const { data } = queryResult;
                     dispatch(setNounParadigmFormulaForEdit(data));
                     navigate(
-                        `/nounParadigmsOverview/df/${nounParadigmFormulaFormData.nounParadigmFormula.nprId}`
+                        `/nounParadigmFormulas/${data.nounParadigmFormula.nounParadigmId}/${data.nounParadigmFormula.nprId}`
                     );
                 } catch (error) {
                     dispatch(
@@ -94,7 +91,9 @@ export const nounParadigmFormulasCrudApi = createApi({
                     await queryFulfilled;
                     const nprId =
                         nounParadigmFormulaFormData.nounParadigmFormula.nprId;
-                    navigate(`/nounParadigmsOverview/df/${nprId}`);
+                    navigate(
+                        `/nounParadigmFormulas/${nounParadigmFormulaFormData.nounParadigmFormula.nounParadigmId}/${nprId}`
+                    );
                 } catch (error) {
                     dispatch(
                         setAlertApiMutationError(buildErrorMessage(error))
@@ -117,7 +116,7 @@ export const nounParadigmFormulasCrudApi = createApi({
             async onQueryStarted({ navigate }, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    navigate("/nounParadigmsOverview");
+                    navigate("/NounParadigmsOverview");
                 } catch (error) {
                     dispatch(
                         setAlertApiMutationError(buildErrorMessage(error))

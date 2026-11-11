@@ -101,7 +101,7 @@ const VerbPersonMarkerFormulas: FC = () => {
         }
     }, [paradigmIdNumber, curParadigmId]); //, loading, loadingFailure, drParentsLoading, drChildsLoading, drWorkingOnSave
 
-    const { recNameParam } = useParams<string>();
+    const { formulaId: recNameParam } = useParams<string>();
 
     const recNameNumber = NzInt(recNameParam);
 
@@ -133,7 +133,9 @@ const VerbPersonMarkerFormulas: FC = () => {
     //მაშინ პარადიგმებზეც უნდა ჰქონდეს.
     //ასე იმიტომ გაკეთდა, რომ არ გამხდარიყო საჭირო პარადიგმების მწკრივის ცხრილის დარეგისტრირება DataType-ებში
     //თუ მომავალში ამ ორი უფლების გამიჯვნა გახდა საჭირო, მოგვიწევს DataType-ებში დავარეგისტრიროთ პარადიგმების მწკრივის ცხრილი
-    const dataType = dataTypes.find((f) => f.dtTable === "verbParadigms");
+    const dataType = dataTypes.find(
+        (f) => f.dtTable === ETableName.VerbParadigms
+    );
 
     //console.log("VerbPersonMarkerFormulas props.match.params.recName=", props.match.params.recName);
 
@@ -222,7 +224,7 @@ const VerbPersonMarkerFormulas: FC = () => {
             <Row>
                 <Col sm="10">
                     <Link
-                        to={`/verbPersonMarkersOverview/verbPersonMarkerParadigms/${paradigmId}`}
+                        to={`/VerbPersonMarkersOverview/${ETableName.VerbPersonMarkerParadigms}/${paradigmId}`}
                         className="btn btn-primary"
                     >
                         <FontAwesomeIcon icon="chevron-left" /> უკან

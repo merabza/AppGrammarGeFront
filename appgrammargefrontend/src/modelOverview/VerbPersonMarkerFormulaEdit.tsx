@@ -373,7 +373,7 @@ const VerbPersonMarkerFormulaEdit: FC = () => {
   //ასე იმიტომ გაკეთდა, რომ არ გამხდარიყო საჭირო პარადიგმების მწკრივის ცხრილის დარეგისტრირება DataType-ებში
   //თუ მომავალში ამ ორი უფლების გამიჯვნა გახდა საჭირო, მოგვიწევს DataType-ებში დავარეგისტრიროთ პარადიგმების მწკრივის ცხრილი
   const dataType = dataTypes.find(
-    (f) => f.dtTable === "verbPersonMarkerParadigms"
+    (f) => f.dtTable === ETableName.VerbPersonMarkerParadigms
   );
 
   //თუ იდენტიფიკატორი წესიერია და ჩატვირთული ობიექტი ჯერ არ არის, ან საჭირო ცხრილები ჩატვირთული არ არის
