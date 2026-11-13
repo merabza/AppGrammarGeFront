@@ -20,7 +20,13 @@ import {
     HubConnection,
     HubConnectionBuilder,
     LogLevel,
+    type IHttpConnectionOptions,
 } from "@microsoft/signalr";
+import {
+    csrfHeaderName,
+    csrfHeaderValue,
+    isSsoMode,
+} from "../appcarcass/common/authMode";
 
 const RecountsDashboard: FC = () => {
     const dispatch = useAppDispatch();
@@ -99,12 +105,16 @@ const RecountsDashboard: FC = () => {
                     );
                     return;
                 }
-                // Build new Hub Connection, url is currently hard coded.
+                // hub-ი backend-ში api/v1/recounter/messages-ზეა (SsoLtgGe#16). Sso რეჟიმში ის იმავე origin-ის
+                // სესიის cookie-თი და CSRF-ის header-ით შედის, Local რეჟიმში — ტოკენით
+                const authOptions: IHttpConnectionOptions = isSsoMode()
+                    ? { headers: { [csrfHeaderName]: csrfHeaderValue } }
+                    : { accessTokenFactory: () => user.token };
                 const hubConnect = new HubConnectionBuilder()
-                    .withUrl(`${baseUrl}/databaserecounter/recountmessages`, {
+                    .withUrl(`${baseUrl}/recounter/messages`, {
                         transport:
                             /*HttpTransportType.WebSockets |*/ HttpTransportType.LongPolling,
-                        accessTokenFactory: () => user.token,
+                        ...authOptions,
                     })
                     .configureLogging(LogLevel.Information)
                     .build();

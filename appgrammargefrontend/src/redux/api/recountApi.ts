@@ -98,7 +98,8 @@ export const recountApi = createApi({
         CancelCurrentProcess: builder.mutation<void, void>({
             query(_) {
                 return {
-                    url: `/databaserecounter/cancelcurrentprocess`,
+                    // backend-ში api/v1/recounter/cancelcurrentprocess-ია (ReCounter-ის hub-ის ჯგუფი)
+                    url: `/recounter/cancelcurrentprocess`,
                     method: "POST",
                 };
             },
