@@ -123,79 +123,28 @@ const RecountsDashboard: FC = () => {
                     console.log("hub Connection successful!");
 
                     // Bind event handlers to the hubConnection.
+                    // სერვერის typed hub-ი (IProgressDataMessenger) კლიენტის მეთოდს SendProgressData-ს იძახებს.
+                    // PropertyNamingPolicy = null-ის გამო ველებიც და ლექსიკონის გასაღებებიც PascalCase-შია
+                    // (ReCounterConstants, AppGrammarGeProcDataConstants). სერვერი ყოველ ჯერზე სრულ დაგროვილ
+                    // მდგომარეობას აგზავნის, ნულოვანი რიცხვები და ცარიელი სტრიქონები კი ლექსიკონიდან იშლება,
+                    // ამიტომ გამოტოვებული გასაღები ნიშნავს 0-ს ან ცარიელ სტრიქონს
                     hubConnect.on(
-                        "sendtoall",
+                        "SendProgressData",
                         (receivedData: ProgressData | null) => {
-                            console.log(
-                                "RecountsDashboard receivedMessage=",
-                                receivedData
-                            );
-                            if (!receivedData) {
-                                // setProcName("");
-                                // setLevelName("");
-                                // setCheckBase("");
-                                // setChangedBase("");
-                                // setErrorMessage("");
-                                // setProcLength(0);
-                                // setProcPosition(0);
-                                // setByLevelLength(0);
-                                // setByLevelPosition(0);
-                                return;
-                            }
+                            if (!receivedData) return;
                             const { BoolData, IntData, StrData } = receivedData;
-                            console.log("RecountsDashboard IntData=", IntData);
-                            if (BoolData) {
-                                if (
-                                    BoolData.ProcessRun === true ||
-                                    BoolData.ProcessRun === false
-                                )
-                                    setProcessRun(BoolData.ProcessRun);
-                            }
-                            if (IntData) {
-                                if (
-                                    IntData.procLength ||
-                                    IntData.ProcLength === 0
-                                )
-                                    setProcLength(IntData.procLength);
-                                if (
-                                    IntData.procPosition ||
-                                    IntData.ProcPosition === 0
-                                )
-                                    setProcPosition(IntData.procPosition);
-                                if (
-                                    IntData.byLevelLength ||
-                                    IntData.ByLevelLength === 0
-                                )
-                                    setByLevelLength(IntData.byLevelLength);
-                                if (
-                                    IntData.byLevelPosition ||
-                                    IntData.ByLevelPosition === 0
-                                )
-                                    setByLevelPosition(IntData.ByLevelPosition);
-                            }
-                            console.log("RecountsDashboard StrData=", StrData);
-                            if (StrData) {
-                                if (StrData.procName || StrData.ProcName === "")
-                                    setProcName(StrData.procName);
-                                if (
-                                    StrData.levelName ||
-                                    StrData.LevelName === ""
-                                )
-                                    setLevelName(StrData.levelName);
-                                if (
-                                    StrData.checkBase ||
-                                    StrData.CheckBase === ""
-                                )
-                                    setCheckBase(StrData.checkBase);
-                                if (
-                                    StrData.changedBase ||
-                                    StrData.ChangedBase === ""
-                                )
-                                    setChangedBase(StrData.ChangedBase);
-                                if (StrData.Error || StrData.Error === "")
-                                    setErrorMessage(StrData.Error);
-                            }
-                            //setLastMessage(receivedMessage);
+                            //BoolData Clear-ის შემდეგ ცარიელია, ამიტომ ProcessRun მხოლოდ მაშინ იცვლება, როცა მოვიდა
+                            if (typeof BoolData?.ProcessRun === "boolean")
+                                setProcessRun(BoolData.ProcessRun);
+                            setProcLength(IntData?.ProcLength ?? 0);
+                            setProcPosition(IntData?.ProcPosition ?? 0);
+                            setByLevelLength(IntData?.ByLevelLength ?? 0);
+                            setByLevelPosition(IntData?.ByLevelPosition ?? 0);
+                            setProcName(StrData?.ProcName ?? "");
+                            setLevelName(StrData?.LevelName ?? "");
+                            setCheckBase(StrData?.CheckBase ?? "");
+                            setChangedBase(StrData?.ChangedBase ?? "");
+                            setErrorMessage(StrData?.ReCounterError ?? "");
                         }
                     );
 
