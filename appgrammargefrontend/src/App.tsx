@@ -156,6 +156,26 @@ library.add(
     faPaperPlane
 );
 
+//ტაბის სათაურები იმ გვერდებისთვის, რომლებიც მენიუში არ არის
+const pageTitles: Record<string, string> = {
+    root: "დერივაციის ხე",
+    rootEdit: "ძირის რედაქტირება",
+    derivEdit: "დერივაციის რედაქტირება",
+    inflEdit: "ფლექსიის რედაქტირება",
+    inflVerbCompEdit: "ზმნური კომპოზიციის რედაქტირება",
+    derivationFormulaEdit: "დერივაციის ფორმულის რედაქტირება",
+    morphemeEdit: "მორფემის რედაქტირება",
+    phoneticsTypeEdit: "ფონეტიკური ტიპის რედაქტირება",
+    phoneticsOptionEdit: "ფონეტიკური ვარიანტის რედაქტირება",
+    nounParadigmFormulas: "სახელის პარადიგმის ფორმულები",
+    nounParadigmFormulaEdit: "სახელის პარადიგმის ფორმულის რედაქტირება",
+    verbRowParadigmFormulas: "ზმნის მწკრივის პარადიგმის ფორმულები",
+    verbRowParadigmFormulaEdit: "ზმნის მწკრივის პარადიგმის ფორმულის რედაქტირება",
+    verbPersonMarkerFormulas: "ზმნის ცალი პირის ნიშნების ფორმულები",
+    verbPersonMarkerFormulaEdit: "ზმნის ცალი პირის პარადიგმის ფორმულის რედაქტირება",
+    issuework: "საკითხზე მუშაობა",
+};
+
 const App: FC = () => {
     // console.log("App start");
 
@@ -165,7 +185,7 @@ const App: FC = () => {
                 {/* <div className="content-wrapper"> */}
                 <Routes>
                     <Route path="/" element={<PrivateApp />}>
-                        <Route path="/*" element={<Layout />}>
+                        <Route path="/*" element={<Layout pageTitles={pageTitles} />}>
                             <Route index element={<Home />} />
 
                             <Route path="profile" element={<Profile />} />
