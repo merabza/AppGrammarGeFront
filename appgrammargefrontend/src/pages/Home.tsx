@@ -2,6 +2,7 @@
 
 import type { FC } from "react";
 import AlertMessages from "../appcarcass/common/AlertMessages";
+import LtgAppLinks from "../appcarcass/common/LtgAppLinks";
 import { useAlert } from "../appcarcass/hooks/useAlert";
 import { EAlertKind } from "../appcarcass/redux/slices/alertSlice";
 
@@ -21,7 +22,7 @@ const Home: FC = () => {
             <h1>გამარჯობა</h1>
             <p>კეთილი იყოს შენი მობრძანება</p>
             <p>ეს არის ქართული ენის მოდელის რედაქტორი</p>
-            <p>მომავალში აქ დაემატება ხშირად გამოყენებადი ბმულები</p>
+            <LtgAppLinks />
         </div>
     );
 };
