@@ -8,7 +8,21 @@ var(--sidebar-color);
 var(--sidebar-background-color);
 */
 :root {
-    --sidebar-color: #7386d5;
-    --sidebar-background-color: #6d7fcc;
-    --sidebar-border-bottom-color: #47748b;
+    --sidebar-color: #5b3fa8;
+    --sidebar-background-color: #483286;
+    --sidebar-border-bottom-color: #3a286c;
+}
+
+/* მენიუს ღილაკი (TopNavMenu-ის Button variant="sidebar") მენიუს ფერებით */
+.btn-sidebar {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--sidebar-color);
+    --bs-btn-border-color: var(--sidebar-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--sidebar-background-color);
+    --bs-btn-hover-border-color: var(--sidebar-background-color);
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--sidebar-color) 50%, transparent);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--sidebar-border-bottom-color);
+    --bs-btn-active-border-color: var(--sidebar-border-bottom-color);
 }

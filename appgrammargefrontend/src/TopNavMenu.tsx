@@ -36,7 +36,7 @@ const TopNavMenu: FC = () => {
         <Navbar bg="light" expand="lg">
             <Button
                 className="btn-space"
-                variant="info"
+                variant="sidebar"
                 onClick={() => dispatch(toggleactive())}
             >
                 <FontAwesomeIcon icon="align-left" />
