@@ -16,8 +16,21 @@ VITE_REACT_APP_NAME="ენის მოდელის რედაქტორ
 client; 5173 is ganmarteba's and 5174 errata's) and proxies `/api` (WebSockets included, for the ReCounter hub),
 `/bff`, `/signin-oidc` and `/signout-callback-oidc` to the host (`vite.config.ts`). The ReCounter hub
 (`api/v1/recounter/messages`) authenticates by the session cookie and the `X-CSRF: 1` header in the Sso mode, by the
-token in the Local mode. Without that file the dev server uses devapp (`.env.development`) in Local mode;
-`.env.production` stays `local` until merabza/SsoLtgGe#20.
+token in the Local mode. Without that file the dev server uses devapp (`.env.development`) in Local mode.
+
+## Builds for the servers (merabza/SsoLtgGe#21)
+
+`dotnet publish` of AppGrammarGe builds this project through `appgrammargefrontend.esproj`, whose `BuildCommand` is
+`npm run build -- --mode $(SpaMode)`. SupportTools passes the ServerInfo's `SpaEnvMode` as `/p:SpaMode`; without it
+the mode is `production`.
+
+| Mode | File | Servers | Sign-in |
+|---|---|---|---|
+| `production` | `.env.production` | riga (app.grammar.ge) | Sso, https://sso.ltg.ge/ (since merabza/SsoLtgGe#20) |
+| `devapp` | `.env.devapp` | guria Dev | Local, "(dev)" in the app name |
+| `testapp` | `.env.testapp` | guria Test, oslo Test | Local, "(test)" in the app name |
+
+All three use the relative `/api/v1`, because the host serves the SPA.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

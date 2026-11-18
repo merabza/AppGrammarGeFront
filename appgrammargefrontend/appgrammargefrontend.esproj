@@ -8,5 +8,10 @@
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
+    <!-- Vite-ის mode, რომლითაც publish-ის დროს ფრონტი იბილდება (.env.{mode}); SupportTools-ი სერვერის SpaEnvMode-ს
+         /p:SpaMode-ით აძლევს, AppGrammarGe-ის publish-ი კი მას ამ პროექტს გადასცემს. JavaScript SDK-ი BuildCommand-ს
+         მხოლოდ publish-ის დროს უშვებს (ShouldRunBuildScript false-ია) -->
+    <SpaMode Condition="'$(SpaMode)' == ''">production</SpaMode>
+    <BuildCommand>npm run build -- --mode $(SpaMode)</BuildCommand>
   </PropertyGroup>
 </Project>
